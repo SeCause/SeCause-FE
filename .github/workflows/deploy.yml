@@ -26,7 +26,11 @@ jobs:
           rm -rf output
           mkdir output
           # Use find command instead of extglob pattern
-          find . -maxdepth 1 -not -path "./output" -not -path "./.git" -not -path "./.github" -exec cp -R {} output/ \;
+          find . -mindepth 1 -maxdepth 1 \
+            ! -name "output" \
+            ! -name ".git" \
+            ! -name ".github" \
+            -exec cp -R {} output/ \;
 
       - name: Push to https://github.com/chaeyoungwon/SeCause-FE
         id: push
