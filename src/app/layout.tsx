@@ -15,10 +15,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`h-full antialiased`}>
+    <html
+      lang="ko"
+      className="scrollbar-hide h-full scroll-smooth antialiased"
+      data-scroll-behavior="smooth"
+    >
       <body className="flex min-h-full flex-col">
         <Header />
-        {children}
+        <main className="flex flex-1 flex-col">{children}</main>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <main>
+    <>
       <section id="overview" className="flex h-screen items-center justify-center">
         Overview
       </section>
@@ -10,6 +10,6 @@ export default function Home() {
       <section id="faq" className="flex h-screen items-center justify-center">
         FAQ
       </section>
-    </main>
+    </>
   );
 }

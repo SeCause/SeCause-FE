@@ -6,6 +6,16 @@
   }
 }
 
+@layer utilities {
+  .scrollbar-hide {
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @theme {
   --color-black: #000000;
   --color-white: #ffffff;
