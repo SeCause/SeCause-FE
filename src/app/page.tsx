@@ -1,9 +1,15 @@
-import GithubLoginButton from '@/features/auth/ui/GithubLoginButton';
-
 export default function Home() {
   return (
-    <div className="flex h-dvh w-full items-center justify-center">
-      <GithubLoginButton />
-    </div>
+    <main>
+      <section id="overview" className="flex h-screen items-center justify-center">
+        Overview
+      </section>
+      <section id="how-it-works" className="flex h-screen items-center justify-center">
+        How it Works
+      </section>
+      <section id="faq" className="flex h-screen items-center justify-center">
+        FAQ
+      </section>
+    </main>
   );
 }
