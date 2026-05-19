@@ -1,6 +1,7 @@
 export const ROUTES = {
   home: '/',
   login: '/login',
+  mypage: '/mypage',
 } as const;
 
 export const SECTION_IDS = {

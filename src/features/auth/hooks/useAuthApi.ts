@@ -11,7 +11,8 @@ export function useGithubLogin() {
 
   return useMutation<LoginData, Error, string>({
     mutationFn: (code: string) => postGithubLogin({ code }),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      document.cookie = `access_token=${data.accessToken}; path=/; SameSite=Lax`;
       router.replace('/');
     },
   });
@@ -23,6 +24,7 @@ export function useLogout() {
   return useMutation({
     mutationFn: postLogout,
     onSuccess: () => {
+      document.cookie = 'access_token=; path=/; max-age=0';
       router.replace('/login');
     },
   });
