@@ -10,17 +10,22 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.100.11",
+    "ky": "^2.0.2",
     "next": "16.2.4",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@tanstack/eslint-plugin-query": "^5.100.11",
+    "@tanstack/react-query-devtools": "^5.100.11",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
+    "eslint-plugin-boundaries": "^6.0.2",
     "eslint-plugin-simple-import-sort": "^13.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
