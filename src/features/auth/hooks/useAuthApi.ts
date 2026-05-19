@@ -12,7 +12,7 @@ export function useGithubLogin() {
   return useMutation<LoginData, Error, string>({
     mutationFn: (code: string) => postGithubLogin({ code }),
     onSuccess: (data) => {
-      document.cookie = `access_token=${data.accessToken}; path=/; SameSite=Lax`;
+      document.cookie = `access_token=${data.accessToken}; path=/; SameSite=Lax; Secure`;
       router.replace('/');
     },
   });

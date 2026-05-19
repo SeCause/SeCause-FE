@@ -5,11 +5,11 @@ import boundaries from 'eslint-plugin-boundaries';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
 const FSD_ELEMENTS = [
-  { type: 'app', pattern: 'app/*' },
-  { type: 'widgets', pattern: 'widgets/*' },
-  { type: 'features', pattern: 'features/*' },
-  { type: 'entities', pattern: 'entities/*' },
-  { type: 'shared', pattern: 'shared/*' },
+  { type: 'app', pattern: 'src/app/**' },
+  { type: 'widgets', pattern: 'src/widgets/**' },
+  { type: 'features', pattern: 'src/features/**' },
+  { type: 'entities', pattern: 'src/entities/**' },
+  { type: 'shared', pattern: 'src/shared/**' },
 ];
 
 const FSD_RULES = [
