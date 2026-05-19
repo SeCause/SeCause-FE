@@ -26,9 +26,10 @@ export default function AuthButton({ user, onLogout }: Props) {
   return (
     <Link
       href={ROUTES.login}
-      className="rounded-xl bg-black px-8 py-2 text-sm font-semibold text-white"
+      className="rounded-xl bg-black px-4 py-1.5 text-sm font-semibold text-white md:px-8 md:py-2"
     >
-      Get Started
+      <span className="md:hidden">Login</span>
+      <span className="hidden md:inline">Get Started</span>
     </Link>
   );
 }

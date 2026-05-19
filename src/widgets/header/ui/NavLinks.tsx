@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { ROUTES, SECTION_IDS, type SectionId } from '@/shared/config/routes';
 
-const NAV_ITEMS: { label: string; sectionId: SectionId }[] = [
+export const NAV_ITEMS: { label: string; sectionId: SectionId }[] = [
   { label: 'Overview', sectionId: SECTION_IDS.overview },
   { label: 'How it Works', sectionId: SECTION_IDS.howItWorks },
   { label: 'FAQ', sectionId: SECTION_IDS.faq },
@@ -50,7 +50,7 @@ export default function NavLinks() {
   }, [activeSection]);
 
   return (
-    <nav ref={navRef} className="relative flex h-full gap-4 self-stretch">
+    <nav ref={navRef} className="relative hidden h-full gap-4 self-stretch md:flex">
       {NAV_ITEMS.map(({ label, sectionId }, idx) => (
         <a
           key={sectionId}
