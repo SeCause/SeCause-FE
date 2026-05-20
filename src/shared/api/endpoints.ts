@@ -1,6 +1,6 @@
 export const ENDPOINTS = {
   auth: {
-    githubLogin: 'auth/github',
+    githubLogin: 'auth/github/login',
     refresh: 'auth/refresh',
     logout: 'auth/logout',
   },
