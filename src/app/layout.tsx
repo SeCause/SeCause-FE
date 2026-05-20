@@ -9,6 +9,12 @@ import Providers from './providers';
 export const metadata: Metadata = {
   title: 'SeCause',
   description: 'AI 기반 코드 보안 취약점 분석 및 수정 가이드 제공 서비스',
+  openGraph: {
+    title: 'SeCause',
+    description: 'AI 기반 코드 보안 취약점 분석 및 수정 가이드 제공 서비스',
+    type: 'website',
+    locale: 'ko_KR',
+  },
 };
 
 export default function RootLayout({
