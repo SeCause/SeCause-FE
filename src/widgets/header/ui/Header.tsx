@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 import AuthButton from '@/features/auth/ui/AuthButton';
 import { ROUTES } from '@/shared/config/routes';
@@ -19,8 +19,9 @@ export default function Header() {
 
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRefs = useMemo(() => [hamburgerRef, menuRef], []);
   useClickOutside(
-    [hamburgerRef, menuRef],
+    mobileMenuRefs,
     useCallback(() => setIsMobileMenuOpen(false), []),
   );
 
@@ -42,7 +43,7 @@ export default function Header() {
           )}
           <Link
             href={ROUTES.home}
-            className="text-primary hidden text-xl font-bold md:block"
+            className="text-blue text-heading-md hidden md:block"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
             SeCause
@@ -53,7 +54,7 @@ export default function Header() {
 
         <Link
           href={ROUTES.home}
-          className="text-primary text-xl font-bold md:hidden"
+          className="text-blue text-heading-md md:hidden"
           onClick={() => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             setIsMobileMenuOpen(false);
@@ -79,7 +80,7 @@ export default function Header() {
               <a
                 key={sectionId}
                 href={`${ROUTES.home}#${sectionId}`}
-                className="py-3 text-base font-medium text-gray-600 hover:text-gray-900"
+                className="text-body-lg py-3 font-medium text-gray-600 hover:text-gray-900"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {label}
