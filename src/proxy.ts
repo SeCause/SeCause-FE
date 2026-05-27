@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 
 import { ROUTES } from '@/shared/config/routes';
 
-const PROTECTED_ROUTES = [ROUTES.mypage];
+const PROTECTED_ROUTES = [ROUTES.mypage, ROUTES.analysis];
 
 export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -16,5 +16,5 @@ export default function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/mypage/:path*'],
+  matcher: ['/mypage/:path*', '/analysis/:path*'],
 };
