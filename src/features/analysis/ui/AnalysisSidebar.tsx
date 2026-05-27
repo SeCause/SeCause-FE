@@ -13,11 +13,13 @@ export default function AnalysisSidebar({ label, disabled, onClick }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <div className="rounded-xl bg-blue-50 p-4">
-        <p className="text-label-md mb-2 text-gray-900">분석 정보</p>
+        <h2 className="text-label-md mb-2 text-gray-900">분석 정보</h2>
         <ul className="flex flex-col gap-2">
           {INFO_BULLETS.map((bullet) => (
             <li key={bullet} className="text-caption flex gap-2 text-gray-700">
-              <span className="mt-0.5 shrink-0">•</span>
+              <span aria-hidden="true" className="mt-0.5 shrink-0">
+                •
+              </span>
               {bullet}
             </li>
           ))}

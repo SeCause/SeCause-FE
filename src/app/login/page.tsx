@@ -29,7 +29,7 @@ export default function Login() {
               key={feature}
               className="text-body-md flex items-center gap-4 font-medium text-gray-900"
             >
-              <span className="bg-blue h-4 w-4 shrink-0 rounded-full blur-xs" />
+              <span aria-hidden="true" className="bg-blue h-4 w-4 shrink-0 rounded-full blur-xs" />
               {feature}
             </li>
           ))}

@@ -34,7 +34,9 @@ export default function Header() {
               ref={hamburgerRef}
               className="flex flex-col justify-center gap-1.5 p-1 md:hidden"
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-              aria-label="메뉴 열기"
+              aria-label={isMobileMenuOpen ? '메뉴 닫기' : '메뉴 열기'}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-nav"
             >
               <span className="block h-0.5 w-6 bg-black" />
               <span className="block h-0.5 w-6 bg-black" />
@@ -71,11 +73,13 @@ export default function Header() {
       {isHome && (
         <div
           ref={menuRef}
+          id="mobile-nav"
+          aria-hidden={!isMobileMenuOpen}
           className={`z-header fixed top-14 right-0 left-0 overflow-hidden border-gray-200 bg-white transition-[max-height] duration-300 ease-in-out md:hidden ${
             isMobileMenuOpen ? 'max-h-60 border-b' : 'max-h-0'
           }`}
         >
-          <nav className="flex flex-col gap-1 px-6 py-4">
+          <nav aria-label="모바일 네비게이션" className="flex flex-col gap-1 px-6 py-4">
             {NAV_ITEMS.map(({ label, sectionId }) => (
               <a
                 key={sectionId}

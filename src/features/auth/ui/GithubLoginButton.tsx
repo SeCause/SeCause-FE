@@ -17,7 +17,8 @@ export default function GithubLoginButton() {
     >
       <Image
         src={GithubIcon}
-        alt="깃허브 아이콘"
+        alt=""
+        aria-hidden="true"
         className="h-4 w-4 md:h-6 md:w-6"
         width={24}
         height={24}

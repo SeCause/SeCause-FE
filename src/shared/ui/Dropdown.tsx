@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useId, useRef, useState } from 'react';
 
 import ArrowIcon from '@/icons/icon_arrow.svg';
 import { useClickOutside } from '@/shared/lib/useClickOutside';
@@ -18,6 +18,7 @@ interface Props {
   placeholder?: string;
   leadingIcon?: React.ReactNode;
   fullWidth?: boolean;
+  'aria-labelledby'?: string;
 }
 
 export default function Dropdown({
@@ -27,7 +28,11 @@ export default function Dropdown({
   placeholder = '선택해주세요',
   leadingIcon,
   fullWidth = false,
+  'aria-labelledby': ariaLabelledby,
 }: Props) {
+  const id = useId();
+  const listboxId = `${id}-listbox`;
+
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -42,9 +47,17 @@ export default function Dropdown({
     <div ref={containerRef} className={`relative ${fullWidth ? 'w-full' : 'w-fit'}`}>
       <button
         onClick={() => setOpen((o) => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls={listboxId}
+        aria-labelledby={ariaLabelledby}
         className={`text-body-md flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2.5 ${fullWidth ? 'w-full' : ''}`}
       >
-        {leadingIcon && <span className="shrink-0 text-gray-700">{leadingIcon}</span>}
+        {leadingIcon && (
+          <span className="shrink-0 text-gray-700" aria-hidden="true">
+            {leadingIcon}
+          </span>
+        )}
         <span
           className={`flex-1 text-left font-medium ${selected ? 'text-gray-900' : 'text-gray-500'}`}
         >
@@ -53,15 +66,23 @@ export default function Dropdown({
         <Image
           src={ArrowIcon}
           className={`h-5 w-5 shrink-0 text-gray-700 ${open ? 'rotate-180' : ''}`}
-          alt="화살표"
+          alt=""
+          aria-hidden="true"
         />
       </button>
 
       {open && (
-        <ul className="z-dropdown absolute mt-1 w-full min-w-max rounded-lg border border-gray-300 bg-white py-1 drop-shadow-sm">
+        <ul
+          role="listbox"
+          id={listboxId}
+          aria-labelledby={ariaLabelledby}
+          className="z-dropdown absolute mt-1 w-full min-w-max rounded-lg border border-gray-300 bg-white py-1 drop-shadow-sm"
+        >
           {options.map((option) => (
-            <li key={option.value}>
+            <li key={option.value} role="presentation">
               <button
+                role="option"
+                aria-selected={value === option.value}
                 onClick={() => {
                   onChange(option.value);
                   setOpen(false);
@@ -70,7 +91,11 @@ export default function Dropdown({
                   value === option.value ? 'text-blue' : 'text-gray-900'
                 }`}
               >
-                {leadingIcon && <span className="shrink-0 text-gray-700">{leadingIcon}</span>}
+                {leadingIcon && (
+                  <span className="shrink-0 text-gray-700" aria-hidden="true">
+                    {leadingIcon}
+                  </span>
+                )}
                 {option.label}
               </button>
             </li>

@@ -11,6 +11,7 @@ interface Props {
   placeholder?: string;
   debounce?: number;
   containerClassName?: string;
+  'aria-label'?: string;
 }
 
 export default function SearchBar({
@@ -18,6 +19,7 @@ export default function SearchBar({
   placeholder = '검색',
   debounce = 300,
   containerClassName,
+  'aria-label': ariaLabel,
 }: Props) {
   const [input, setInput] = useState('');
   const debouncedInput = useDebounce(input, debounce);
@@ -37,12 +39,14 @@ export default function SearchBar({
 
   return (
     <div
+      role="search"
       className={`flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 ${containerClassName ?? ''}`}
     >
-      <Image src={SearchIcon} className="h-4 w-4 shrink-0 text-gray-500" alt="돋보기" />
+      <Image src={SearchIcon} className="h-4 w-4 shrink-0" alt="" aria-hidden="true" />
       <input
         type="text"
         placeholder={placeholder}
+        aria-label={ariaLabel ?? placeholder}
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}

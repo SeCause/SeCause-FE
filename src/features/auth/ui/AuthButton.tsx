@@ -26,10 +26,15 @@ export default function AuthButton({ user, onLogout }: Props) {
   return (
     <Link
       href={ROUTES.login}
+      aria-label="Get Started"
       className="text-label-md rounded-xl bg-black px-4 py-1.5 text-white md:px-8 md:py-2"
     >
-      <span className="md:hidden">Login</span>
-      <span className="hidden md:inline">Get Started</span>
+      <span aria-hidden="true" className="md:hidden">
+        Login
+      </span>
+      <span aria-hidden="true" className="hidden md:inline">
+        Get Started
+      </span>
     </Link>
   );
 }
