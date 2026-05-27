@@ -22,13 +22,13 @@ export default function LoginCallbackClient() {
   }, [mutate, searchParams, router]);
 
   if (isError) {
-    return <p className="text-text-secondary text-sm">로그인 중 오류가 발생했습니다.</p>;
+    return <p className="text-body-md text-gray-700">로그인 중 오류가 발생했습니다.</p>;
   }
 
   return (
     <div className="flex flex-1 items-center justify-center">
       {isPending && (
-        <div className="border-primary h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
+        <div className="border-blue h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
       )}
     </div>
   );

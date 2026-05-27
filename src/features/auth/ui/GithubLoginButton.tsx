@@ -22,7 +22,7 @@ export default function GithubLoginButton() {
         width={24}
         height={24}
       />
-      <span className="text-sm font-semibold whitespace-nowrap text-white md:text-base">
+      <span className="text-label-md md:text-body-lg whitespace-nowrap text-white md:font-semibold">
         Github 계정으로 계속하기
       </span>
     </button>

@@ -58,7 +58,7 @@ export default function NavLinks() {
             itemRefs.current[idx] = el;
           }}
           href={`${ROUTES.home}#${sectionId}`}
-          className={`flex w-26 items-center justify-center text-base transition-colors ${
+          className={`text-body-lg flex w-26 items-center justify-center transition-colors ${
             activeSection === sectionId
               ? 'font-semibold text-black'
               : 'font-medium text-gray-600 hover:text-gray-900'
