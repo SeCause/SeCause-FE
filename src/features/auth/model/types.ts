@@ -4,18 +4,24 @@ export interface LoginRequest {
   code: string;
 }
 
-export interface User {
+export interface GithubLoginResponse {
+  userId: number;
+  githubId: number;
+  githubLoginId: string;
+  name: string;
+  email: string;
+  avatarUrl: string;
+}
+
+export interface UserProfile {
+  avatarUrl: string | null;
+  username: string;
+}
+
+export interface GetUserResponse {
   userId: number;
   email: string;
   name: string;
-  githubToken: string;
-  createdAt: string;
 }
 
-export interface LoginData {
-  accessToken: string;
-  tokenType: string;
-  user: User;
-}
-
-export type LoginResponse = ApiResponse<LoginData>;
+export type LoginResponse = ApiResponse<GithubLoginResponse>;
