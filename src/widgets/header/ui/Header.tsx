@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 import AuthButton from '@/features/auth/ui/AuthButton';
 import { ROUTES } from '@/shared/config/routes';
@@ -19,8 +19,9 @@ export default function Header() {
 
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRefs = useMemo(() => [hamburgerRef, menuRef], []);
   useClickOutside(
-    [hamburgerRef, menuRef],
+    mobileMenuRefs,
     useCallback(() => setIsMobileMenuOpen(false), []),
   );
 
@@ -33,7 +34,9 @@ export default function Header() {
               ref={hamburgerRef}
               className="flex flex-col justify-center gap-1.5 p-1 md:hidden"
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-              aria-label="메뉴 열기"
+              aria-label={isMobileMenuOpen ? '메뉴 닫기' : '메뉴 열기'}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-nav"
             >
               <span className="block h-0.5 w-6 bg-black" />
               <span className="block h-0.5 w-6 bg-black" />
@@ -42,7 +45,7 @@ export default function Header() {
           )}
           <Link
             href={ROUTES.home}
-            className="text-primary hidden text-xl font-bold md:block"
+            className="text-blue text-heading-md hidden md:block"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
             SeCause
@@ -53,7 +56,7 @@ export default function Header() {
 
         <Link
           href={ROUTES.home}
-          className="text-primary text-xl font-bold md:hidden"
+          className="text-blue text-heading-md md:hidden"
           onClick={() => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             setIsMobileMenuOpen(false);
@@ -70,16 +73,18 @@ export default function Header() {
       {isHome && (
         <div
           ref={menuRef}
+          id="mobile-nav"
+          aria-hidden={!isMobileMenuOpen}
           className={`z-header fixed top-14 right-0 left-0 overflow-hidden border-gray-200 bg-white transition-[max-height] duration-300 ease-in-out md:hidden ${
             isMobileMenuOpen ? 'max-h-60 border-b' : 'max-h-0'
           }`}
         >
-          <nav className="flex flex-col gap-1 px-6 py-4">
+          <nav aria-label="모바일 네비게이션" className="flex flex-col gap-1 px-6 py-4">
             {NAV_ITEMS.map(({ label, sectionId }) => (
               <a
                 key={sectionId}
                 href={`${ROUTES.home}#${sectionId}`}
-                className="py-3 text-base font-medium text-gray-600 hover:text-gray-900"
+                className="text-body-lg py-3 font-medium text-gray-600 hover:text-gray-900"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {label}

@@ -50,7 +50,11 @@ export default function NavLinks() {
   }, [activeSection]);
 
   return (
-    <nav ref={navRef} className="relative hidden h-full gap-4 self-stretch md:flex">
+    <nav
+      ref={navRef}
+      aria-label="데스크톱 네비게이션"
+      className="relative hidden h-full gap-4 self-stretch md:flex"
+    >
       {NAV_ITEMS.map(({ label, sectionId }, idx) => (
         <a
           key={sectionId}
@@ -58,7 +62,8 @@ export default function NavLinks() {
             itemRefs.current[idx] = el;
           }}
           href={`${ROUTES.home}#${sectionId}`}
-          className={`flex w-26 items-center justify-center text-base transition-colors ${
+          aria-current={activeSection === sectionId ? 'true' : undefined}
+          className={`text-body-lg flex w-26 items-center justify-center transition-colors ${
             activeSection === sectionId
               ? 'font-semibold text-black'
               : 'font-medium text-gray-600 hover:text-gray-900'
@@ -70,6 +75,7 @@ export default function NavLinks() {
 
       {indicatorStyle && (
         <span
+          aria-hidden="true"
           className="absolute bottom-[-1.5px] h-0.5 bg-black transition-all duration-300 ease-in-out"
           style={{ left: indicatorStyle.left, width: indicatorStyle.width }}
         />

@@ -17,12 +17,13 @@ export default function GithubLoginButton() {
     >
       <Image
         src={GithubIcon}
-        alt="깃허브 아이콘"
+        alt=""
+        aria-hidden="true"
         className="h-4 w-4 md:h-6 md:w-6"
         width={24}
         height={24}
       />
-      <span className="text-sm font-semibold whitespace-nowrap text-white md:text-base">
+      <span className="text-label-md md:text-body-lg whitespace-nowrap text-white md:font-semibold">
         Github 계정으로 계속하기
       </span>
     </button>
