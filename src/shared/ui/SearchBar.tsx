@@ -1,0 +1,53 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+
+import { useDebounce } from '@/shared/lib/useDebounce';
+
+import { SearchIcon } from './icons';
+
+interface Props {
+  onChange: (value: string) => void;
+  placeholder?: string;
+  debounce?: number;
+  containerClassName?: string;
+}
+
+export default function SearchBar({
+  onChange,
+  placeholder = '검색',
+  debounce = 300,
+  containerClassName,
+}: Props) {
+  const [input, setInput] = useState('');
+  const debouncedInput = useDebounce(input, debounce);
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
+    }
+    onChange(debouncedInput);
+  }, [debouncedInput, onChange]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') onChange(input);
+  };
+
+  return (
+    <div
+      className={`flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 ${containerClassName ?? ''}`}
+    >
+      <SearchIcon className="h-4 w-4 shrink-0 text-gray-500" />
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={handleKeyDown}
+        className="text-body-md w-full bg-transparent text-gray-900 outline-none placeholder:text-gray-500"
+      />
+    </div>
+  );
+}
