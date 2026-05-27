@@ -20,10 +20,11 @@ export function useGithubLogin() {
   });
 }
 
-export function useUser() {
+export function useUser({ enabled = true }: { enabled?: boolean } = {}) {
   return useQuery({
     queryKey: ['user'],
     queryFn: getUser,
+    enabled,
     retry: false,
     staleTime: 5 * 60 * 1000,
   });

@@ -12,12 +12,12 @@ import { useClickOutside } from '@/shared/lib/useClickOutside';
 import NavLinks, { NAV_ITEMS } from './NavLinks';
 
 export default function Header() {
-  const { data: user } = useUser();
-  const { mutate: logout } = useLogout();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === ROUTES.home;
-  const isLogin = pathname === ROUTES.login;
+  const isAuthPage = pathname.startsWith(ROUTES.login);
+  const { data: user } = useUser({ enabled: !isAuthPage });
+  const { mutate: logout } = useLogout();
 
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -68,7 +68,7 @@ export default function Header() {
         </Link>
 
         <div className="flex justify-end">
-          {(!isLogin || user) && <AuthButton user={user ?? null} onLogout={() => logout()} />}
+          {(!isAuthPage || user) && <AuthButton user={user ?? null} onLogout={() => logout()} />}
         </div>
       </header>
 
