@@ -6,19 +6,9 @@ import Dropdown from '@/shared/ui/Dropdown';
 
 import { MOCK_BRANCHES } from '../model/mocks';
 import type { Repo } from '../model/types';
+import RepoIcon from './RepoIcon';
 
 const BRANCH_OPTIONS = MOCK_BRANCHES.map((b) => ({ value: b, label: b }));
-
-function RepoIcon({ name }: { name: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className="bg-blue/10 text-blue text-label-sm flex h-7 w-7 shrink-0 items-center justify-center rounded uppercase"
-    >
-      {name[0]}
-    </span>
-  );
-}
 
 interface Props {
   repo: Repo;

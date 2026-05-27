@@ -8,18 +8,9 @@ import type { Repo } from '@/features/analysis/model/types';
 import Dropdown from '@/shared/ui/Dropdown';
 import SearchBar from '@/shared/ui/SearchBar';
 
-const ACCOUNT_OPTIONS = MOCK_ACCOUNTS.map((a) => ({ value: a, label: a }));
+import RepoIcon from './RepoIcon';
 
-function RepoIcon({ name }: { name: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className="bg-blue/10 text-blue text-label-sm flex h-7 w-7 shrink-0 items-center justify-center rounded uppercase"
-    >
-      {name[0]}
-    </span>
-  );
-}
+const ACCOUNT_OPTIONS = MOCK_ACCOUNTS.map((a) => ({ value: a, label: a }));
 
 interface Props {
   value: Repo | null;
