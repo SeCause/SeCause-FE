@@ -1,10 +1,10 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
+import SearchIcon from '@/icons/icon_search.svg';
 import { useDebounce } from '@/shared/lib/useDebounce';
-
-import { SearchIcon } from './icons';
 
 interface Props {
   onChange: (value: string) => void;
@@ -39,7 +39,7 @@ export default function SearchBar({
     <div
       className={`flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 ${containerClassName ?? ''}`}
     >
-      <SearchIcon className="h-4 w-4 shrink-0 text-gray-500" />
+      <Image src={SearchIcon} className="h-4 w-4 shrink-0 text-gray-500" alt="돋보기" />
       <input
         type="text"
         placeholder={placeholder}
