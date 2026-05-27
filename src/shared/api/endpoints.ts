@@ -6,7 +6,7 @@ export const ENDPOINTS = {
   },
 
   users: {
-    me: 'users',
+    me: 'users/me',
     updateImage: 'users/image',
   },
 
