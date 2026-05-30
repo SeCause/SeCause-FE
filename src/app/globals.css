@@ -54,6 +54,14 @@
   .scrollbar-custom-gray::-webkit-scrollbar-track {
     background: transparent;
   }
+
+  .icon-gray {
+    filter: brightness(0) saturate(100%) invert(40%);
+  }
+
+  .icon-blue {
+    filter: brightness(0) saturate(100%) invert(48%) sepia(98%) saturate(2000%) hue-rotate(210deg);
+  }
 }
 
 @theme {
