@@ -15,7 +15,7 @@ export default function GithubBadge({ username }: Props) {
         aria-hidden="true"
         width={15}
         height={15}
-        className="filter-[brightness(0)_invert(1)]"
+        className="brightness-0 invert"
       />
       {username}
     </span>

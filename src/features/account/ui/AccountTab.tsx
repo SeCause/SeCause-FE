@@ -3,9 +3,9 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import GithubBadge from '@/features/auth/ui/GithubBadge';
 import CameraIcon from '@/icons/icon_camera.svg';
 import Button from '@/shared/ui/Button';
+import GithubBadge from '@/shared/ui/GithubBadge';
 import Input from '@/shared/ui/Input';
 
 export default function AccountTab() {

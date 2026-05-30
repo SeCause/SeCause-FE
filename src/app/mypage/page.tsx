@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 
-import AccountTab from '@/features/account/ui/AccountTab';
-import RepositoriesTab from '@/features/repositories/ui/RepositoriesTab';
-import MyPageSidebar, { type MyPageTab } from '@/widgets/mypage-sidebar/ui/MyPageSidebar';
+import { AccountTab } from '@/features/account';
+import { RepositoriesTab } from '@/features/repositories';
+import { MyPageSidebar, type MyPageTab } from '@/widgets/mypage-sidebar';
 
 export default function MyPage() {
   const [activeTab, setActiveTab] = useState<MyPageTab>('repositories');

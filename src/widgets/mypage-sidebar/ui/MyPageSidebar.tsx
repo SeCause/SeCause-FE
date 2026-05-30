@@ -55,7 +55,7 @@ export default function MyPageSidebar({ activeTab, onTabChange }: Props) {
 
       <div
         className={`flex w-64 flex-col gap-4 px-3 py-4 transition-opacity duration-200 ease-in-out ${
-          isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
+          isOpen ? 'opacity-100' : 'pointer-events-none invisible opacity-0'
         }`}
       >
         <Dropdown
