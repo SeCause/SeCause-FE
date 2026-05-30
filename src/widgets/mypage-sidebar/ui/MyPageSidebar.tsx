@@ -33,7 +33,7 @@ export default function MyPageSidebar({ activeTab, onTabChange }: Props) {
   return (
     <aside
       className={`flex shrink-0 flex-col overflow-hidden border-r border-gray-200 bg-white transition-[width] duration-200 ease-in-out ${
-        isOpen ? 'w-60' : 'w-14 items-center'
+        isOpen ? 'w-64' : 'w-14 items-center'
       }`}
     >
       <div className="flex shrink-0 items-center justify-end border-b border-gray-200 px-3 py-3">
@@ -54,7 +54,7 @@ export default function MyPageSidebar({ activeTab, onTabChange }: Props) {
       </div>
 
       <div
-        className={`flex w-60 flex-col gap-4 px-3 py-4 transition-opacity duration-200 ease-in-out ${
+        className={`flex w-64 flex-col gap-4 px-3 py-4 transition-opacity duration-200 ease-in-out ${
           isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
       >
