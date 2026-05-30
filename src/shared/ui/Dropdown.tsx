@@ -17,6 +17,7 @@ interface Props {
   onChange: (value: string) => void;
   placeholder?: string;
   leadingIcon?: React.ReactNode;
+  trailingIcon?: React.ReactNode;
   fullWidth?: boolean;
   'aria-labelledby'?: string;
 }
@@ -27,6 +28,7 @@ export default function Dropdown({
   onChange,
   placeholder = '선택해주세요',
   leadingIcon,
+  trailingIcon,
   fullWidth = false,
   'aria-labelledby': ariaLabelledby,
 }: Props) {
@@ -63,12 +65,18 @@ export default function Dropdown({
         >
           {selected ? selected.label : placeholder}
         </span>
-        <Image
-          src={ArrowIcon}
-          className={`h-5 w-5 shrink-0 text-gray-700 ${open ? 'rotate-180' : ''}`}
-          alt=""
-          aria-hidden="true"
-        />
+        {trailingIcon ? (
+          <span className="shrink-0" aria-hidden="true">
+            {trailingIcon}
+          </span>
+        ) : (
+          <Image
+            src={ArrowIcon}
+            className={`h-5 w-5 shrink-0 text-gray-700 ${open ? 'rotate-180' : ''}`}
+            alt=""
+            aria-hidden="true"
+          />
+        )}
       </button>
 
       {open && (
