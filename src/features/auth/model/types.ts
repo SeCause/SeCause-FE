@@ -22,6 +22,7 @@ export interface GetUserResponse {
   userId: number;
   email: string;
   name: string;
+  avatarUrl: string;
 }
 
 export type LoginResponse = ApiResponse<GithubLoginResponse>;
