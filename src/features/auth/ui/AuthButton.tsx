@@ -2,17 +2,13 @@
 
 import Link from 'next/link';
 
+import type { UserProfile } from '@/features/auth/model/types';
 import { ROUTES } from '@/shared/config/routes';
 
 import ProfileDropdown from './ProfileDropdown';
 
-interface User {
-  avatarUrl: string;
-  username: string;
-}
-
 interface Props {
-  user: User | null;
+  user: UserProfile | null;
   onLogout: () => void;
 }
 

@@ -1,12 +1,12 @@
 export const ENDPOINTS = {
   auth: {
     githubLogin: 'auth/github/login',
-    refresh: 'auth/refresh',
+    reissue: 'auth/reissue',
     logout: 'auth/logout',
   },
 
   users: {
-    me: 'users',
+    me: 'users/me',
     updateImage: 'users/image',
   },
 

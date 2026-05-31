@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
+import { useLogout, useUser } from '@/features/auth/hooks/useAuthApi';
 import AuthButton from '@/features/auth/ui/AuthButton';
 import { ROUTES } from '@/shared/config/routes';
 import { useClickOutside } from '@/shared/lib/useClickOutside';
@@ -11,11 +12,12 @@ import { useClickOutside } from '@/shared/lib/useClickOutside';
 import NavLinks, { NAV_ITEMS } from './NavLinks';
 
 export default function Header() {
-  const [user, setUser] = useState<{ avatarUrl: string; username: string } | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === ROUTES.home;
-  const isLogin = pathname === ROUTES.login;
+  const isAuthPage = pathname.startsWith(ROUTES.login);
+  const { data: user, isLoading } = useUser({ enabled: !isAuthPage });
+  const { mutate: logout } = useLogout();
 
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -66,7 +68,9 @@ export default function Header() {
         </Link>
 
         <div className="flex justify-end">
-          {(!isLogin || user) && <AuthButton user={user} onLogout={() => setUser(null)} />}
+          {!isLoading && (!isAuthPage || user) && (
+            <AuthButton user={user ?? null} onLogout={() => logout()} />
+          )}
         </div>
       </header>
 
