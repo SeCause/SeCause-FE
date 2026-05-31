@@ -6,6 +6,7 @@ import { useId, useState } from 'react';
 
 import ArrowIcon from '@/icons/icon_arrow.svg';
 import LogoutIcon from '@/icons/icon_logout.svg';
+import { ROUTES } from '@/shared/config/routes';
 
 interface Props {
   avatarUrl: string | null;
@@ -75,7 +76,7 @@ export default function ProfileDropdown({ avatarUrl, username, onLogout }: Props
           className="absolute right-0 mt-2 w-56 overflow-hidden rounded-xl border border-gray-300 bg-white shadow-lg"
         >
           <Link
-            href="/mypage"
+            href={ROUTES.mypage}
             role="menuitem"
             className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100"
             onClick={() => setOpen(false)}

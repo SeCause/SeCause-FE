@@ -6,20 +6,17 @@ import type {
 } from '@/features/auth/model/types';
 import { apiClient } from '@/shared/api/client';
 import { ENDPOINTS } from '@/shared/api/endpoints';
-import type { ApiResponse } from '@/shared/api/types';
 
 export async function postGithubLogin(body: LoginRequest): Promise<GithubLoginResponse> {
-  const res = await apiClient
-    .post(ENDPOINTS.auth.githubLogin, { json: body })
-    .json<ApiResponse<GithubLoginResponse>>();
+  const res = await apiClient.post<GithubLoginResponse>(ENDPOINTS.auth.githubLogin, { json: body });
   return res.result;
 }
 
 export async function getUser(): Promise<UserProfile> {
-  const res = await apiClient.get(ENDPOINTS.users.me).json<ApiResponse<GetUserResponse>>();
+  const res = await apiClient.get<GetUserResponse>(ENDPOINTS.users.me);
   return { avatarUrl: res.result.avatarUrl, username: res.result.name, email: res.result.email };
 }
 
 export async function postLogout(): Promise<void> {
-  return apiClient.post(ENDPOINTS.auth.logout).json<void>();
+  await apiClient.post(ENDPOINTS.auth.logout);
 }
