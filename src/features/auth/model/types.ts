@@ -1,5 +1,3 @@
-import type { ApiResponse } from '@/shared/api/types';
-
 export interface LoginRequest {
   code: string;
 }
@@ -13,17 +11,12 @@ export interface GithubLoginResponse {
   avatarUrl: string;
 }
 
-export interface UserProfile {
-  avatarUrl: string | null;
-  username: string;
-  email: string;
-}
-
 export interface GetUserResponse {
   userId: number;
+  githubLoginId: string;
   email: string;
   name: string;
   avatarUrl: string;
 }
 
-export type LoginResponse = ApiResponse<GithubLoginResponse>;
+export type UserProfile = GetUserResponse;

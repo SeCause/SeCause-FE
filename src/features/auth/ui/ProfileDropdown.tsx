@@ -2,11 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useId, useState } from 'react';
+import { useCallback, useId, useRef, useState } from 'react';
 
 import ArrowIcon from '@/icons/icon_arrow.svg';
 import LogoutIcon from '@/icons/icon_logout.svg';
 import { ROUTES } from '@/shared/config/routes';
+import { useClickOutside } from '@/shared/lib/useClickOutside';
 
 interface Props {
   avatarUrl: string | null;
@@ -51,16 +52,22 @@ export default function ProfileDropdown({ avatarUrl, username, onLogout }: Props
   const menuId = `${id}-menu`;
 
   const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside(
+    containerRef,
+    useCallback(() => setOpen(false), []),
+  );
 
   return (
-    <div className="relative">
+    <div ref={containerRef} className="relative">
       <button
         onClick={() => setOpen((prev) => !prev)}
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={menuId}
         aria-label={`${username} 프로필 메뉴`}
-        className="flex items-center gap-2 rounded-lg bg-gray-100 px-2 py-1 hover:bg-gray-200"
+        className="flex items-center gap-2 rounded-lg bg-white px-2 py-1 hover:bg-gray-100"
       >
         <Avatar avatarUrl={avatarUrl} username={username} size={28} />
         <span className={`inline-block ${open ? 'rotate-180' : 'rotate-0'}`} aria-hidden="true">
