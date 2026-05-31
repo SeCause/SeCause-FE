@@ -17,7 +17,7 @@ export async function postGithubLogin(body: LoginRequest): Promise<GithubLoginRe
 
 export async function getUser(): Promise<UserProfile> {
   const res = await apiClient.get(ENDPOINTS.users.me).json<ApiResponse<GetUserResponse>>();
-  return { avatarUrl: res.result.avatarUrl, username: res.result.name };
+  return { avatarUrl: res.result.avatarUrl, username: res.result.name, email: res.result.email };
 }
 
 export async function postLogout(): Promise<void> {

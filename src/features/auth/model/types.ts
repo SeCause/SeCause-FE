@@ -16,6 +16,7 @@ export interface GithubLoginResponse {
 export interface UserProfile {
   avatarUrl: string | null;
   username: string;
+  email: string;
 }
 
 export interface GetUserResponse {
