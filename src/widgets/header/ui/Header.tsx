@@ -29,7 +29,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="z-header sticky top-0 grid h-14 grid-cols-[1fr_auto_1fr] items-center border-b border-gray-200 bg-white px-4 md:flex md:justify-between md:px-10">
+      <header className="z-header sticky top-0 grid h-14 grid-cols-[1fr_auto_1fr] items-center border-b border-white/20 bg-white/60 px-4 backdrop-blur-xl md:flex md:justify-between md:px-10">
         <div className="flex h-full items-center gap-20">
           {isHome && (
             <button

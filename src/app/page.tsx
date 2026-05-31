@@ -1,15 +1,14 @@
+import FaqSection from '@/widgets/landing/ui/FaqSection';
+import HeroSection from '@/widgets/landing/ui/HeroSection';
+import HowItWorksSection from '@/widgets/landing/ui/HowItWorksSection';
+
 export default function Home() {
   return (
     <>
-      <section id="overview" className="flex h-screen items-center justify-center">
-        Overview
-      </section>
-      <section id="how-it-works" className="flex h-screen items-center justify-center">
-        How it Works
-      </section>
-      <section id="faq" className="flex h-screen items-center justify-center">
-        FAQ
-      </section>
+      <div className="bg-mesh fixed inset-0 -z-10" />
+      <HeroSection />
+      <HowItWorksSection />
+      <FaqSection />
     </>
   );
 }

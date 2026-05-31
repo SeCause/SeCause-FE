@@ -62,6 +62,14 @@
   .icon-blue {
     filter: brightness(0) saturate(100%) invert(48%) sepia(98%) saturate(2000%) hue-rotate(210deg);
   }
+
+  .bg-mesh {
+    background:
+      radial-gradient(at 15% 25%, #e0f2fe 0%, transparent 60%),
+      radial-gradient(at 85% 5%, #dbeafe 0%, transparent 45%),
+      radial-gradient(at 70% 75%, #f1f5f9 0%, transparent 50%),
+      radial-gradient(at 40% 90%, #f8fafc 0%, transparent 45%), #fafcff;
+  }
 }
 
 @theme {
