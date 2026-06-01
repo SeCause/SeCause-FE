@@ -70,7 +70,7 @@ export default function ProfileDropdown({ avatarUrl, username, onLogout }: Props
         className="flex items-center gap-2 rounded-lg bg-white px-2 py-1 hover:bg-gray-100"
       >
         <Avatar avatarUrl={avatarUrl} username={username} size={28} />
-        <span className={`inline-block ${open ? 'rotate-180' : 'rotate-0'}`} aria-hidden="true">
+        <span className={`inline-block ${open ? 'rotate-0' : 'rotate-180'}`} aria-hidden="true">
           <Image src={ArrowIcon} alt="" width={18} height={18} />
         </span>
       </button>

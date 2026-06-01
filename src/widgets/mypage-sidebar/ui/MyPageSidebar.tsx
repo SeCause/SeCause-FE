@@ -7,6 +7,7 @@ import AccountIcon from '@/icons/icon_account.svg';
 import RepositoryIcon from '@/icons/icon_repository.svg';
 import SidebarIcon from '@/icons/icon_sidebar.svg';
 import SwitchIcon from '@/icons/icon_switch.svg';
+import { cn } from '@/shared/lib/cn';
 import Dropdown from '@/shared/ui/Dropdown';
 
 export type MyPageTab = 'repositories' | 'account';
@@ -32,9 +33,10 @@ export default function MyPageSidebar({ activeTab, onTabChange }: Props) {
 
   return (
     <aside
-      className={`flex shrink-0 flex-col overflow-hidden border-r border-gray-200 bg-white transition-[width] duration-200 ease-in-out ${
-        isOpen ? 'w-64' : 'w-14 items-center'
-      }`}
+      className={cn(
+        'flex shrink-0 flex-col overflow-hidden border-r border-gray-200 bg-white transition-[width] duration-200 ease-in-out',
+        isOpen ? 'w-64' : 'w-14 items-center',
+      )}
     >
       <div className="flex shrink-0 items-center justify-end border-b border-gray-200 px-3 py-3">
         <button
@@ -54,9 +56,10 @@ export default function MyPageSidebar({ activeTab, onTabChange }: Props) {
       </div>
 
       <div
-        className={`flex w-64 flex-col gap-4 px-3 py-4 transition-opacity duration-200 ease-in-out ${
-          isOpen ? 'opacity-100' : 'pointer-events-none invisible opacity-0'
-        }`}
+        className={cn(
+          'flex w-64 flex-col gap-4 px-3 py-4 transition-opacity duration-200 ease-in-out',
+          isOpen ? 'opacity-100' : 'pointer-events-none invisible opacity-0',
+        )}
       >
         <Dropdown
           options={ACCOUNT_OPTIONS}
@@ -72,9 +75,10 @@ export default function MyPageSidebar({ activeTab, onTabChange }: Props) {
               key={id}
               onClick={() => onTabChange(id)}
               aria-current={activeTab === id ? 'page' : undefined}
-              className={`text-label-lg flex items-center gap-2 rounded-lg px-3 py-2 text-left transition-colors ${
-                activeTab === id ? 'bg-blue/10 text-blue' : 'text-gray-700 hover:bg-gray-100'
-              }`}
+              className={cn(
+                'text-label-lg flex items-center gap-2 rounded-lg px-3 py-2 text-left transition-colors',
+                activeTab === id ? 'bg-blue/10 text-blue' : 'text-gray-700 hover:bg-gray-100',
+              )}
             >
               <Image
                 src={icon}
