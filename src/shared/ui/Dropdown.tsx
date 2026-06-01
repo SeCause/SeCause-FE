@@ -72,7 +72,7 @@ export default function Dropdown({
         ) : (
           <Image
             src={ArrowIcon}
-            className={`h-5 w-5 shrink-0 text-gray-700 ${open ? 'rotate-180' : ''}`}
+            className={`h-5 w-5 shrink-0 text-gray-700 ${open ? '' : 'rotate-180'}`}
             alt=""
             aria-hidden="true"
           />
