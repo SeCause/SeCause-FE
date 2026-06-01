@@ -89,6 +89,11 @@
   --color-blue: #487cff;
   --color-blue-dark: #3a6fe0;
 
+  /* severity */
+  --color-severity-critical: #fc4f4f;
+  --color-severity-high: #ffce3a;
+  --color-severity-medium: #4fa0fc;
+
   /* grayscale */
   --color-gray-50: #fafafa;
   --color-gray-100: #f5f5f5;

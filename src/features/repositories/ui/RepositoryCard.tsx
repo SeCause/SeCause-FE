@@ -53,7 +53,8 @@ export default function RepositoryCard({ repo, starred, onToggleStar }: Props) {
               <span className={cn(starred ? 'text-yellow-400' : 'text-gray-300')}>★</span>
             </button>
             <span className="text-label-lg text-blue max-w-full min-w-0 font-bold wrap-break-word sm:truncate">
-              {owner} / {repo.title}
+              {owner ? `${owner} / ` : ''}
+              {repo.title}
             </span>
           </div>
 
