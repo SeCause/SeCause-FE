@@ -45,19 +45,24 @@ export default function FaqSection() {
 
         <div className="flex flex-col gap-3">
           {FAQ_ITEMS.map((item, idx) => (
-            <button
+            <div
               key={item.question}
-              onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
               className="w-full overflow-hidden rounded-2xl bg-white/60 shadow-sm backdrop-blur-sm transition-shadow hover:shadow-md"
             >
-              <div className="flex items-center justify-between px-6 py-4">
+              <button
+                onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
+                className="flex w-full items-center justify-between px-6 py-4"
+                aria-expanded={openIdx === idx}
+              >
                 <span className="text-label-lg max-sm:text-body-sm text-left text-gray-900">
                   {item.question}
                 </span>
-                <span className={`icon-gray ml-4 shrink-0 ${openIdx === idx ? 'rotate-180' : ''}`}>
+                <span
+                  className={`icon-gray ml-4 shrink-0 transition-transform duration-300 ${openIdx === idx ? 'rotate-180' : ''}`}
+                >
                   <Image src={ArrowIcon} alt="" aria-hidden="true" width={18} height={18} />
                 </span>
-              </div>
+              </button>
               <div
                 className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${openIdx === idx ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
               >
@@ -67,7 +72,7 @@ export default function FaqSection() {
                   </div>
                 </div>
               </div>
-            </button>
+            </div>
           ))}
         </div>
       </div>

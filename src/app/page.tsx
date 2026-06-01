@@ -5,8 +5,8 @@ import HowItWorksSection from '@/widgets/landing/ui/HowItWorksSection';
 export default function Home() {
   return (
     <>
-      <div className="bg-mesh fixed inset-0 -z-10" />
-      <div className="bg-dot-grid fixed inset-0 -z-10" />
+      <div className="bg-mesh z-below fixed inset-0" />
+      <div className="bg-dot-grid z-below fixed inset-0" />
       <HeroSection />
       <HowItWorksSection />
       <FaqSection />

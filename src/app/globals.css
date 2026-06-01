@@ -63,7 +63,7 @@
     filter: brightness(0) saturate(100%) invert(48%) sepia(98%) saturate(2000%) hue-rotate(210deg);
   }
 
-.bg-mesh {
+  .bg-mesh {
     background:
       radial-gradient(at 15% 25%, #e0f2fe 0%, transparent 60%),
       radial-gradient(at 85% 5%, #dbeafe 0%, transparent 45%),
@@ -103,6 +103,7 @@
 
   --z-index-dropdown: 40;
   --z-index-header: 50;
+  --z-index-below: -10;
 
   /* drop shadows */
   --drop-shadow-sm: 0 1px 4px rgb(0 0 0 / 0.08);

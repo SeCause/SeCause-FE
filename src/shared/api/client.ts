@@ -1,7 +1,12 @@
 import ky, { type AfterResponseHook, type BeforeRequestHook } from 'ky';
 
 import { ENDPOINTS } from './endpoints';
-import { logApiRequest, logApiResponse, readResponseBodyForLog } from './logger';
+import {
+  isApiLoggingEnabled,
+  logApiRequest,
+  logApiResponse,
+  readResponseBodyForLog,
+} from './logger';
 import type { ApiResponse } from './types';
 
 const requestStartTimes = new WeakMap<Request, number>();
@@ -17,17 +22,21 @@ const logRequest: BeforeRequestHook = ({ request }) => {
   logApiRequest({ layer: 'client', method: request.method, url: request.url });
 };
 
-const logResponse: AfterResponseHook = async ({ request, response }) => {
+const logResponse: AfterResponseHook = ({ request, response }) => {
   const startedAt = requestStartTimes.get(request) ?? performance.now();
 
-  logApiResponse({
-    layer: 'client',
-    method: request.method,
-    url: request.url,
-    status: response.status,
-    durationMs: performance.now() - startedAt,
-    body: await readResponseBodyForLog(response),
-  });
+  if (isApiLoggingEnabled()) {
+    readResponseBodyForLog(response.clone()).then((body) => {
+      logApiResponse({
+        layer: 'client',
+        method: request.method,
+        url: request.url,
+        status: response.status,
+        durationMs: performance.now() - startedAt,
+        body,
+      });
+    });
+  }
 };
 
 const handleUnauthorized: AfterResponseHook = async ({ request, response, retryCount }) => {
