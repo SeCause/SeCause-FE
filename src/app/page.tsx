@@ -6,6 +6,7 @@ export default function Home() {
   return (
     <>
       <div className="bg-mesh fixed inset-0 -z-10" />
+      <div className="bg-dot-grid fixed inset-0 -z-10" />
       <HeroSection />
       <HowItWorksSection />
       <FaqSection />
