@@ -3,13 +3,13 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import type { UserProfile } from '@/features/auth/model/types';
+import type { GetUserResponse } from '@/features/auth/model/types';
 import CameraIcon from '@/icons/icon_camera.svg';
 import Button from '@/shared/ui/Button';
 import Input from '@/shared/ui/Input';
 
-export default function ProfileForm({ user }: { user: UserProfile }) {
-  const [name, setName] = useState(user.username);
+export default function ProfileForm({ user }: { user: GetUserResponse }) {
+  const [name, setName] = useState(user.name);
 
   return (
     <div className="flex flex-col gap-6 md:flex-row md:gap-10">
@@ -39,9 +39,7 @@ export default function ProfileForm({ user }: { user: UserProfile }) {
           <Input type="email" value={user.email} readOnly className="md:flex-1" />
         </div>
         <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-2">
-          <span className="text-body-lg shrink-0 text-gray-700 max-lg:self-start md:w-12">
-            이름
-          </span>
+          <span className="text-body-lg shrink-0 text-gray-700 md:w-12">이름</span>
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}

@@ -1,13 +1,43 @@
-import ky, { type AfterResponseHook } from 'ky';
+import ky, { type AfterResponseHook, type BeforeRequestHook } from 'ky';
 
 import { ENDPOINTS } from './endpoints';
+import {
+  isApiLoggingEnabled,
+  logApiRequest,
+  logApiResponse,
+  readResponseBodyForLog,
+} from './logger';
 import type { ApiResponse } from './types';
+
+const requestStartTimes = new WeakMap<Request, number>();
 
 const baseClient = ky.create({
   prefix: '/api',
   headers: { 'Content-Type': 'application/json' },
   credentials: 'include',
 });
+
+const logRequest: BeforeRequestHook = ({ request }) => {
+  requestStartTimes.set(request, performance.now());
+  logApiRequest({ layer: 'client', method: request.method, url: request.url });
+};
+
+const logResponse: AfterResponseHook = ({ request, response }) => {
+  const startedAt = requestStartTimes.get(request) ?? performance.now();
+
+  if (isApiLoggingEnabled()) {
+    readResponseBodyForLog(response.clone()).then((body) => {
+      logApiResponse({
+        layer: 'client',
+        method: request.method,
+        url: request.url,
+        status: response.status,
+        durationMs: performance.now() - startedAt,
+        body,
+      });
+    });
+  }
+};
 
 const handleUnauthorized: AfterResponseHook = async ({ request, response, retryCount }) => {
   if (response.status !== 401 || retryCount > 0) return;
@@ -21,7 +51,8 @@ const handleUnauthorized: AfterResponseHook = async ({ request, response, retryC
 
 const kyClient = baseClient.extend({
   hooks: {
-    afterResponse: [handleUnauthorized],
+    beforeRequest: [logRequest],
+    afterResponse: [logResponse, handleUnauthorized],
   },
 });
 

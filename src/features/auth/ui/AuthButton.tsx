@@ -14,9 +14,7 @@ interface Props {
 
 export default function AuthButton({ user, onLogout }: Props) {
   if (user) {
-    return (
-      <ProfileDropdown avatarUrl={user.avatarUrl} username={user.username} onLogout={onLogout} />
-    );
+    return <ProfileDropdown avatarUrl={user.avatarUrl} username={user.name} onLogout={onLogout} />;
   }
 
   return (
