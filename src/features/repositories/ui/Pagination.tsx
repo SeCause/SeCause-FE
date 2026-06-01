@@ -1,5 +1,7 @@
 'use client';
 
+import { cn } from '@/shared/lib/cn';
+
 interface Props {
   current: number;
   total: number;
@@ -22,7 +24,10 @@ export default function Pagination({ current, total, onChange }: Props) {
         onClick={() => hasPrev && onChange(current - 1)}
         disabled={!hasPrev}
         aria-label="이전 페이지"
-        className={`${NAV_BTN} ${hasPrev ? 'text-gray-600 hover:bg-gray-100' : 'cursor-default text-gray-300'}`}
+        className={cn(
+          NAV_BTN,
+          hasPrev ? 'text-gray-600 hover:bg-gray-100' : 'cursor-default text-gray-300',
+        )}
       >
         &lt;
       </button>
@@ -34,11 +39,10 @@ export default function Pagination({ current, total, onChange }: Props) {
             key={pageNum}
             type="button"
             onClick={() => onChange(pageNum)}
-            className={
-              isActive
-                ? `${NAV_BTN} bg-blue text-white`
-                : `${NAV_BTN} text-gray-600 hover:bg-gray-100`
-            }
+            className={cn(
+              NAV_BTN,
+              isActive ? 'bg-blue text-white' : 'text-gray-600 hover:bg-gray-100',
+            )}
             aria-current={isActive ? 'page' : undefined}
           >
             {pageNum}
@@ -51,7 +55,10 @@ export default function Pagination({ current, total, onChange }: Props) {
         onClick={() => hasNext && onChange(current + 1)}
         disabled={!hasNext}
         aria-label="다음 페이지"
-        className={`${NAV_BTN} ${hasNext ? 'text-gray-600 hover:bg-gray-100' : 'cursor-default text-gray-300'}`}
+        className={cn(
+          NAV_BTN,
+          hasNext ? 'text-gray-600 hover:bg-gray-100' : 'cursor-default text-gray-300',
+        )}
       >
         &gt;
       </button>

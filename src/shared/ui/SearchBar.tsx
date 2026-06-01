@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
 import SearchIcon from '@/icons/icon_search.svg';
+import { cn } from '@/shared/lib/cn';
 import { useDebounce } from '@/shared/lib/useDebounce';
 
 interface Props {
@@ -40,7 +41,10 @@ export default function SearchBar({
   return (
     <div
       role="search"
-      className={`flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 ${containerClassName ?? ''}`}
+      className={cn(
+        'flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2',
+        containerClassName,
+      )}
     >
       <Image src={SearchIcon} className="h-4 w-4 shrink-0" alt="" aria-hidden="true" />
       <input

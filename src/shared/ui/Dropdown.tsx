@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useCallback, useId, useRef, useState } from 'react';
 
 import ArrowIcon from '@/icons/icon_arrow.svg';
+import { cn } from '@/shared/lib/cn';
 import { useClickOutside } from '@/shared/lib/useClickOutside';
 
 export interface DropdownOption {
@@ -46,14 +47,17 @@ export default function Dropdown({
   const selected = options.find((o) => o.value === value);
 
   return (
-    <div ref={containerRef} className={`relative ${fullWidth ? 'w-full' : 'w-fit'}`}>
+    <div ref={containerRef} className={cn('relative', fullWidth ? 'w-full' : 'w-fit')}>
       <button
         onClick={() => setOpen((o) => !o)}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={listboxId}
         aria-labelledby={ariaLabelledby}
-        className={`text-body-md flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2.5 ${fullWidth ? 'w-full' : ''}`}
+        className={cn(
+          'text-body-md flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2.5',
+          fullWidth && 'w-full',
+        )}
       >
         {leadingIcon && (
           <span className="shrink-0 text-gray-700" aria-hidden="true">
@@ -61,7 +65,10 @@ export default function Dropdown({
           </span>
         )}
         <span
-          className={`flex-1 text-left font-medium ${selected ? 'text-gray-900' : 'text-gray-500'}`}
+          className={cn(
+            'flex-1 text-left font-medium',
+            selected ? 'text-gray-900' : 'text-gray-500',
+          )}
         >
           {selected ? selected.label : placeholder}
         </span>
@@ -72,7 +79,7 @@ export default function Dropdown({
         ) : (
           <Image
             src={ArrowIcon}
-            className={`h-5 w-5 shrink-0 text-gray-700 ${open ? '' : 'rotate-180'}`}
+            className={cn('h-5 w-5 shrink-0 text-gray-700', !open && 'rotate-180')}
             alt=""
             aria-hidden="true"
           />
@@ -95,9 +102,10 @@ export default function Dropdown({
                   onChange(option.value);
                   setOpen(false);
                 }}
-                className={`text-body-md flex w-full items-center gap-2 px-3 py-2.5 text-left font-medium transition-colors hover:bg-gray-100 ${
-                  value === option.value ? 'text-blue' : 'text-gray-900'
-                }`}
+                className={cn(
+                  'text-body-md flex w-full items-center gap-2 px-3 py-2.5 text-left font-medium transition-colors hover:bg-gray-100',
+                  value === option.value ? 'text-blue' : 'text-gray-900',
+                )}
               >
                 {leadingIcon && (
                   <span className="shrink-0 text-gray-700" aria-hidden="true">

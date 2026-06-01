@@ -1,3 +1,4 @@
+import { cn } from '@/shared/lib/cn';
 import { formatAnalysisDate } from '@/shared/lib/formatDate';
 
 import type { Repository } from '../model/types';
@@ -49,7 +50,7 @@ export default function RepositoryCard({ repo, starred, onToggleStar }: Props) {
               aria-pressed={starred}
               className="flex h-5 w-5 shrink-0 items-center justify-center text-lg leading-none transition-transform hover:scale-110"
             >
-              <span className={starred ? 'text-yellow-400' : 'text-gray-300'}>★</span>
+              <span className={cn(starred ? 'text-yellow-400' : 'text-gray-300')}>★</span>
             </button>
             <span className="text-label-lg text-blue max-w-full min-w-0 font-bold wrap-break-word sm:truncate">
               {owner} / {repo.title}
@@ -67,9 +68,10 @@ export default function RepositoryCard({ repo, starred, onToggleStar }: Props) {
 
         {status && (
           <span
-            className={`text-label-md shrink-0 self-start whitespace-nowrap sm:pt-1 ${
-              STATUS_STYLE[status] ?? 'text-gray-500'
-            }`}
+            className={cn(
+              'text-label-md shrink-0 self-start whitespace-nowrap sm:pt-1',
+              STATUS_STYLE[status] ?? 'text-gray-500',
+            )}
           >
             {STATUS_LABEL[status] ?? status}
           </span>
