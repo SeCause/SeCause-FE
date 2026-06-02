@@ -16,7 +16,7 @@ export default function Header() {
   const pathname = usePathname();
   const isHome = pathname === ROUTES.home;
   const isAuthPage = pathname.startsWith(ROUTES.login);
-  const { data: user, isLoading } = useUser({ enabled: !isAuthPage });
+  const { data: user } = useUser({ enabled: !isAuthPage });
   const { mutate: logout } = useLogout();
 
   const hamburgerRef = useRef<HTMLButtonElement>(null);
@@ -68,9 +68,7 @@ export default function Header() {
         </Link>
 
         <div className="flex justify-end">
-          {!isLoading && (!isAuthPage || user) && (
-            <AuthButton user={user ?? null} onLogout={() => logout()} />
-          )}
+          {!isAuthPage && <AuthButton user={user ?? null} onLogout={() => logout()} />}
         </div>
       </header>
 
