@@ -58,7 +58,7 @@ export default function FaqSection() {
                   {item.question}
                 </span>
                 <span
-                  className={`icon-gray ml-4 shrink-0 transition-transform duration-300 ${openIdx === idx ? 'rotate-180' : ''}`}
+                  className={`icon-gray ml-4 shrink-0 ${openIdx === idx ? 'rotate-0' : 'rotate-180'}`}
                 >
                   <Image src={ArrowIcon} alt="" aria-hidden="true" width={18} height={18} />
                 </span>
