@@ -1,5 +1,7 @@
 import '@/app/globals.css';
 
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 
 import { Header } from '@/widgets/header';
@@ -33,6 +35,8 @@ export default function RootLayout({
           <Header />
           <main className="flex flex-1 flex-col">{children}</main>
         </Providers>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
