@@ -12,7 +12,7 @@ export default function HowItWorksSection() {
   return (
     <section
       id={SECTION_IDS.howItWorks}
-      className="flex h-[calc(100dvh-3.5rem)] items-center px-6 md:px-20"
+      className="scroll-mt-header flex h-[calc(100dvh-var(--spacing-header))] items-center px-6 md:px-20"
     >
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
         <h2 className="text-heading-lg text-center">How it works</h2>

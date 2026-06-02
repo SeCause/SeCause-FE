@@ -29,7 +29,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="z-header sticky top-0 grid h-14 grid-cols-[1fr_auto_1fr] items-center border-b border-gray-200 bg-white/60 px-4 backdrop-blur-xl md:flex md:justify-between md:px-10">
+      <header className="z-header h-header sticky top-0 grid grid-cols-[1fr_auto_1fr] items-center border-b border-gray-200 bg-white/60 px-4 backdrop-blur-xl md:flex md:justify-between md:px-10">
         <div className="flex h-full items-center gap-20">
           {isHome && (
             <button
@@ -79,7 +79,7 @@ export default function Header() {
           ref={menuRef}
           id="mobile-nav"
           aria-hidden={!isMobileMenuOpen}
-          className={`z-header fixed top-14 right-0 left-0 overflow-hidden border-gray-200 bg-white transition-[max-height] duration-300 ease-in-out md:hidden ${
+          className={`z-header top-header fixed right-0 left-0 overflow-hidden border-gray-200 bg-white transition-[max-height] duration-300 ease-in-out md:hidden ${
             isMobileMenuOpen ? 'max-h-60 border-b' : 'max-h-0'
           }`}
         >

@@ -38,7 +38,7 @@ export default function FaqSection() {
   return (
     <section
       id={SECTION_IDS.faq}
-      className="flex h-[calc(100dvh-3.5rem)] items-center px-6 md:px-20"
+      className="scroll-mt-header flex h-[calc(100dvh-var(--spacing-header))] items-center px-6 md:px-20"
     >
       <div className="mx-auto w-full max-w-3xl">
         <h2 className="text-heading-lg mb-10 text-center">Frequently asked questions</h2>

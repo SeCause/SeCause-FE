@@ -34,7 +34,7 @@ export default function MyPageSidebar({ activeTab, onTabChange }: Props) {
   return (
     <aside
       className={cn(
-        'flex shrink-0 flex-col overflow-hidden border-r border-gray-200 bg-white transition-[width] duration-200 ease-in-out',
+        'top-header sticky flex h-[calc(100dvh-var(--spacing-header))] shrink-0 flex-col overflow-hidden border-r border-gray-200 bg-white transition-[width] duration-200 ease-in-out',
         isOpen ? 'w-64' : 'w-14 items-center',
       )}
     >

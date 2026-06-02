@@ -110,6 +110,8 @@
   --z-index-header: 50;
   --z-index-below: -10;
 
+  --spacing-header: 3.5rem;
+
   /* drop shadows */
   --drop-shadow-sm: 0 1px 4px rgb(0 0 0 / 0.08);
   --drop-shadow-md: 0 4px 12px rgb(0 0 0 / 0.1);
