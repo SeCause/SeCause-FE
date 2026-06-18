@@ -14,14 +14,14 @@ export default function OverviewTab({ dashboard }: Props) {
     dashboard.severityBreakdown.find((item) => item.severity === 'CRITICAL')?.count ?? 0;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-5">
       <CodeDetailsCard
         codeDetails={dashboard.codeDetails}
         lastAnalysisAt={dashboard.analysis.completedAt}
       />
 
-      <div className="mt-4 flex flex-col gap-1">
-        <h2 className="text-heading-md text-gray-900">Project Dashboard</h2>
+      <div className="mt-4 flex flex-col gap-2">
+        <h2 className="text-heading-base text-gray-900">Project Dashboard</h2>
         <p className="text-body-md text-gray-600">
           레포지토리의 보안 분석 결과와 위험도 분포를 확인할 수 있습니다.
         </p>

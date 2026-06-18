@@ -14,9 +14,9 @@ export default function RepositoryDashboardHeader({ owner, name, githubUrl }: Pr
       href={githubUrl}
       target="_blank"
       rel="noreferrer"
-      className="text-label-lg text-blue flex w-fit items-center gap-2 font-bold hover:underline"
+      className="text-heading-base text-blue flex w-fit items-center gap-2 hover:underline"
     >
-      <Image src={FolderIcon} alt="" aria-hidden="true" width={18} height={18} />
+      <Image src={FolderIcon} alt="" aria-hidden="true" width={24} height={24} />
       {owner} / {name}
     </a>
   );
