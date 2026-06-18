@@ -11,3 +11,10 @@ export const SEVERITY_TAG_STYLE: Record<string, string> = {
   MEDIUM: 'bg-severity-medium/10 text-severity-medium',
   LOW: 'bg-severity-low/20 text-gray-600',
 };
+
+export const SEVERITY_COLOR: Record<string, string> = {
+  CRITICAL: 'var(--color-severity-critical)',
+  HIGH: 'var(--color-severity-high)',
+  MEDIUM: 'var(--color-severity-medium)',
+  LOW: 'var(--color-severity-low)',
+};
