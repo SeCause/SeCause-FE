@@ -3,25 +3,41 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import { MOCK_ACCOUNTS, MOCK_REPOS } from '@/features/analysis/model/mocks';
-import type { Repo } from '@/features/analysis/model/types';
+import {
+  useAnalysisRepositories,
+  useGithubAccounts,
+} from '@/features/analysis/hooks/useAnalysisApi';
+import type { AnalysisRepository } from '@/features/analysis/model/types';
 import Dropdown from '@/shared/ui/Dropdown';
 import SearchBar from '@/shared/ui/SearchBar';
 
 import RepoIcon from './RepoIcon';
 
-const ACCOUNT_OPTIONS = MOCK_ACCOUNTS.map((a) => ({ value: a, label: a }));
-
 interface Props {
-  value: Repo | null;
-  onChange: (repo: Repo) => void;
+  value: AnalysisRepository | null;
+  onChange: (repo: AnalysisRepository) => void;
 }
 
 export default function RepoStep({ value: selectedRepo, onChange }: Props) {
   const [search, setSearch] = useState('');
-  const [selectedAccount, setSelectedAccount] = useState(MOCK_ACCOUNTS[0]);
+  const [selectedAccount, setSelectedAccount] = useState<string | null>(null);
 
-  const filtered = MOCK_REPOS.filter((r) => r.name.toLowerCase().includes(search.toLowerCase()));
+  const { data: accounts = [] } = useGithubAccounts();
+  const activeAccount = selectedAccount ?? accounts[0]?.name ?? null;
+  const { data: repositories = [], isLoading: isReposLoading } =
+    useAnalysisRepositories(activeAccount);
+
+  const accountOptions = accounts.map((account) => ({
+    value: account.name,
+    label: account.type === 'ORGANIZATION' ? `${account.name} (Organization)` : account.name,
+  }));
+
+  const filtered = repositories.filter((r) => r.name.toLowerCase().includes(search.toLowerCase()));
+
+  const handleAccountChange = (accountName: string) => {
+    setSelectedAccount(accountName);
+    setSearch('');
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -30,9 +46,9 @@ export default function RepoStep({ value: selectedRepo, onChange }: Props) {
           Select Github Account
         </p>
         <Dropdown
-          options={ACCOUNT_OPTIONS}
-          value={selectedAccount}
-          onChange={setSelectedAccount}
+          options={accountOptions}
+          value={activeAccount}
+          onChange={handleAccountChange}
           aria-labelledby="account-label"
           leadingIcon={
             <Image
@@ -62,29 +78,40 @@ export default function RepoStep({ value: selectedRepo, onChange }: Props) {
           aria-atomic="true"
           className="text-caption self-end pr-3.5 text-gray-700"
         >
-          {filtered.length} results
+          {!isReposLoading && `${filtered.length} results`}
         </p>
 
         <ul
           aria-labelledby="repo-search-label"
           className="scrollbar-custom-gray flex max-h-64 flex-col gap-2 overflow-y-auto px-3.5"
         >
-          {filtered.map((repo) => (
-            <li key={repo.id}>
-              <button
-                onClick={() => onChange(repo)}
-                aria-pressed={selectedRepo?.id === repo.id}
-                className={`text-body-md flex w-full items-center gap-3 rounded-lg border bg-white px-4 py-3 text-left font-medium transition-colors ${
-                  selectedRepo?.id === repo.id
-                    ? 'border-blue bg-blue/5 text-blue font-semibold'
-                    : 'border-gray-300 text-gray-900 hover:bg-gray-100'
-                }`}
-              >
-                <RepoIcon name={repo.name} />
-                {repo.name}
-              </button>
+          {isReposLoading ? (
+            <li className="flex justify-center py-6">
+              <span
+                aria-label="레포지토리 불러오는 중"
+                className="block h-6 w-6 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600"
+              />
             </li>
-          ))}
+          ) : (
+            filtered.map((repo) => (
+              <li key={`${repo.owner}/${repo.name}`}>
+                <button
+                  onClick={() => onChange(repo)}
+                  aria-pressed={
+                    selectedRepo?.owner === repo.owner && selectedRepo?.name === repo.name
+                  }
+                  className={`text-body-md flex w-full items-center gap-3 rounded-lg border bg-white px-4 py-3 text-left font-medium transition-colors ${
+                    selectedRepo?.owner === repo.owner && selectedRepo?.name === repo.name
+                      ? 'border-blue bg-blue/5 text-blue font-semibold'
+                      : 'border-gray-300 text-gray-900 hover:bg-gray-100'
+                  }`}
+                >
+                  <RepoIcon name={repo.name} />
+                  {repo.name}
+                </button>
+              </li>
+            ))
+          )}
         </ul>
       </div>
     </div>
