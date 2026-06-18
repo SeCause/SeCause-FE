@@ -20,6 +20,9 @@ interface Props {
   leadingIcon?: React.ReactNode;
   trailingIcon?: React.ReactNode;
   fullWidth?: boolean;
+  className?: string;
+  buttonClassName?: string;
+  listboxClassName?: string;
   'aria-labelledby'?: string;
 }
 
@@ -31,6 +34,9 @@ export default function Dropdown({
   leadingIcon,
   trailingIcon,
   fullWidth = false,
+  className,
+  buttonClassName,
+  listboxClassName,
   'aria-labelledby': ariaLabelledby,
 }: Props) {
   const id = useId();
@@ -47,7 +53,7 @@ export default function Dropdown({
   const selected = options.find((o) => o.value === value);
 
   return (
-    <div ref={containerRef} className={cn('relative', fullWidth ? 'w-full' : 'w-fit')}>
+    <div ref={containerRef} className={cn('relative', fullWidth ? 'w-full' : 'w-fit', className)}>
       <button
         onClick={() => setOpen((o) => !o)}
         aria-haspopup="listbox"
@@ -57,6 +63,7 @@ export default function Dropdown({
         className={cn(
           'text-body-md flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2.5',
           fullWidth && 'w-full',
+          buttonClassName,
         )}
       >
         {leadingIcon && (
@@ -91,7 +98,10 @@ export default function Dropdown({
           role="listbox"
           id={listboxId}
           aria-labelledby={ariaLabelledby}
-          className="scrollbar-custom-gray z-dropdown absolute mt-1 max-h-54 w-full min-w-max overflow-y-auto rounded-lg border border-gray-300 bg-white py-1 drop-shadow-sm"
+          className={cn(
+            'scrollbar-custom-gray z-dropdown absolute mt-1 max-h-54 w-full min-w-max overflow-y-auto rounded-lg border border-gray-300 bg-white py-1 drop-shadow-sm',
+            listboxClassName,
+          )}
         >
           {options.map((option) => (
             <li key={option.value} role="presentation">
