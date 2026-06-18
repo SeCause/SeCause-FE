@@ -20,7 +20,10 @@ export function useGithubAccounts() {
 export function useAnalysisRepositories(accountName: string | null) {
   return useQuery({
     queryKey: ['analysisRepositories', accountName],
-    queryFn: () => getAnalysisRepositories(accountName!),
+    queryFn: () => {
+      if (!accountName) throw new Error('Account name is required');
+      return getAnalysisRepositories(accountName);
+    },
     enabled: accountName !== null,
   });
 }
@@ -28,7 +31,12 @@ export function useAnalysisRepositories(accountName: string | null) {
 export function useGithubBranches(ownerName: string | null, repositoryName: string | null) {
   return useQuery({
     queryKey: ['githubBranches', ownerName, repositoryName],
-    queryFn: () => getGithubBranches(ownerName!, repositoryName!),
+    queryFn: () => {
+      if (!ownerName || !repositoryName) {
+        throw new Error('Owner name and repository name are required');
+      }
+      return getGithubBranches(ownerName, repositoryName);
+    },
     enabled: ownerName !== null && repositoryName !== null,
   });
 }
