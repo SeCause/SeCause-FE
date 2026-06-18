@@ -1,31 +1,78 @@
 export type AnalysisStatus = 'COMPLETED' | 'IN_PROGRESS' | 'FAILED' | 'PENDING';
 
-export interface RepositoryAnalysis {
-  analysisId: number;
-  analysisStatus: AnalysisStatus;
-  criticalCount: number;
-  highCount: number;
-  mediumCount: number;
-  lowCount: number;
-  totalIssues: number;
-  completedAt: string;
+export type IssueSeverity = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
+
+export interface RepositoryIssueCounts {
+  critical: number;
+  high: number;
+  medium: number;
+  low: number;
 }
 
 export interface Repository {
   repositoryId: number;
-  title: string;
-  githubLink: string;
+  owner: string;
+  name: string;
+  fullName: string;
   branch: string;
-  totalFiles: number;
-  createdAt: string;
-  analysis: RepositoryAnalysis | null;
+  fileCount: number;
+  lineCount: number;
+  languages: string[];
+  issueCounts: RepositoryIssueCounts;
+  analysisStatus: AnalysisStatus;
+  progressPercent: number;
+  analysisRequestedAt: string;
+  completedAt: string | null;
+}
+
+export interface RepositoryListParams {
+  accountName?: string;
+  keyword?: string;
 }
 
 export interface RepositoryListResult {
-  content: Repository[];
-  page: number;
-  size: number;
-  totalElements: number;
-  totalPages: number;
-  hasNext: boolean;
+  repositories: Repository[];
+}
+
+export interface RepositoryCodeDetails {
+  branch: string;
+  fileCount: number;
+  lineCount: number;
+  languages: string[];
+}
+
+export interface RepositoryDashboardAnalysis {
+  status: AnalysisStatus;
+  progressPercent: number;
+  requestedAt: string;
+  completedAt: string | null;
+  failureReason: string | null;
+}
+
+export interface RepositoryIssueTypeCount {
+  type: string;
+  severity: IssueSeverity;
+  count: number;
+}
+
+export interface RepositorySeverityCount {
+  severity: IssueSeverity;
+  count: number;
+  percentage: number;
+}
+
+export interface RepositoryDashboard {
+  repositoryId: number;
+  owner: string;
+  name: string;
+  fullName: string;
+  description: string | null;
+  githubUrl: string;
+  codeDetails: RepositoryCodeDetails;
+  analysis: RepositoryDashboardAnalysis;
+  summary: {
+    totalIssues: number;
+  };
+  issuesByType: RepositoryIssueTypeCount[];
+  severityBreakdown: RepositorySeverityCount[];
 }

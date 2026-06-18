@@ -3,11 +3,15 @@
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 
+import {
+  useDeleteRepository,
+  useRepositories,
+} from '@/features/repositories/hooks/useRepositoriesApi';
 import { ROUTES } from '@/shared/config/routes';
 import Button from '@/shared/ui/Button';
 import SearchBar from '@/shared/ui/SearchBar';
+import { useToast } from '@/shared/ui/Toast';
 
-import { MOCK_REPOSITORIES } from '../model/mocks';
 import Pagination from './Pagination';
 import RepositoryCard from './RepositoryCard';
 
@@ -15,14 +19,16 @@ const ITEMS_PER_PAGE = 5;
 
 export default function RepositoriesTab() {
   const router = useRouter();
+  const { showToast } = useToast();
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  const [starredIds, setStarredIds] = useState<Set<number>>(
-    () => new Set(MOCK_REPOSITORIES.map((r) => r.repositoryId)),
-  );
 
-  const filtered = MOCK_REPOSITORIES.filter((repo) =>
-    repo.title.toLowerCase().includes(search.toLowerCase()),
+  const { data, isLoading, isError } = useRepositories();
+  const { mutate: deleteRepository, isPending: isDeleting } = useDeleteRepository();
+
+  const repositories = data?.repositories ?? [];
+  const filtered = repositories.filter((repo) =>
+    repo.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
@@ -33,12 +39,10 @@ export default function RepositoriesTab() {
     setPage(1);
   }, []);
 
-  const handleToggleStar = (id: number) => {
-    setStarredIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
+  const handleDelete = (repositoryId: number) => {
+    deleteRepository(repositoryId, {
+      onSuccess: () => showToast('레포지토리가 삭제됐습니다.', 'success'),
+      onError: () => showToast('레포지토리 삭제 중 오류가 발생했습니다.'),
     });
   };
 
@@ -59,15 +63,21 @@ export default function RepositoriesTab() {
       />
 
       <div className="flex min-h-100 flex-col gap-2.5">
-        {paginated.length > 0 ? (
+        {isLoading ? (
+          <p className="text-body-md m-auto text-gray-500">불러오는 중...</p>
+        ) : isError ? (
+          <p className="text-body-md m-auto text-gray-500">레포지토리를 불러오지 못했습니다.</p>
+        ) : paginated.length > 0 ? (
           paginated.map((repo) => (
             <RepositoryCard
               key={repo.repositoryId}
               repo={repo}
-              starred={starredIds.has(repo.repositoryId)}
-              onToggleStar={handleToggleStar}
+              onDelete={handleDelete}
+              isDeleting={isDeleting}
             />
           ))
+        ) : repositories.length === 0 ? (
+          <p className="text-body-md m-auto text-gray-500">분석한 레포지토리가 없습니다.</p>
         ) : (
           <p className="text-body-md m-auto text-gray-500">검색 결과가 없습니다.</p>
         )}
