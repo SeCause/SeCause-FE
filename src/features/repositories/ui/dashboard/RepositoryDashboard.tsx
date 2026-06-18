@@ -4,8 +4,8 @@ import { useState } from 'react';
 
 import { useRepositoryDashboard } from '@/features/repositories/hooks/useRepositoriesApi';
 import type { RepositoryDetailTab } from '@/features/repositories/model/types';
+import IssuesTab from '@/features/repositories/ui/issues/IssuesTab';
 
-import IssuesTab from './IssuesTab';
 import OverviewTab from './OverviewTab';
 import RepositoryDashboardHeader from './RepositoryDashboardHeader';
 import RepositoryDetailSidebar from './RepositoryDetailSidebar';
