@@ -91,6 +91,7 @@ export interface RepositoryIssue {
 
 export interface RepositoryIssueListParams {
   severity?: IssueSeverity | 'ALL';
+  filePath?: string;
   page?: number;
   size?: number;
 }
@@ -102,4 +103,32 @@ export interface RepositoryIssueListResult {
   totalElements: number;
   totalPages: number;
   hasNext: boolean;
+}
+
+export interface RepositoryIssueFile {
+  filePath: string;
+  issueCount: number;
+}
+
+export interface SecurityReference {
+  securityReferenceId: number;
+  referenceType: string;
+  title: string;
+  referenceUrl: string;
+}
+
+export interface RepositoryIssueDetail {
+  analysisResultId: number;
+  vulnerabilityType: string;
+  severity: IssueSeverity;
+  filePath: string;
+  lineStart: number;
+  lineEnd: number;
+  codeSnippet: string;
+  description: string;
+  summary: string;
+  attackScenario: string;
+  fixCode: string;
+  fixSummary: string;
+  references: SecurityReference[];
 }

@@ -32,6 +32,19 @@
   }
 }
 
+@keyframes issueDetailDown {
+  from {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    max-height: 56rem;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @layer utilities {
   .scrollbar-hide {
     scrollbar-width: none;

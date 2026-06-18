@@ -1,7 +1,5 @@
 import type { RepositoryIssueTypeCount } from '@/features/repositories/model/types';
-import { cn } from '@/shared/lib/cn';
-
-import { SEVERITY_TAG_LABEL, SEVERITY_TAG_STYLE } from './severityTag';
+import SeverityBadge from '@/features/repositories/ui/SeverityBadge';
 
 interface Props {
   issuesByType: RepositoryIssueTypeCount[];
@@ -17,14 +15,7 @@ export default function IssuesByTypeCard({ issuesByType }: Props) {
         <ul className="flex flex-col gap-2">
           {issuesByType.map((item) => (
             <li key={item.type} className="flex items-center gap-3">
-              <span
-                className={cn(
-                  'text-label-sm shrink-0 rounded px-1.5 py-0.5 font-medium',
-                  SEVERITY_TAG_STYLE[item.severity] ?? 'bg-gray-100 text-gray-600',
-                )}
-              >
-                {SEVERITY_TAG_LABEL[item.severity] ?? item.severity}
-              </span>
+              <SeverityBadge severity={item.severity} className="text-label-sm px-2 py-0.5" />
               <span className="text-body-md flex-1 text-gray-900">{item.type}</span>
               <span className="text-label-sm rounded bg-gray-100 px-1.5 py-0.5 text-gray-700">
                 {item.count}

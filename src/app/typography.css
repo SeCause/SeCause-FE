@@ -14,6 +14,11 @@
   --text-heading-md--line-height: 130%;
   --text-heading-md--letter-spacing: -0.015em;
 
+  --text-heading-base: clamp(1.0625rem, 1.2vw + 0.125rem, 1.25rem);
+  --text-heading-base--font-weight: 700;
+  --text-heading-base--line-height: 130%;
+  --text-heading-base--letter-spacing: -0.01em;
+
   --text-heading-sm: clamp(1rem, 1vw + 0.125rem, 1.125rem);
   --text-heading-sm--font-weight: 600;
   --text-heading-sm--line-height: 135%;

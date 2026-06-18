@@ -6,9 +6,12 @@ import {
   deleteRepository,
   getRepositories,
   getRepositoryDashboard,
+  getRepositoryIssueDetail,
+  getRepositoryIssueFiles,
   getRepositoryIssues,
 } from '@/features/repositories/api/repositories';
 import type {
+  IssueSeverity,
   RepositoryIssueListParams,
   RepositoryListParams,
 } from '@/features/repositories/model/types';
@@ -17,6 +20,10 @@ const repositoriesKey = (params?: RepositoryListParams) => ['repositories', para
 const repositoryDashboardKey = (repositoryId: number) => ['repositories', repositoryId] as const;
 const repositoryIssuesKey = (repositoryId: number, params?: RepositoryIssueListParams) =>
   ['repositories', repositoryId, 'issues', params] as const;
+const repositoryIssueFilesKey = (repositoryId: number, severity?: IssueSeverity | 'ALL') =>
+  ['repositories', repositoryId, 'issue-files', severity] as const;
+const repositoryIssueDetailKey = (repositoryId: number, analysisResultId: number) =>
+  ['repositories', repositoryId, 'issues', analysisResultId] as const;
 
 export function useRepositories(params?: RepositoryListParams) {
   return useQuery({
@@ -47,9 +54,33 @@ export function useDeleteRepository() {
   });
 }
 
-export function useRepositoryIssues(repositoryId: number, params?: RepositoryIssueListParams) {
+export function useRepositoryIssues(
+  repositoryId: number,
+  params?: RepositoryIssueListParams,
+  { enabled = true }: { enabled?: boolean } = {},
+) {
   return useQuery({
     queryKey: repositoryIssuesKey(repositoryId, params),
     queryFn: () => getRepositoryIssues(repositoryId, params),
+    enabled,
+  });
+}
+
+export function useRepositoryIssueFiles(repositoryId: number, severity?: IssueSeverity | 'ALL') {
+  return useQuery({
+    queryKey: repositoryIssueFilesKey(repositoryId, severity),
+    queryFn: () => getRepositoryIssueFiles(repositoryId, severity),
+  });
+}
+
+export function useRepositoryIssueDetail(
+  repositoryId: number,
+  analysisResultId: number,
+  { enabled = true }: { enabled?: boolean } = {},
+) {
+  return useQuery({
+    queryKey: repositoryIssueDetailKey(repositoryId, analysisResultId),
+    queryFn: () => getRepositoryIssueDetail(repositoryId, analysisResultId),
+    enabled,
   });
 }

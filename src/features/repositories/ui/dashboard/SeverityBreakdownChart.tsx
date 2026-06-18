@@ -3,8 +3,7 @@
 import { Pie, PieChart } from 'recharts';
 
 import type { RepositorySeverityCount } from '@/features/repositories/model/types';
-
-import { SEVERITY_COLOR, SEVERITY_TAG_LABEL } from './severityTag';
+import { SEVERITY_COLOR, SEVERITY_TAG_LABEL } from '@/features/repositories/ui/severityTag';
 
 const CHART_SIZE = 144;
 
