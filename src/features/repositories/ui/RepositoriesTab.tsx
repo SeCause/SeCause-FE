@@ -32,7 +32,11 @@ export default function RepositoriesTab() {
   );
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
-  const paginated = filtered.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+  const currentPage = Math.min(Math.max(page, 1), totalPages || 1);
+  const paginated = filtered.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  );
 
   const handleSearch = useCallback((value: string) => {
     setSearch(value);
@@ -83,7 +87,7 @@ export default function RepositoriesTab() {
       </div>
 
       <div className="mt-4">
-        <Pagination current={page} total={totalPages} onChange={setPage} />
+        <Pagination current={currentPage} total={totalPages} onChange={setPage} />
       </div>
     </div>
   );

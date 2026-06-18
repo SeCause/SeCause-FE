@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import Button from '@/shared/ui/Button';
 
 interface Props {
@@ -23,12 +25,24 @@ export default function ConfirmDialog({
   onConfirm,
   onCancel,
 }: Props) {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !isConfirming) {
+        onCancel();
+      }
+    };
+    if (open) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [open, isConfirming, onCancel]);
+
   if (!open) return null;
 
   return (
     <div
       role="presentation"
-      onClick={onCancel}
+      onClick={isConfirming ? undefined : onCancel}
       className="z-modal fixed inset-0 flex items-center justify-center bg-black/40"
     >
       <div
