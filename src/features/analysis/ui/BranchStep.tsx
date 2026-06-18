@@ -3,9 +3,9 @@
 import Image from 'next/image';
 
 import { useGithubBranches } from '@/features/analysis/hooks/useAnalysisApi';
+import type { AnalysisRepository } from '@/features/analysis/model/types';
 import Dropdown from '@/shared/ui/Dropdown';
 
-import type { AnalysisRepository } from '../model/types';
 import RepoIcon from './RepoIcon';
 
 interface Props {

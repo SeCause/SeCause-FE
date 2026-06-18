@@ -1,0 +1,13 @@
+export const SEVERITY_TAG_LABEL: Record<string, string> = {
+  CRITICAL: '심각',
+  HIGH: '높음',
+  MEDIUM: '보통',
+  LOW: '낮음',
+};
+
+export const SEVERITY_TAG_STYLE: Record<string, string> = {
+  CRITICAL: 'bg-severity-critical/10 text-severity-critical',
+  HIGH: 'bg-severity-high/10 text-severity-high',
+  MEDIUM: 'bg-severity-medium/10 text-severity-medium',
+  LOW: 'bg-severity-low/20 text-gray-600',
+};
