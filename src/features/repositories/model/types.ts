@@ -1,5 +1,7 @@
 export type AnalysisStatus = 'COMPLETED' | 'IN_PROGRESS' | 'FAILED' | 'PENDING';
 
+export type RepositoryDetailTab = 'overview' | 'issues';
+
 export type IssueSeverity = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
 
 export interface RepositoryIssueCounts {
@@ -75,4 +77,29 @@ export interface RepositoryDashboard {
   };
   issuesByType: RepositoryIssueTypeCount[];
   severityBreakdown: RepositorySeverityCount[];
+}
+
+export interface RepositoryIssue {
+  analysisResultId: number;
+  vulnerabilityType: string;
+  severity: IssueSeverity;
+  filePath: string;
+  lineStart: number;
+  lineEnd: number;
+  summary: string;
+}
+
+export interface RepositoryIssueListParams {
+  severity?: IssueSeverity | 'ALL';
+  page?: number;
+  size?: number;
+}
+
+export interface RepositoryIssueListResult {
+  content: RepositoryIssue[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  hasNext: boolean;
 }

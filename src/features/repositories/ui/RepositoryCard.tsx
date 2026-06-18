@@ -1,14 +1,16 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import type { Repository } from '@/features/repositories/model/types';
 import TrashIcon from '@/icons/icon_trash.svg';
+import { ROUTES } from '@/shared/config/routes';
 import { cn } from '@/shared/lib/cn';
 import { formatAnalysisDate } from '@/shared/lib/formatDate';
 import ConfirmDialog from '@/shared/ui/ConfirmDialog';
 
-import type { Repository } from '../model/types';
 import SeverityBadges from './SeverityBadges';
 
 const STATUS_LABEL: Record<string, string> = {
@@ -32,8 +34,13 @@ interface Props {
 }
 
 export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
+  const router = useRouter();
   const status = repo.analysisStatus;
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+
+  const handleCardClick = () => {
+    router.push(ROUTES.repositoryDetail(repo.repositoryId));
+  };
 
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -46,7 +53,10 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
   };
 
   return (
-    <div className="flex cursor-pointer flex-col gap-3 rounded-xl border border-gray-200 px-4 py-3.5 shadow-sm hover:bg-gray-50 sm:px-5">
+    <div
+      onClick={handleCardClick}
+      className="flex cursor-pointer flex-col gap-3 rounded-xl border border-gray-200 px-4 py-3.5 shadow-sm hover:bg-gray-50 sm:px-5"
+    >
       <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3 lg:items-center">
         <div className="flex min-w-0 gap-x-3 gap-y-2 max-lg:flex-col lg:items-center">
           <div className="flex items-center gap-2">

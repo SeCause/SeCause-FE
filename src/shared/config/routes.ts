@@ -3,6 +3,7 @@ export const ROUTES = {
   login: '/login',
   mypage: '/mypage',
   analysis: '/analysis',
+  repositoryDetail: (repositoryId: number) => `/mypage/repositories/${repositoryId}`,
 } as const;
 
 export const SECTION_IDS = {
