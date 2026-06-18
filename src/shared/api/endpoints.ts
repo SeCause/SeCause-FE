@@ -24,8 +24,10 @@ export const ENDPOINTS = {
   },
 
   analysis: {
-    availableRepositories: 'analysis/request',
-    request: (repositoryId: number) => `analysis/request/${repositoryId}`,
-    status: (repositoryId: number) => `analysis/request/${repositoryId}/status`,
+    accounts: 'analysis/request/accounts',
+    repositories: 'analysis/request/repositories',
+    branches: (ownerName: string, repositoryName: string) =>
+      `analysis/request/repositories/${ownerName}/${repositoryName}/branches`,
+    request: 'analysis/request',
   },
 } as const;

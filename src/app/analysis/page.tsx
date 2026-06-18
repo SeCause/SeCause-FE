@@ -1,12 +1,15 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { MOCK_BRANCHES } from '@/features/analysis/model/mocks';
-import type { AnalysisStep, Repo } from '@/features/analysis/model/types';
+import { useCreateAnalysisRequest } from '@/features/analysis/hooks/useAnalysisApi';
+import type { AnalysisRepository, AnalysisStep } from '@/features/analysis/model/types';
 import AnalysisSidebar from '@/features/analysis/ui/AnalysisSidebar';
 import BranchStep from '@/features/analysis/ui/BranchStep';
 import RepoStep from '@/features/analysis/ui/RepoStep';
+import { ROUTES } from '@/shared/config/routes';
+import { useToast } from '@/shared/ui/Toast';
 
 const HEADINGS: Record<AnalysisStep, { title: string; subtitle: string }> = {
   repo: {
@@ -20,18 +23,40 @@ const HEADINGS: Record<AnalysisStep, { title: string; subtitle: string }> = {
 };
 
 export default function AnalysisPage() {
+  const router = useRouter();
+  const { showToast } = useToast();
   const [step, setStep] = useState<AnalysisStep>('repo');
-  const [selectedRepo, setSelectedRepo] = useState<Repo | null>(null);
+  const [selectedRepo, setSelectedRepo] = useState<AnalysisRepository | null>(null);
   const [selectedBranch, setSelectedBranch] = useState<string | null>(null);
+  const { mutate: createAnalysisRequest, isPending } = useCreateAnalysisRequest();
 
-  const handleRepoSelect = (repo: Repo) => {
+  const handleRepoSelect = (repo: AnalysisRepository) => {
     setSelectedRepo(repo);
     setSelectedBranch(null);
   };
 
   const handleGoToBranch = () => {
-    setSelectedBranch(MOCK_BRANCHES[0]);
+    if (!selectedRepo) return;
+    setSelectedBranch(selectedRepo.defaultBranch);
     setStep('branch');
+  };
+
+  const handleRunAnalysis = () => {
+    if (!selectedRepo || !selectedBranch) return;
+    createAnalysisRequest(
+      {
+        owner: selectedRepo.owner,
+        repositoryName: selectedRepo.name,
+        branch: selectedBranch,
+      },
+      {
+        onSuccess: () => {
+          showToast('분석 요청이 완료됐습니다.', 'success');
+          router.push(ROUTES.mypage);
+        },
+        onError: () => showToast('분석 요청 중 오류가 발생했습니다.'),
+      },
+    );
   };
 
   return (
@@ -67,9 +92,13 @@ export default function AnalysisPage() {
           </div>
 
           <AnalysisSidebar
-            label={step === 'repo' ? 'Select Repository' : 'Run Analysis'}
-            disabled={step === 'repo' ? selectedRepo === null : selectedBranch === null}
-            onClick={step === 'repo' ? handleGoToBranch : () => {}}
+            label={
+              step === 'repo' ? 'Select Repository' : isPending ? 'Requesting...' : 'Run Analysis'
+            }
+            disabled={
+              step === 'repo' ? selectedRepo === null : selectedBranch === null || isPending
+            }
+            onClick={step === 'repo' ? handleGoToBranch : handleRunAnalysis}
           />
         </div>
       </div>

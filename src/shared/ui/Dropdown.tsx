@@ -91,7 +91,7 @@ export default function Dropdown({
           role="listbox"
           id={listboxId}
           aria-labelledby={ariaLabelledby}
-          className="z-dropdown absolute mt-1 w-full min-w-max rounded-lg border border-gray-300 bg-white py-1 drop-shadow-sm"
+          className="scrollbar-custom-gray z-dropdown absolute mt-1 max-h-54 w-full min-w-max overflow-y-auto rounded-lg border border-gray-300 bg-white py-1 drop-shadow-sm"
         >
           {options.map((option) => (
             <li key={option.value} role="presentation">

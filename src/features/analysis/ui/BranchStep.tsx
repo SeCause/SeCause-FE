@@ -2,21 +2,22 @@
 
 import Image from 'next/image';
 
+import { useGithubBranches } from '@/features/analysis/hooks/useAnalysisApi';
 import Dropdown from '@/shared/ui/Dropdown';
 
-import { MOCK_BRANCHES } from '../model/mocks';
-import type { Repo } from '../model/types';
+import type { AnalysisRepository } from '../model/types';
 import RepoIcon from './RepoIcon';
 
-const BRANCH_OPTIONS = MOCK_BRANCHES.map((b) => ({ value: b, label: b }));
-
 interface Props {
-  repo: Repo;
+  repo: AnalysisRepository;
   value: string | null;
   onChange: (branch: string) => void;
 }
 
 export default function BranchStep({ repo, value, onChange }: Props) {
+  const { data: branches = [], isLoading } = useGithubBranches(repo.owner, repo.name);
+  const branchOptions = branches.map((b) => ({ value: b.name, label: b.name }));
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
@@ -35,10 +36,10 @@ export default function BranchStep({ repo, value, onChange }: Props) {
           Select branch
         </p>
         <Dropdown
-          options={BRANCH_OPTIONS}
+          options={branchOptions}
           value={value}
           onChange={onChange}
-          placeholder="브랜치를 선택해주세요"
+          placeholder={isLoading ? '불러오는 중...' : '브랜치를 선택해주세요'}
           aria-labelledby="branch-label"
           leadingIcon={
             <Image
