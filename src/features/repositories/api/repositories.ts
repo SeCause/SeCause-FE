@@ -1,5 +1,7 @@
 import type {
   RepositoryDashboard,
+  RepositoryIssueListParams,
+  RepositoryIssueListResult,
   RepositoryListParams,
   RepositoryListResult,
 } from '@/features/repositories/model/types';
@@ -24,4 +26,14 @@ export async function getRepositoryDashboard(repositoryId: number): Promise<Repo
 
 export async function deleteRepository(repositoryId: number): Promise<void> {
   await apiClient.delete(ENDPOINTS.repositories.delete(repositoryId));
+}
+
+export async function getRepositoryIssues(
+  repositoryId: number,
+  params?: RepositoryIssueListParams,
+): Promise<RepositoryIssueListResult> {
+  const res = await apiClient.get<RepositoryIssueListResult>(ENDPOINTS.issues.list(repositoryId), {
+    searchParams: params as Record<string, string>,
+  });
+  return res.result;
 }

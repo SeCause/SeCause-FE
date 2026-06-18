@@ -6,11 +6,17 @@ import {
   deleteRepository,
   getRepositories,
   getRepositoryDashboard,
+  getRepositoryIssues,
 } from '@/features/repositories/api/repositories';
-import type { RepositoryListParams } from '@/features/repositories/model/types';
+import type {
+  RepositoryIssueListParams,
+  RepositoryListParams,
+} from '@/features/repositories/model/types';
 
 const repositoriesKey = (params?: RepositoryListParams) => ['repositories', params] as const;
 const repositoryDashboardKey = (repositoryId: number) => ['repositories', repositoryId] as const;
+const repositoryIssuesKey = (repositoryId: number, params?: RepositoryIssueListParams) =>
+  ['repositories', repositoryId, 'issues', params] as const;
 
 export function useRepositories(params?: RepositoryListParams) {
   return useQuery({
@@ -38,5 +44,12 @@ export function useDeleteRepository() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['repositories'] });
     },
+  });
+}
+
+export function useRepositoryIssues(repositoryId: number, params?: RepositoryIssueListParams) {
+  return useQuery({
+    queryKey: repositoryIssuesKey(repositoryId, params),
+    queryFn: () => getRepositoryIssues(repositoryId, params),
   });
 }
