@@ -41,7 +41,6 @@ export default function RepositoriesTab() {
 
   const handleDelete = (repositoryId: number) => {
     deleteRepository(repositoryId, {
-      onSuccess: () => showToast('레포지토리가 삭제됐습니다.', 'success'),
       onError: () => showToast('레포지토리 삭제 중 오류가 발생했습니다.'),
     });
   };
