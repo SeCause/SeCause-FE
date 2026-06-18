@@ -108,6 +108,7 @@
 
   --z-index-dropdown: 40;
   --z-index-header: 50;
+  --z-index-modal: 60;
   --z-index-below: -10;
 
   --spacing-header: 3.5rem;
