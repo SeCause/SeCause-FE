@@ -10,18 +10,42 @@ const KST_FORMATTER = new Intl.DateTimeFormat('ko-KR', {
   hour12: false,
 });
 
-export function formatAnalysisDate(isoString: string): string {
-  // 백엔드가 타임존 정보 없이 UTC 기준 시각을 내려주므로, UTC로 명시한 뒤 KST로 변환한다.
+function parseUTCDate(isoString: string): Date | null {
   const utcString = HAS_TIMEZONE.test(isoString) ? isoString : `${isoString}Z`;
   const date = new Date(utcString);
-  if (isNaN(date.getTime())) {
-    return '-';
-  }
 
+  return isNaN(date.getTime()) ? null : date;
+}
+
+function formatKSTDate(date: Date): string {
   const parts = KST_FORMATTER.formatToParts(date).reduce<Record<string, string>>(
     (acc, part) => ({ ...acc, [part.type]: part.value }),
     {},
   );
 
   return `${parts.year}.${parts.month}.${parts.day}, ${parts.hour}:${parts.minute}`;
+}
+
+export function formatAnalysisDate(isoString: string): string {
+  const date = parseUTCDate(isoString);
+  return date ? formatKSTDate(date) : '-';
+}
+
+export function formatRelativeTime(isoString: string): string {
+  const date = parseUTCDate(isoString);
+  if (!date) return '-';
+
+  const diffSeconds = Math.max(0, Math.floor((Date.now() - date.getTime()) / 1000));
+  if (diffSeconds < 60) return '방금 전';
+
+  const diffMinutes = Math.floor(diffSeconds / 60);
+  if (diffMinutes < 60) return `${diffMinutes}분 전`;
+
+  const diffHours = Math.floor(diffMinutes / 60);
+  if (diffHours < 24) return `${diffHours}시간 전`;
+
+  const diffDays = Math.floor(diffHours / 24);
+  if (diffDays < 30) return `${diffDays}일 전`;
+
+  return formatKSTDate(date);
 }
