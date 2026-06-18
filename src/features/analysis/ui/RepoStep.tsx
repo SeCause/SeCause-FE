@@ -20,7 +20,9 @@ interface Props {
 
 export default function RepoStep({ value: selectedRepo, onChange }: Props) {
   const [search, setSearch] = useState('');
-  const [selectedAccount, setSelectedAccount] = useState<string | null>(null);
+  const [selectedAccount, setSelectedAccount] = useState<string | null>(
+    () => selectedRepo?.owner ?? null,
+  );
 
   const { data: accounts = [] } = useGithubAccounts();
   const activeAccount = selectedAccount ?? accounts[0]?.name ?? null;
