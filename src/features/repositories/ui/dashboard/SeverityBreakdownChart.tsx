@@ -1,6 +1,6 @@
 'use client';
 
-import { Cell, Pie, PieChart } from 'recharts';
+import { Pie, PieChart } from 'recharts';
 
 import type { RepositorySeverityCount } from '@/features/repositories/model/types';
 
@@ -14,6 +14,10 @@ interface Props {
 
 export default function SeverityBreakdownChart({ breakdown }: Props) {
   const total = breakdown.reduce((sum, item) => sum + item.count, 0);
+  const chartData = breakdown.map((item) => ({
+    ...item,
+    fill: SEVERITY_COLOR[item.severity] ?? '#d0d0d0',
+  }));
 
   return (
     <div className="rounded-xl border border-gray-200 p-4">
@@ -22,7 +26,7 @@ export default function SeverityBreakdownChart({ breakdown }: Props) {
         <div className="relative h-36 w-36 shrink-0">
           <PieChart width={CHART_SIZE} height={CHART_SIZE}>
             <Pie
-              data={breakdown}
+              data={chartData}
               dataKey="count"
               nameKey="severity"
               innerRadius="70%"
@@ -30,11 +34,7 @@ export default function SeverityBreakdownChart({ breakdown }: Props) {
               paddingAngle={breakdown.length > 1 ? 2 : 0}
               stroke="none"
               isAnimationActive={false}
-            >
-              {breakdown.map((item) => (
-                <Cell key={item.severity} fill={SEVERITY_COLOR[item.severity] ?? '#d0d0d0'} />
-              ))}
-            </Pie>
+            />
           </PieChart>
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
             <span className="text-heading-md text-gray-900">{total}</span>
