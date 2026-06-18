@@ -93,6 +93,7 @@
   --color-severity-critical: #fc4f4f;
   --color-severity-high: #ffce3a;
   --color-severity-medium: #4fa0fc;
+  --color-severity-low: #c2c8d0;
 
   /* grayscale */
   --color-gray-50: #fafafa;
