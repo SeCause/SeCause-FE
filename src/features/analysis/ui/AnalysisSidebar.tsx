@@ -1,3 +1,5 @@
+import { cn } from '@/shared/lib/cn';
+
 const INFO_BULLETS = [
   '본 프로젝트는 SemGrep, CodeQL, Vector DB를 사용하여 포괄적으로 검사합니다.',
   '분석 결과는 실시간으로 확인 가능하며, 완료 후 상세 보고서가 제공됩니다.',
@@ -7,9 +9,10 @@ interface Props {
   label: string;
   disabled: boolean;
   onClick: () => void;
+  buttonClassName?: string;
 }
 
-export default function AnalysisSidebar({ label, disabled, onClick }: Props) {
+export default function AnalysisSidebar({ label, disabled, onClick, buttonClassName }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <div className="rounded-xl bg-blue-50 p-4">
@@ -29,11 +32,13 @@ export default function AnalysisSidebar({ label, disabled, onClick }: Props) {
       <button
         disabled={disabled}
         onClick={onClick}
-        className={`text-label-lg h-12 w-full rounded-xl transition-colors ${
+        className={cn(
+          'text-label-lg h-12 w-full rounded-xl transition-colors',
           disabled
             ? 'cursor-not-allowed bg-gray-100 text-gray-500'
-            : 'bg-blue cursor-pointer text-white'
-        }`}
+            : 'bg-blue cursor-pointer text-white',
+          buttonClassName,
+        )}
       >
         {label}
       </button>

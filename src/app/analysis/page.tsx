@@ -3,11 +3,14 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { useCreateAnalysisRequest } from '@/features/analysis/hooks/useAnalysisApi';
-import type { AnalysisRepository, AnalysisStep } from '@/features/analysis/model/types';
-import AnalysisSidebar from '@/features/analysis/ui/AnalysisSidebar';
-import BranchStep from '@/features/analysis/ui/BranchStep';
-import RepoStep from '@/features/analysis/ui/RepoStep';
+import {
+  type AnalysisRepository,
+  AnalysisSidebar,
+  type AnalysisStep,
+  BranchStep,
+  RepoStep,
+  useCreateAnalysisRequest,
+} from '@/features/analysis';
 import { ROUTES } from '@/shared/config/routes';
 import { useToast } from '@/shared/ui/Toast';
 
