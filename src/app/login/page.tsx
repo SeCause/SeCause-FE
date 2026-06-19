@@ -16,7 +16,7 @@ export default function Login() {
           <h1 className="text-heading-md whitespace-pre-line text-gray-900">
             코드를 더 안전하게 관리하세요.
           </h1>
-          <p className="text-body-md md:text-body-lg text-gray-700">
+          <p className="text-body-lg leading-normal text-gray-700">
             취약점을 탐지하는 것을 넘어,
             <br />
             원인을 이해하고 빠르게 해결할 수 있도록 돕습니다.
@@ -27,7 +27,7 @@ export default function Login() {
           {FEATURES.map((feature) => (
             <li
               key={feature}
-              className="text-body-md flex items-center gap-4 font-medium text-gray-900"
+              className="text-body-sm md:text-body-lg flex items-center gap-4 font-medium text-gray-900"
             >
               <span aria-hidden="true" className="bg-blue h-4 w-4 shrink-0 rounded-full blur-xs" />
               {feature}
