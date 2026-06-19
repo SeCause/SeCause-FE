@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 
 import { AnalysisSidebar, RepoIcon } from '@/features/analysis';
 import GithubIcon from '@/icons/icon_github.svg';
@@ -9,10 +10,56 @@ import { ACCOUNT_OPTIONS, REPO_OPTIONS } from '@/widgets/landing/model/mockHowIt
 
 import PreviewShell from './PreviewShell';
 
+const SELECT_DELAY_MS = 200;
+const ENABLE_DELAY_MS = 600;
+const PRESS_DELAY_MS = 500;
+const PRESS_DURATION_MS = 300;
+
 export default function AnalysisRequestPreview() {
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+  const headingRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = headingRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.4 },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    const selectTimer = setTimeout(() => setSelectedIndex(0), SELECT_DELAY_MS);
+    const enableTimer = setTimeout(() => setIsButtonEnabled(true), ENABLE_DELAY_MS);
+    const pressTimer = setTimeout(() => {
+      setIsPressed(true);
+      setTimeout(() => setIsPressed(false), PRESS_DURATION_MS);
+    }, ENABLE_DELAY_MS + PRESS_DELAY_MS);
+
+    return () => {
+      clearTimeout(selectTimer);
+      clearTimeout(enableTimer);
+      clearTimeout(pressTimer);
+    };
+  }, [hasStarted]);
+
   return (
     <PreviewShell>
-      <div className="flex flex-col gap-1">
+      <div ref={headingRef} className="flex flex-col gap-1">
         <h1 className="text-heading-md text-gray-900">New Project</h1>
         <p className="text-body-md text-gray-700">
           보안 분석을 진행할 GitHub 저장소를 선택해주세요.
@@ -50,7 +97,7 @@ export default function AnalysisRequestPreview() {
                     <button
                       className={cn(
                         'text-body-md flex w-full items-center gap-3 rounded-lg border bg-white px-4 py-2 text-left font-medium transition-colors',
-                        idx === 0
+                        idx === selectedIndex
                           ? 'border-blue bg-blue/5 text-blue font-semibold'
                           : 'border-gray-300 text-gray-900',
                       )}
@@ -67,9 +114,12 @@ export default function AnalysisRequestPreview() {
 
         <AnalysisSidebar
           label="Select Repository"
-          disabled={false}
+          disabled={!isButtonEnabled}
           onClick={() => {}}
-          buttonClassName="h-9 text-label-md  rounded-lg"
+          buttonClassName={cn(
+            'h-9 text-label-md rounded-lg transition-transform duration-150',
+            isPressed && 'scale-95',
+          )}
         />
       </div>
     </PreviewShell>
