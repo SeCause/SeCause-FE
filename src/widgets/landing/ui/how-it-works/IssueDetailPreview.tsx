@@ -1,6 +1,4 @@
-import CodeDiffView from '@/features/repositories/ui/issues/CodeDiffView';
-import IssueFileTabs from '@/features/repositories/ui/issues/IssueFileTabs';
-import SeverityBadge from '@/features/repositories/ui/SeverityBadge';
+import { CodeDiffView, IssueFileTabs, SeverityBadge } from '@/features/repositories';
 import { MOCK_FILES, MOCK_ISSUE_DETAIL } from '@/widgets/landing/model/mockHowItWorksData';
 
 import MockRepositoryHeader from './MockRepositoryHeader';

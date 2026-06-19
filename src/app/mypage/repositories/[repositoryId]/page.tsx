@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 
-import RepositoryDashboard from '@/features/repositories/ui/dashboard/RepositoryDashboard';
+import { RepositoryDashboard } from '@/features/repositories';
 
 export default function RepositoryDetailPage() {
   const params = useParams<{ repositoryId: string }>();

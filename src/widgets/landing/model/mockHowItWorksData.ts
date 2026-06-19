@@ -1,12 +1,12 @@
 import type {
-  RepositoryDashboard,
+  RepositoryDashboardData,
   RepositoryIssueDetail,
   RepositoryIssueFile,
-} from '@/features/repositories/model/types';
+} from '@/features/repositories';
 
 const TWO_DAYS_AGO = new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString();
 
-export const MOCK_DASHBOARD: RepositoryDashboard = {
+export const MOCK_DASHBOARD: RepositoryDashboardData = {
   repositoryId: 1,
   owner: 'secure-corp',
   name: 'secure-app',

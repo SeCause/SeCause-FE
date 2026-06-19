@@ -1,4 +1,4 @@
-import RepositoryDashboardHeader from '@/features/repositories/ui/dashboard/RepositoryDashboardHeader';
+import { RepositoryDashboardHeader } from '@/features/repositories';
 import { MOCK_DASHBOARD } from '@/widgets/landing/model/mockHowItWorksData';
 
 export default function MockRepositoryHeader() {

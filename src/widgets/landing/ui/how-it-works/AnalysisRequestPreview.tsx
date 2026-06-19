@@ -1,7 +1,6 @@
 import Image from 'next/image';
 
-import AnalysisSidebar from '@/features/analysis/ui/AnalysisSidebar';
-import RepoIcon from '@/features/analysis/ui/RepoIcon';
+import { AnalysisSidebar, RepoIcon } from '@/features/analysis';
 import GithubIcon from '@/icons/icon_github.svg';
 import { cn } from '@/shared/lib/cn';
 import Dropdown from '@/shared/ui/Dropdown';

@@ -1,7 +1,9 @@
-import CodeDetailsCard from '@/features/repositories/ui/dashboard/CodeDetailsCard';
-import IssuesByTypeCard from '@/features/repositories/ui/dashboard/IssuesByTypeCard';
-import IssueSummaryCards from '@/features/repositories/ui/dashboard/IssueSummaryCards';
-import SeverityBreakdownChart from '@/features/repositories/ui/dashboard/SeverityBreakdownChart';
+import {
+  CodeDetailsCard,
+  IssuesByTypeCard,
+  IssueSummaryCards,
+  SeverityBreakdownChart,
+} from '@/features/repositories';
 import { MOCK_DASHBOARD } from '@/widgets/landing/model/mockHowItWorksData';
 
 import MockRepositoryHeader from './MockRepositoryHeader';
