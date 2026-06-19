@@ -9,9 +9,10 @@ const CHART_SIZE = 144;
 
 interface Props {
   breakdown: RepositorySeverityCount[];
+  animate?: boolean;
 }
 
-export default function SeverityBreakdownChart({ breakdown }: Props) {
+export default function SeverityBreakdownChart({ breakdown, animate = false }: Props) {
   const total = breakdown.reduce((sum, item) => sum + item.count, 0);
   const chartData = breakdown.map((item) => ({
     ...item,
@@ -32,7 +33,9 @@ export default function SeverityBreakdownChart({ breakdown }: Props) {
               outerRadius="100%"
               paddingAngle={breakdown.length > 1 ? 2 : 0}
               stroke="none"
-              isAnimationActive={false}
+              isAnimationActive={animate}
+              animationDuration={600}
+              animationEasing="ease-out"
             />
           </PieChart>
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">

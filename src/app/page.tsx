@@ -1,6 +1,6 @@
 import FaqSection from '@/widgets/landing/ui/FaqSection';
 import HeroSection from '@/widgets/landing/ui/HeroSection';
-import HowItWorksSection from '@/widgets/landing/ui/HowItWorksSection';
+import HowItWorksSection from '@/widgets/landing/ui/how-it-works/HowItWorksSection';
 
 export default function Home() {
   return (
