@@ -8,6 +8,30 @@ interface Props {
   startLine?: number;
 }
 
+const ROW_STYLES = {
+  added: {
+    row: 'bg-emerald-100',
+    lineNumber: 'text-emerald-600',
+    sign: 'text-emerald-600',
+    text: 'text-emerald-950',
+    symbol: '+',
+  },
+  removed: {
+    row: 'bg-red-100',
+    lineNumber: 'text-red-500',
+    sign: 'text-red-500',
+    text: 'text-red-950',
+    symbol: '-',
+  },
+  unchanged: {
+    row: '',
+    lineNumber: 'text-gray-400',
+    sign: 'text-gray-300',
+    text: 'text-gray-800',
+    symbol: ' ',
+  },
+} as const;
+
 export default function CodeDiffView({ oldCode, newCode, startLine = 1 }: Props) {
   const changes = diffLines(oldCode, newCode);
 
@@ -45,47 +69,19 @@ export default function CodeDiffView({ oldCode, newCode, startLine = 1 }: Props)
 
   return (
     <div className="scrollbar-custom-gray overflow-x-auto rounded-lg border border-gray-200 font-mono text-xs">
-      {rows.map((row) => (
-        <div
-          key={row.key}
-          className={cn(
-            'flex gap-3 px-3 py-0.5',
-            row.type === 'added' && 'bg-emerald-100',
-            row.type === 'removed' && 'bg-red-100',
-          )}
-        >
-          <span
-            className={cn(
-              'w-7 shrink-0 text-right select-none',
-              row.type === 'added' && 'text-emerald-600',
-              row.type === 'removed' && 'text-red-500',
-              row.type === 'unchanged' && 'text-gray-400',
-            )}
-          >
-            {row.lineNumber}
-          </span>
-          <span
-            className={cn(
-              'w-3 shrink-0 font-semibold',
-              row.type === 'added' && 'text-emerald-600',
-              row.type === 'removed' && 'text-red-500',
-              row.type === 'unchanged' && 'text-gray-300',
-            )}
-          >
-            {row.type === 'added' ? '+' : row.type === 'removed' ? '-' : ' '}
-          </span>
-          <span
-            className={cn(
-              'whitespace-pre',
-              row.type === 'added' && 'text-emerald-950',
-              row.type === 'removed' && 'text-red-950',
-              row.type === 'unchanged' && 'text-gray-800',
-            )}
-          >
-            {row.line}
-          </span>
-        </div>
-      ))}
+      {rows.map((row) => {
+        const style = ROW_STYLES[row.type];
+
+        return (
+          <div key={row.key} className={cn('flex gap-3 px-3 py-0.5', style.row)}>
+            <span className={cn('w-7 shrink-0 text-right select-none', style.lineNumber)}>
+              {row.lineNumber}
+            </span>
+            <span className={cn('w-3 shrink-0 font-semibold', style.sign)}>{style.symbol}</span>
+            <span className={cn('whitespace-pre', style.text)}>{row.line}</span>
+          </div>
+        );
+      })}
     </div>
   );
 }
