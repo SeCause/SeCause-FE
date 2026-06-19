@@ -18,9 +18,7 @@ import SeverityBreakdownChart from '@/features/repositories/ui/dashboard/Severit
 import CodeDiffView from '@/features/repositories/ui/issues/CodeDiffView';
 import IssueFileTabs from '@/features/repositories/ui/issues/IssueFileTabs';
 import SeverityBadge from '@/features/repositories/ui/SeverityBadge';
-import { SEVERITY_TAG_LABEL } from '@/features/repositories/ui/severityTag';
 import GithubIcon from '@/icons/icon_github.svg';
-import SwitchIcon from '@/icons/icon_switch.svg';
 import { SECTION_IDS } from '@/shared/config/routes';
 import { cn } from '@/shared/lib/cn';
 import Dropdown from '@/shared/ui/Dropdown';
@@ -90,11 +88,6 @@ const MOCK_FILES: RepositoryIssueFile[] = [
 
 const ACCOUNT_OPTIONS = [{ value: 'secure-corp', label: 'secure-corp' }];
 const REPO_OPTIONS = ['secure-app', 'payment-api', 'admin-dashboard'];
-
-const SEVERITY_FILTER_OPTIONS = [
-  { value: 'ALL', label: '취약도 전체' },
-  ...Object.entries(SEVERITY_TAG_LABEL).map(([value, label]) => ({ value, label })),
-];
 
 function BrowserFrame({ children }: { children: ReactNode }) {
   return (
