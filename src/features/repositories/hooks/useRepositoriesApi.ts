@@ -63,6 +63,7 @@ export function useRepositoryIssues(
     queryKey: repositoryIssuesKey(repositoryId, params),
     queryFn: () => getRepositoryIssues(repositoryId, params),
     enabled,
+    placeholderData: (prev) => prev,
   });
 }
 

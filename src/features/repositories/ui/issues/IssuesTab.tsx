@@ -129,7 +129,7 @@ export default function IssuesTab({ repositoryId }: Props) {
           onSelect={handleFileSelect}
         />
 
-        <div className="flex flex-col gap-3">
+        <div className="flex min-h-100 flex-col gap-3">
           {isFilesLoading || isIssuesLoading ? (
             <p className="text-body-md m-auto text-gray-500">불러오는 중...</p>
           ) : isFilesError || isIssuesError ? (
