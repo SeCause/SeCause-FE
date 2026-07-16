@@ -1,51 +1,85 @@
+import { Check } from 'lucide-react';
+import Image from 'next/image';
+
 import GithubLoginButton from '@/features/auth/ui/GithubLoginButton';
 
-const FEATURES = [
-  '신뢰도 높은 보안 도구 기반의 실시간 저장소 분석',
-  '취약점의 원인과 영향을 설명하는 AI 기반 인사이트',
-  '즉시 적용 가능한 스마트 수정 가이드 제공',
-  '다양한 언어와 환경을 아우르는 통합 보안 탐지',
-  '불필요한 노이즈를 줄인 정확한 분석 결과',
+import styles from './page.module.css';
+
+const BENEFIT_ITEMS = [
+  '프로젝트 취약점 분석',
+  'AI 기반 원인 및 영향 설명',
+  '수정 가이드와 분석 결과 관리',
+];
+
+const LOGIN_NOTES = [
+  '별도의 회원가입 없이 바로 이용할 수 있습니다.',
+  '로그인을 계속하면 이용약관 및 개인정보 처리방침에 동의하게 됩니다.',
 ];
 
 export default function Login() {
   return (
-    <div className="flex flex-1 flex-col justify-center px-6 py-12 md:flex-row md:gap-14 md:px-20 md:py-0">
-      <div className="flex w-full flex-col items-center gap-10 md:flex-1 md:justify-center md:gap-8">
-        <div className="flex flex-col gap-4 md:text-left">
-          <h1 className="text-heading-md whitespace-pre-line text-gray-900">
-            코드를 더 안전하게 관리하세요.
-          </h1>
-          <p className="text-body-lg leading-normal text-gray-700">
-            취약점을 탐지하는 것을 넘어,
-            <br />
-            원인을 이해하고 빠르게 해결할 수 있도록 돕습니다.
+    <div className="relative flex flex-1 items-center justify-center overflow-hidden bg-white px-6 py-14">
+      <Background />
+
+      <section className="relative z-10 w-full max-w-md">
+        <div className="mb-8 text-center">
+          <div className="border-blue/35 mx-auto mb-5 flex size-12 items-center justify-center rounded-2xl border bg-white">
+            <Image src="/icon.svg" alt="SeCause" width={28} height={28} priority />
+          </div>
+
+          <h1 className="text-heading-lg text-gray-900">SeCause에 로그인</h1>
+
+          <p className="text-body-md mx-auto mt-3 max-w-sm text-gray-600">
+            GitHub 계정으로 로그인하고 프로젝트의 보안 분석을 시작하세요.
           </p>
         </div>
 
-        <ul className="flex flex-col gap-3 md:gap-4">
-          {FEATURES.map((feature) => (
-            <li
-              key={feature}
-              className="text-body-sm md:text-body-lg flex items-center gap-4 font-medium text-gray-900"
-            >
-              <span aria-hidden="true" className="bg-blue h-4 w-4 shrink-0 rounded-full blur-xs" />
-              {feature}
-            </li>
-          ))}
-        </ul>
+        <div className="rounded-2xl border border-gray-200 bg-white p-7 shadow-[0_18px_45px_rgba(15,23,42,0.05)] md:p-8">
+          <ul className="mb-4 space-y-2">
+            {LOGIN_NOTES.map((note) => (
+              <li key={note} className="text-body-sm flex items-start gap-2.5 text-gray-700">
+                <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-500">
+                  <Check className="size-3" />
+                </span>
+                <span>{note}</span>
+              </li>
+            ))}
+          </ul>
 
-        <div className="md:hidden">
-          <GithubLoginButton />
-        </div>
-      </div>
+          <div className="flex w-full justify-center">
+            <GithubLoginButton />
+          </div>
 
-      <div className="hidden flex-col items-center justify-center gap-16 border-gray-300 md:flex md:flex-1">
-        <div className="text-body-md flex h-50 w-50 items-center justify-center rounded-md border border-dashed border-current text-gray-500">
-          로고
+          <div className="my-7 h-px bg-gray-100" />
+
+          <p className="text-label-sm mb-4 text-gray-500">로그인 후 이용할 수 있는 기능</p>
+
+          <ul className="space-y-3">
+            {BENEFIT_ITEMS.map((item) => (
+              <li key={item} className="text-body-sm flex items-center gap-3 text-gray-600">
+                <span className="bg-blue/8 text-blue flex size-5 shrink-0 items-center justify-center rounded-full">
+                  <Check className="size-3.5" />
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-6 flex items-center justify-center gap-2 font-mono text-xs text-gray-400">
+            <span className={`${styles.cursorBlink} bg-blue inline-block h-3.5 w-0.5`} />
+            <span>Ready to connect</span>
+          </div>
         </div>
-        <GithubLoginButton />
-      </div>
+      </section>
     </div>
+  );
+}
+
+function Background() {
+  return (
+    <>
+      <div className="bg-dot-grid pointer-events-none absolute inset-0 mask-[radial-gradient(circle_at_center,black,transparent_70%)] opacity-15" />
+      <div className="bg-blue/5 pointer-events-none absolute top-[16%] left-1/2 size-100 -translate-x-1/2 rounded-full blur-3xl" />
+    </>
   );
 }

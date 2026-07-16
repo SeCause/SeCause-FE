@@ -1,0 +1,15 @@
+.cursorBlink {
+  animation: cursorBlink 1s steps(1) infinite;
+}
+
+@keyframes cursorBlink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursorBlink {
+    animation: none;
+  }
+}
