@@ -1,7 +1,9 @@
 import { Check } from 'lucide-react';
 import Image from 'next/image';
 
+import SeCauseIcon from '@/app/icon.svg';
 import GithubLoginButton from '@/features/auth/ui/GithubLoginButton';
+import BackgroundGrid from '@/shared/ui/BackgroundGrid';
 
 import styles from './page.module.css';
 
@@ -19,12 +21,12 @@ const LOGIN_NOTES = [
 export default function Login() {
   return (
     <div className="relative flex flex-1 items-center justify-center overflow-hidden bg-white px-6 py-14">
-      <Background />
+      <BackgroundGrid />
 
       <section className="relative z-10 w-full max-w-md">
         <div className="mb-8 text-center">
           <div className="border-blue/35 mx-auto mb-5 flex size-12 items-center justify-center rounded-2xl border bg-white">
-            <Image src="/icon.svg" alt="SeCause" width={28} height={28} priority />
+            <Image src={SeCauseIcon} alt="SeCause" width={28} height={28} priority />{' '}
           </div>
 
           <h1 className="text-heading-lg text-gray-900">SeCause에 로그인</h1>
@@ -72,14 +74,5 @@ export default function Login() {
         </div>
       </section>
     </div>
-  );
-}
-
-function Background() {
-  return (
-    <>
-      <div className="bg-dot-grid pointer-events-none absolute inset-0 mask-[radial-gradient(circle_at_center,black,transparent_70%)] opacity-15" />
-      <div className="bg-blue/5 pointer-events-none absolute top-[16%] left-1/2 size-100 -translate-x-1/2 rounded-full blur-3xl" />
-    </>
   );
 }

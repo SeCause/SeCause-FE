@@ -2,6 +2,7 @@ import { Compass, FolderGit2, House } from 'lucide-react';
 import Link from 'next/link';
 
 import { ROUTES } from '@/shared/config/routes';
+import BackgroundGrid from '@/shared/ui/BackgroundGrid';
 
 export default function NotFound() {
   return (
@@ -44,16 +45,5 @@ export default function NotFound() {
         </div>
       </div>
     </section>
-  );
-}
-
-function BackgroundGrid() {
-  return (
-    <>
-      <div className="pointer-events-none absolute inset-0" />
-      <div className="bg-dot-grid pointer-events-none absolute inset-0" />
-      <div className="pointer-events-none absolute top-[18%] left-[8%] size-20 rounded-full border border-gray-200/70" />
-      <div className="pointer-events-none absolute right-[8%] bottom-[14%] size-28 rounded-full border border-dashed border-gray-200/70" />
-    </>
   );
 }
