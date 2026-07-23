@@ -68,20 +68,22 @@ export default function CodeDiffView({ oldCode, newCode, startLine = 1 }: Props)
   });
 
   return (
-    <div className="scrollbar-custom-gray overflow-x-auto rounded-lg border border-gray-200 font-mono text-xs">
-      {rows.map((row) => {
-        const style = ROW_STYLES[row.type];
+    <div className="scrollbar-custom-gray min-w-0 overflow-x-auto rounded-lg border border-gray-200 font-mono text-xs">
+      <div className="min-w-max">
+        {rows.map((row) => {
+          const style = ROW_STYLES[row.type];
 
-        return (
-          <div key={row.key} className={cn('flex gap-3 px-3 py-0.5', style.row)}>
-            <span className={cn('w-7 shrink-0 text-right select-none', style.lineNumber)}>
-              {row.lineNumber}
-            </span>
-            <span className={cn('w-3 shrink-0 font-semibold', style.sign)}>{style.symbol}</span>
-            <span className={cn('whitespace-pre', style.text)}>{row.line}</span>
-          </div>
-        );
-      })}
+          return (
+            <div key={row.key} className={cn('flex gap-3 px-3 py-0.5', style.row)}>
+              <span className={cn('w-7 shrink-0 text-right select-none', style.lineNumber)}>
+                {row.lineNumber}
+              </span>
+              <span className={cn('w-3 shrink-0 font-semibold', style.sign)}>{style.symbol}</span>
+              <span className={cn('whitespace-pre', style.text)}>{row.line}</span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

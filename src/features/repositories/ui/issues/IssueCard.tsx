@@ -16,7 +16,7 @@ interface Props {
 
 export default function IssueCard({ issue, repositoryId, expanded, onToggle }: Props) {
   return (
-    <div className="flex flex-col gap-2 rounded-xl border border-gray-200 px-5 py-4">
+    <div className="flex min-w-0 flex-col gap-2 rounded-xl border border-gray-200 px-5 py-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex min-w-0 flex-wrap items-center gap-2.5">
@@ -47,7 +47,7 @@ export default function IssueCard({ issue, repositoryId, expanded, onToggle }: P
       </div>
 
       {expanded && (
-        <div className="overflow-hidden motion-safe:animate-[issueDetailDown_220ms_ease-out]">
+        <div className="min-w-0 overflow-hidden motion-safe:animate-[issueDetailDown_220ms_ease-out]">
           <IssueDetailPanel repositoryId={repositoryId} analysisResultId={issue.analysisResultId} />
         </div>
       )}

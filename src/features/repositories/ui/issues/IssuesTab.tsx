@@ -120,7 +120,7 @@ export default function IssuesTab({ repositoryId }: Props) {
         />
       </div>
 
-      <div className="grid min-h-100 grid-cols-1 gap-3 md:grid-cols-[13rem_1fr]">
+      <div className="grid min-h-100 grid-cols-1 gap-3 lg:grid-cols-[13rem_1fr]">
         <IssueFileTabs
           files={files}
           selectedFilePath={effectiveSelectedFilePath}
@@ -129,7 +129,7 @@ export default function IssuesTab({ repositoryId }: Props) {
           onSelect={handleFileSelect}
         />
 
-        <div className="flex min-h-100 flex-col gap-3">
+        <div className="flex min-h-100 min-w-0 flex-col gap-3">
           {isFilesLoading || isIssuesLoading ? (
             <p className="text-body-md m-auto text-gray-500">불러오는 중...</p>
           ) : isFilesError || isIssuesError ? (

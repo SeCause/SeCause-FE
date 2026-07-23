@@ -39,7 +39,7 @@
     transform: translateY(-6px);
   }
   to {
-    max-height: 56rem;
+    max-height: 300rem;
     opacity: 1;
     transform: translateY(0);
   }

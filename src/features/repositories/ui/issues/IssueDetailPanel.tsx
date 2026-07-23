@@ -36,7 +36,7 @@ export default function IssueDetailPanel({ repositoryId, analysisResultId }: Pro
         startLine={detail.lineStart}
       />
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2">
         <div className="rounded-lg border border-gray-200 p-4">
           <p className="text-label-lg mb-2 text-gray-900">취약점: {detail.vulnerabilityType}</p>
           <p className="text-body-md text-gray-700">
@@ -45,7 +45,7 @@ export default function IssueDetailPanel({ repositoryId, analysisResultId }: Pro
           <p className="text-body-md mt-3 text-gray-700">
             <span className="font-semibold">공격 예시:</span>
           </p>
-          <p className="text-body-sm mt-1 rounded bg-gray-50 p-3 font-mono text-gray-700">
+          <p className="text-body-sm mt-1 rounded bg-gray-50 p-3 font-mono wrap-break-word whitespace-pre-wrap text-gray-700">
             {detail.attackScenario}
           </p>
         </div>
