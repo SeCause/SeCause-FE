@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 
 import { Header } from '@/widgets/header';
 
+import { pretendard } from './fonts';
 import Providers from './providers';
 
 export const metadata: Metadata = {
@@ -27,7 +28,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className="scrollbar-hide h-full snap-y snap-mandatory scroll-smooth antialiased"
+      className={`${pretendard.variable} scrollbar-hide h-full snap-y snap-mandatory scroll-smooth antialiased`}
       data-scroll-behavior="smooth"
     >
       <body className="flex min-h-full flex-col">
