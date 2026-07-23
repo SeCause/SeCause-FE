@@ -8,7 +8,7 @@ export default function HeroSection() {
   return (
     <section
       id={SECTION_IDS.overview}
-      className="scroll-mt-header flex h-[calc(100dvh-var(--spacing-header))] items-center px-6 md:px-20"
+      className="scroll-mt-header flex h-[calc(100dvh-var(--spacing-header))] snap-start items-center px-6 md:px-20"
     >
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-12 md:flex-row md:gap-16">
         <div className="flex flex-col items-center gap-6 text-center md:items-start md:text-left">

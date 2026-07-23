@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className="scrollbar-hide h-full scroll-smooth antialiased"
+      className="scrollbar-hide h-full snap-y snap-mandatory scroll-smooth antialiased"
       data-scroll-behavior="smooth"
     >
       <body className="flex min-h-full flex-col">
