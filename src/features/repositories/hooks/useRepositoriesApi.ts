@@ -10,20 +10,18 @@ import {
   getRepositoryIssueFiles,
   getRepositoryIssues,
 } from '@/features/repositories/api/repositories';
+import {
+  repositoriesKey,
+  repositoryDashboardKey,
+  repositoryIssueDetailKey,
+  repositoryIssueFilesKey,
+  repositoryIssuesKey,
+} from '@/features/repositories/model/queryKeys';
 import type {
   IssueSeverity,
   RepositoryIssueListParams,
   RepositoryListParams,
 } from '@/features/repositories/model/types';
-
-const repositoriesKey = (params?: RepositoryListParams) => ['repositories', params] as const;
-const repositoryDashboardKey = (repositoryId: number) => ['repositories', repositoryId] as const;
-const repositoryIssuesKey = (repositoryId: number, params?: RepositoryIssueListParams) =>
-  ['repositories', repositoryId, 'issues', params] as const;
-const repositoryIssueFilesKey = (repositoryId: number, severity?: IssueSeverity | 'ALL') =>
-  ['repositories', repositoryId, 'issue-files', severity] as const;
-const repositoryIssueDetailKey = (repositoryId: number, analysisResultId: number) =>
-  ['repositories', repositoryId, 'issues', analysisResultId] as const;
 
 export function useRepositories(params?: RepositoryListParams) {
   return useQuery({
