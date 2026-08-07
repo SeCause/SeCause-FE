@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import {
   useDeleteRepository,
@@ -27,15 +27,16 @@ export default function RepositoriesTab() {
   const { mutate: deleteRepository, isPending: isDeleting } = useDeleteRepository();
 
   const repositories = data?.repositories ?? [];
-  const filtered = repositories.filter((repo) =>
-    repo.name.toLowerCase().includes(search.toLowerCase()),
-  );
+  const filtered = useMemo(() => {
+    const keyword = search.toLowerCase();
+    return (data?.repositories ?? []).filter((repo) => repo.name.toLowerCase().includes(keyword));
+  }, [data, search]);
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
   const currentPage = Math.min(Math.max(page, 1), totalPages || 1);
-  const paginated = filtered.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE,
+  const paginated = useMemo(
+    () => filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE),
+    [filtered, currentPage],
   );
 
   const handleSearch = useCallback((value: string) => {
