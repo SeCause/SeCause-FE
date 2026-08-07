@@ -1,8 +1,13 @@
 import { QueryClient } from '@tanstack/react-query';
 
+// RSC에서 prefetch한 데이터가 hydration 직후 stale 처리되어 동일 API를 다시 호출하지 않도록 한다.
+// mutation 성공 시 invalidateQueries를 호출하는 흐름은 staleTime과 관계없이 즉시 갱신된다.
+const STALE_TIME_MS = 30_000;
+
 const queryClientConfig = {
   defaultOptions: {
     queries: {
+      staleTime: STALE_TIME_MS,
       retry: 1,
       refetchOnWindowFocus: false,
     },

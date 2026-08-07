@@ -77,7 +77,7 @@ test.describe('저장소 분석 결과 사용자 흐름', () => {
     await expect(page.getByText('SeCause / backend')).toBeHidden();
 
     // When
-    await page.getByText('SeCause / frontend').click();
+    await page.getByRole('link', { name: 'SeCause / frontend 분석 결과 보기' }).click();
 
     // Then
     await expect(page).toHaveURL('/mypage/repositories/101');

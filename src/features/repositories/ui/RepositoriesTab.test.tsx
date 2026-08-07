@@ -73,7 +73,7 @@ describe('RepositoriesTab', () => {
     // Given
     const user = userEvent.setup();
     render(<RepositoriesTab />);
-    const frontendCard = screen.getByText('SeCause / frontend').closest('div.flex.cursor-pointer');
+    const frontendCard = screen.getByText('SeCause / frontend').closest('article');
     expect(frontendCard).not.toBeNull();
 
     // When
@@ -91,6 +91,16 @@ describe('RepositoriesTab', () => {
       expect.objectContaining({ onError: expect.any(Function) }),
     );
     expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
-    expect(push).not.toHaveBeenCalled();
+  });
+
+  it('Given 저장소 카드가 있을 때 Then 키보드로 접근 가능한 상세 링크를 제공한다', () => {
+    // Given
+    render(<RepositoriesTab />);
+
+    // Then
+    expect(screen.getByRole('link', { name: 'SeCause / frontend 분석 결과 보기' })).toHaveAttribute(
+      'href',
+      '/mypage/repositories/1',
+    );
   });
 });
