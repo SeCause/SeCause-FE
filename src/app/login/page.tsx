@@ -1,4 +1,5 @@
 import { Check } from 'lucide-react';
+import type { Metadata } from 'next';
 import Image from 'next/image';
 
 import SeCauseIcon from '@/app/icon.svg';
@@ -6,6 +7,10 @@ import GithubLoginButton from '@/features/auth/ui/GithubLoginButton';
 import BackgroundGrid from '@/shared/ui/BackgroundGrid';
 
 import styles from './page.module.css';
+
+export const metadata: Metadata = {
+  title: '로그인',
+};
 
 const BENEFIT_ITEMS = [
   '프로젝트 취약점 분석',

@@ -1,9 +1,15 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import type { Metadata } from 'next';
 
 import { RepositoryDashboard } from '@/features/repositories';
 import { getRepositoryDashboardServer } from '@/features/repositories/api/repositories.server';
 import { repositoryDashboardKey } from '@/features/repositories/model/queryKeys';
 import { createServerQueryClient } from '@/shared/lib/queryClient';
+
+export const metadata: Metadata = {
+  title: '대시보드',
+  robots: { index: false, follow: false },
+};
 
 interface Props {
   params: Promise<{ repositoryId: string }>;
