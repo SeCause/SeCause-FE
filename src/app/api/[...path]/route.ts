@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { logApiRequest, logApiResponse, readResponseBodyForLog } from '@/shared/api/logger';
+import { withApiLogging } from '@/shared/api/logger';
 
 import { buildClientHeaders, buildUpstreamHeaders } from './headers';
 import { buildUpstreamUrl } from './url';
@@ -20,26 +20,18 @@ async function proxyRequest(request: NextRequest, context: RouteContext) {
   }
 
   const body = ['GET', 'HEAD'].includes(request.method) ? undefined : await request.arrayBuffer();
-  const startedAt = performance.now();
 
-  logApiRequest({ layer: 'bff', method: request.method, url: targetUrl.toString() });
-
-  const upstreamResponse = await fetch(targetUrl, {
-    method: request.method,
-    headers: buildUpstreamHeaders(request),
-    body,
-    redirect: 'manual',
-    cache: 'no-store',
-  });
-
-  logApiResponse({
-    layer: 'bff',
-    method: request.method,
-    url: targetUrl.toString(),
-    status: upstreamResponse.status,
-    durationMs: performance.now() - startedAt,
-    body: await readResponseBodyForLog(upstreamResponse),
-  });
+  const upstreamResponse = await withApiLogging(
+    { layer: 'bff', method: request.method, url: targetUrl.toString() },
+    () =>
+      fetch(targetUrl, {
+        method: request.method,
+        headers: buildUpstreamHeaders(request),
+        body,
+        redirect: 'manual',
+        cache: 'no-store',
+      }),
+  );
 
   return new NextResponse(upstreamResponse.body, {
     status: upstreamResponse.status,
