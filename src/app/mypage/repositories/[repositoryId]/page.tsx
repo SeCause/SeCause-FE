@@ -9,7 +9,6 @@ import { createServerQueryClient } from '@/shared/lib/queryClient';
 
 export const metadata: Metadata = {
   title: '대시보드',
-  robots: { index: false, follow: false },
 };
 
 interface Props {
