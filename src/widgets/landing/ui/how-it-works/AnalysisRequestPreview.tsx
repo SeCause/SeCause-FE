@@ -60,7 +60,7 @@ export default function AnalysisRequestPreview() {
   return (
     <PreviewShell>
       <div ref={headingRef} className="flex flex-col gap-1">
-        <h1 className="text-heading-md text-gray-900">New Project</h1>
+        <p className="text-heading-md text-gray-900">New Project</p>
         <p className="text-body-md text-gray-700">
           보안 분석을 진행할 GitHub 저장소를 선택해주세요.
         </p>
