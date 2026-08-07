@@ -106,4 +106,15 @@ test.describe('저장소 분석 결과 사용자 흐름', () => {
     await expect(page.getByRole('button', { name: /src\/utils\/database\.ts/ })).toBeVisible();
     await expect(page.getByRole('button', { name: 'View Issue' }).first()).toBeVisible();
   });
+
+  test('Given 잘못된 저장소 ID일 때 When 상세 페이지에 접근하면 Then 404를 표시한다', async ({
+    page,
+  }) => {
+    // When
+    const response = await page.goto('/mypage/repositories/not-a-number');
+
+    // Then
+    expect(response?.status()).toBe(404);
+    await expect(page.getByRole('heading', { name: '페이지를 찾을 수 없습니다.' })).toBeVisible();
+  });
 });

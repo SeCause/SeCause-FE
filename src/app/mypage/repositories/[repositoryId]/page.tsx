@@ -1,5 +1,6 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import { RepositoryDashboard } from '@/features/repositories';
 import { getRepositoryDashboardServer } from '@/features/repositories/api/repositories.server';
@@ -18,6 +19,10 @@ interface Props {
 export default async function RepositoryDetailPage({ params }: Props) {
   const { repositoryId: repositoryIdParam } = await params;
   const repositoryId = Number(repositoryIdParam);
+
+  if (!Number.isSafeInteger(repositoryId) || repositoryId <= 0) {
+    notFound();
+  }
 
   const queryClient = createServerQueryClient();
   // 실패(인증 만료 등)해도 던지기만 할 뿐 여기서 잡지 않는다 — prefetchQuery가 내부에서
