@@ -1,8 +1,6 @@
 import { NextRequest } from 'next/server';
 
-function getApiBaseUrl() {
-  return process.env.API_BASE_URL ?? process.env.NEXT_PUBLIC_API_BASE_URL;
-}
+import { getApiBaseUrl } from '@/shared/api/env';
 
 export function buildUpstreamUrl(request: NextRequest, path: string[]) {
   const apiBaseUrl = getApiBaseUrl();

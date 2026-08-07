@@ -3,7 +3,7 @@
 AI 기반 **코드 보안 취약점 분석** 및 **수정 가이드 제공** 서비스
 
 > GitHub 저장소를 연동하면 AI가 코드를 분석해 보안 취약점을 찾아내고,
-<br/>심각도별로 정리된 **대시보드**와 **이슈별 수정 가이드**(Code Diff)를 제공합니다.
+> <br/>심각도별로 정리된 **대시보드**와 **이슈별 수정 가이드**(Code Diff)를 제공합니다.
 
 <br/>
 
@@ -19,16 +19,16 @@ AI 기반 **코드 보안 취약점 분석** 및 **수정 가이드 제공** 서
 
 ## 기술 스택
 
-| 구분          | 스택                                                                                |
-| ------------- | ----------------------------------------------------------------------------------- |
-| **Framework**     | Next.js 16 (App Router), React 19, TypeScript                                       |
-| **Styling**       | Tailwind CSS 4                                                                      |
-| **상태/데이터**   | TanStack Query (React Query), ky (HTTP client)                                      |
-| **UI/시각화**     | Recharts, lucide-react, diff                                                        |
-| **코드 품질**     | ESLint (eslint-plugin-boundaries, simple-import-sort), Prettier, Husky, lint-staged |
-| **테스트**        | Vitest, React Testing Library, Playwright (E2E)                                     |
-| **배포/모니터링** | Vercel, Vercel Analytics, Speed Insights                                            |
-| **패키지 매니저** | pnpm                                                                                |
+| 구분              | 스택                                                                           |
+| ----------------- | ------------------------------------------------------------------------------ |
+| **Framework**     | Next.js 16.2 (App Router), React 19.2, TypeScript 5                            |
+| **Styling**       | Tailwind CSS 4                                                                 |
+| **상태/데이터**   | TanStack Query 5, ky 2                                                         |
+| **UI/시각화**     | Recharts 3, lucide-react, diff                                                 |
+| **코드 품질**     | ESLint 9 (boundaries, simple-import-sort), Prettier 3, Husky 9, lint-staged 16 |
+| **테스트**        | Vitest 4, React Testing Library, Playwright (E2E)                              |
+| **배포/모니터링** | Vercel, Vercel Analytics, Speed Insights                                       |
+| **패키지 매니저** | pnpm                                                                           |
 
 <br/>
 
@@ -36,24 +36,26 @@ AI 기반 **코드 보안 취약점 분석** 및 **수정 가이드 제공** 서
 
 [Feature-Sliced Design(FSD)](https://feature-sliced.design/) 방법론을 따르며, `eslint-plugin-boundaries`로 레이어 간 의존 방향을 강제합니다.
 
-```
-app → widgets → features → entities → shared
+```text
+app → widgets → features → shared
 ```
 
 - 상위 레이어는 하위 레이어만 참조할 수 있고, 역방향 참조는 ESLint 규칙으로 차단됩니다.
+- 도메인 모델이 확장되면 `features`와 `shared` 사이에 `entities` 레이어를 추가할 수 있도록 ESLint 규칙이 구성되어 있습니다.
 
 <br/>
 
 ## 파일 구조
 
-```
+```text
 src/
 ├── app/                    # Next.js App Router (페이지, 라우팅, API Route)
 │   ├── analysis/           # 분석 요청 페이지
 │   ├── api/[...path]/      # BFF 프록시 API Route
 │   ├── login/              # 로그인 / OAuth 콜백
-│   ├── mypage/              # 마이페이지, 저장소 대시보드
-│   └── layout.tsx, page.tsx
+│   ├── mypage/             # 마이페이지, 저장소 대시보드 및 저장소 상세
+│   ├── layout.tsx          # 전역 레이아웃, Analytics, Speed Insights
+│   └── page.tsx            # 랜딩 페이지
 │
 ├── widgets/                # 여러 feature를 조합한 화면 단위 UI
 │   ├── header/
@@ -61,13 +63,14 @@ src/
 │   ├── login/
 │   └── mypage-sidebar/
 │
-├── features/                # 도메인 단위 기능
+├── features/               # 도메인 단위 기능
 │   ├── account/            # 계정 설정
 │   ├── analysis/           # 분석 요청 플로우 (저장소/브랜치 선택)
-│   └── repositories/        # 저장소 대시보드, 이슈 목록/상세, 코드 Diff
+│   ├── auth/               # GitHub OAuth 및 인증 UI/API
+│   └── repositories/       # 저장소 대시보드, 이슈 목록/상세, 코드 Diff
 │
 └── shared/                  # 공통 모듈
-    ├── api/                 # API client, endpoints, 타입
+    ├── api/                 # API client, BFF server client, endpoints, 타입
     ├── config/              # 라우트 등 설정
     ├── lib/                 # 공통 훅/유틸 (cn, formatDate, debounce 등)
     └── ui/                  # 공통 UI 컴포넌트 (Button, Dropdown, Toast 등)
@@ -82,12 +85,23 @@ pnpm install
 # 개발 서버 실행
 pnpm dev
 
+# 코드 검사
+pnpm lint
+
+# 단위/컴포넌트 테스트
+pnpm test
+pnpm test:watch
+
+# E2E 테스트 (Playwright)
+pnpm test:e2e
+pnpm test:e2e:ui
+
 # 프로덕션 빌드
 pnpm build
 pnpm start
 
-# E2E 테스트 (Playwright)
-pnpm test:e2e
+# 번들 분석
+pnpm analyze
 ```
 
 개발 서버 실행 후 [http://localhost:3000](http://localhost:3000) 에서 확인할 수 있습니다.

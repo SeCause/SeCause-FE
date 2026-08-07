@@ -1,12 +1,9 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
 import { SECTION_IDS } from '@/shared/config/routes';
-
-import AnalysisRequestPreview from './AnalysisRequestPreview';
-import IssueDetailPreview from './IssueDetailPreview';
-import RepoOverviewPreview from './RepoOverviewPreview';
 
 const TABS = [
   {
@@ -23,7 +20,13 @@ const TABS = [
   },
 ] as const;
 
-const TAB_PREVIEWS = [AnalysisRequestPreview, RepoOverviewPreview, IssueDetailPreview];
+// 탭 하나만 화면에 노출되므로, 나머지 두 프리뷰(및 recharts 등 각자의 의존성)는
+// 실제로 해당 탭을 선택하기 전까지 홈페이지 초기 번들에 포함시키지 않는다.
+const TAB_PREVIEWS = [
+  dynamic(() => import('./AnalysisRequestPreview')),
+  dynamic(() => import('./RepoOverviewPreview')),
+  dynamic(() => import('./IssueDetailPreview')),
+];
 
 export default function HowItWorksSection() {
   const [activeTab, setActiveTab] = useState(0);

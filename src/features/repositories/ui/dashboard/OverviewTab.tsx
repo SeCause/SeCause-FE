@@ -1,9 +1,16 @@
+import dynamic from 'next/dynamic';
+
 import type { RepositoryDashboard } from '@/features/repositories/model/types';
 
 import CodeDetailsCard from './CodeDetailsCard';
 import IssuesByTypeCard from './IssuesByTypeCard';
 import IssueSummaryCards from './IssueSummaryCards';
-import SeverityBreakdownChart from './SeverityBreakdownChart';
+
+const SeverityBreakdownChart = dynamic(() => import('./SeverityBreakdownChart'), {
+  loading: () => (
+    <div className="h-[13.275rem] animate-pulse rounded-xl border border-gray-200 bg-gray-50" />
+  ),
+});
 
 interface Props {
   dashboard: RepositoryDashboard;

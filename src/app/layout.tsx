@@ -4,19 +4,27 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/shared/config/site';
 import { Header } from '@/widgets/header';
 
 import { pretendard } from './fonts';
 import Providers from './providers';
 
 export const metadata: Metadata = {
-  title: 'SeCause',
-  description: 'AI 기반 코드 보안 취약점 분석 및 수정 가이드 제공 서비스',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
   openGraph: {
-    title: 'SeCause',
-    description: 'AI 기반 코드 보안 취약점 분석 및 수정 가이드 제공 서비스',
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
     type: 'website',
     locale: 'ko_KR',
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    images: [{ url: '/open_graph.jpg', width: 1200, height: 630 }],
   },
 };
 

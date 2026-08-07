@@ -1,4 +1,4 @@
-type ApiLogLayer = 'client' | 'bff';
+type ApiLogLayer = 'client' | 'bff' | 'rsc';
 
 interface ApiLogBase {
   layer: ApiLogLayer;
@@ -38,6 +38,31 @@ export function logApiResponse({ layer, method, url, status, durationMs, body }:
   }
 
   console.info(message, body);
+}
+
+/**
+ * "요청 하나를 감싸서" 시작 로그 → fetch 실행 → 응답 로그를 한 번에 처리하는 헬퍼.
+ * route.ts(BFF)와 server.ts(RSC prefetch)처럼 fetch를 직접 호출하는 서버 쪽 코드에서 쓴다.
+ * client.ts는 ky의 beforeRequest/afterResponse 훅으로 시점이 나뉘어 있어 이 모양으로
+ * 감쌀 수 없으므로 대상에서 제외한다.
+ */
+export async function withApiLogging(
+  base: ApiLogBase,
+  run: () => Promise<Response>,
+): Promise<Response> {
+  const startedAt = performance.now();
+  logApiRequest(base);
+
+  const response = await run();
+
+  logApiResponse({
+    ...base,
+    status: response.status,
+    durationMs: performance.now() - startedAt,
+    body: await readResponseBodyForLog(response),
+  });
+
+  return response;
 }
 
 export async function readResponseBodyForLog(response: Response) {

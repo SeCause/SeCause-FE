@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import type { Repository } from '@/features/repositories/model/types';
@@ -34,16 +34,10 @@ interface Props {
 }
 
 export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
-  const router = useRouter();
   const status = repo.analysisStatus;
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
-  const handleCardClick = () => {
-    router.push(ROUTES.repositoryDetail(repo.repositoryId));
-  };
-
-  const handleDeleteClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleDeleteClick = () => {
     setIsConfirmOpen(true);
   };
 
@@ -53,11 +47,14 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
   };
 
   return (
-    <div
-      onClick={handleCardClick}
-      className="flex cursor-pointer flex-col gap-3 rounded-xl border border-gray-200 px-4 py-3.5 shadow-sm hover:bg-gray-50 sm:px-5"
-    >
-      <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3 lg:items-center">
+    <article className="relative flex flex-col gap-3 rounded-xl border border-gray-200 px-4 py-3.5 shadow-sm transition-colors hover:bg-gray-50 sm:px-5">
+      <Link
+        href={ROUTES.repositoryDetail(repo.repositoryId)}
+        aria-label={`${repo.owner} / ${repo.name} 분석 결과 보기`}
+        className="focus-visible:outline-blue absolute inset-0 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2"
+      />
+
+      <div className="pointer-events-none flex min-w-0 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3 lg:items-center">
         <div className="flex min-w-0 gap-x-3 gap-y-2 max-lg:flex-col lg:items-center">
           <div className="flex items-center gap-2">
             <span className="text-label-lg text-blue max-w-full min-w-0 font-bold wrap-break-word sm:truncate">
@@ -73,16 +70,17 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
         </div>
 
         <button
+          type="button"
           onClick={handleDeleteClick}
           disabled={isDeleting}
           aria-label="레포지토리 삭제"
-          className="shrink-0 self-start rounded-lg p-1.5 text-gray-500 hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent"
+          className="pointer-events-auto relative z-10 shrink-0 self-start rounded-lg p-1.5 text-gray-500 hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent"
         >
           <Image src={TrashIcon} alt="" aria-hidden="true" className="h-4 w-4" />
         </button>
       </div>
 
-      <div className="flex min-w-0 items-start justify-between gap-2.5">
+      <div className="pointer-events-none flex min-w-0 items-start justify-between gap-2.5">
         <p className="text-body-md min-w-0 wrap-break-word text-gray-600">
           {repo.completedAt ? (
             <>
@@ -119,6 +117,6 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
         onConfirm={handleConfirmDelete}
         onCancel={() => setIsConfirmOpen(false)}
       />
-    </div>
+    </article>
   );
 }
