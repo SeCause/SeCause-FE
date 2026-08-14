@@ -17,7 +17,7 @@ src="https://github.com/user-attachments/assets/5c663f26-90cf-470e-899c-52d6ca8a
 <br />
 
 GitHub 저장소를 연동하면 코드를 분석해 보안 취약점을 탐지하고,
-**심각도별 분석 대시보드**와 **이슈별 수정 가이드**(Code Diff)를 제공합니다.
+**심각도별 분석 대시보드**와 **이슈별 수정 가이드**를 제공합니다.
 
 </div>
 
