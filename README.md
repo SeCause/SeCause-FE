@@ -102,6 +102,9 @@ pnpm start
 
 # 번들 분석
 pnpm analyze
+
+# API 타입 재생성 (백엔드 스펙 변경 시)
+pnpm generate:api-types
 ```
 
 개발 서버 실행 후 [http://localhost:3000](http://localhost:3000) 에서 확인할 수 있습니다.
