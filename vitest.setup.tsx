@@ -18,8 +18,6 @@ vi.mock('next/image', () => ({
 }));
 
 vi.mock('@/shared/lib/viewTransition', () => ({
-  // ViewTransition은 React canary 전용 API라 Next 빌드에서만 alias되어 존재하고,
-  // Vitest가 쓰는 순정 react 패키지에는 없다. 테스트에서는 자식을 그대로 렌더링해
-  // DOM 구조/접근성만 검증한다.
+  // 순정 react 패키지엔 없는 canary API라, 자식을 그대로 렌더링해 통과시킨다.
   ViewTransition: ({ children }: { children?: React.ReactNode }) => children,
 }));

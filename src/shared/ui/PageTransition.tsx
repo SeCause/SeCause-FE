@@ -1,5 +1,7 @@
 'use client';
 
+import './PageTransition.module.css';
+
 import { ViewTransition } from '@/shared/lib/viewTransition';
 
 interface Props {
