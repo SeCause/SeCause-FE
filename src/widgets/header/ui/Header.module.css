@@ -1,0 +1,17 @@
+/* root의 기본 크로스페이드에서 헤더를 빼내 깜빡임을 막는다. */
+:global(.site-header) {
+  view-transition-name: site-header;
+}
+
+:global(::view-transition-group(site-header)) {
+  animation: none;
+  z-index: 100;
+}
+
+:global(::view-transition-old(site-header)) {
+  display: none;
+}
+
+:global(::view-transition-new(site-header)) {
+  animation: none;
+}

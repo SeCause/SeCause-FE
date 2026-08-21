@@ -1,0 +1,27 @@
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes page-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+/* 인자는 클래스 선택자가 아닌 view-transition-class 식별자라 해시되면 안 된다. */
+:global(::view-transition-old(.page-fade-out)) {
+  animation: 80ms ease-out both page-fade-out;
+}
+
+:global(::view-transition-new(.page-fade-in)) {
+  animation: 100ms ease-in both page-fade-in;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :global(::view-transition-old(.page-fade-out)),
+  :global(::view-transition-new(.page-fade-in)) {
+    animation: none;
+  }
+}

@@ -3,8 +3,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
-import { getUser, postGithubLogin, postLogout } from '@/features/auth/api/auth';
-import type { GithubLoginResponse } from '@/features/auth/model/types';
+import { getUser, patchUser, postGithubLogin, postLogout } from '@/features/auth/api/auth';
+import type {
+  GetUserResponse,
+  GithubLoginResponse,
+  UpdateUserRequest,
+} from '@/features/auth/model/types';
 import { ROUTES } from '@/shared/config/routes';
 
 export function useGithubLogin() {
@@ -39,6 +43,17 @@ export function useLogout() {
     onSuccess: () => {
       queryClient.removeQueries({ queryKey: ['user'] });
       router.replace(ROUTES.login);
+    },
+  });
+}
+
+export function useUpdateUser() {
+  const queryClient = useQueryClient();
+
+  return useMutation<GetUserResponse, Error, UpdateUserRequest>({
+    mutationFn: patchUser,
+    onSuccess: (user) => {
+      queryClient.setQueryData(['user'], user);
     },
   });
 }

@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { getRepositoriesServer } from '@/features/repositories/api/repositories.server';
 import { repositoriesKey } from '@/features/repositories/model/queryKeys';
 import { createServerQueryClient } from '@/shared/lib/queryClient';
+import PageTransition from '@/shared/ui/PageTransition';
 
 import MyPageClient from './MyPageClient';
 
@@ -21,8 +22,10 @@ export default async function MyPage() {
   });
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <MyPageClient />
-    </HydrationBoundary>
+    <PageTransition>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <MyPageClient />
+      </HydrationBoundary>
+    </PageTransition>
   );
 }

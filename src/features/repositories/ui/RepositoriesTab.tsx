@@ -24,7 +24,8 @@ export default function RepositoriesTab() {
   const [page, setPage] = useState(1);
 
   const { data, isLoading, isError } = useRepositories();
-  const { mutate: deleteRepository, isPending: isDeleting } = useDeleteRepository();
+  const { mutate: deleteRepository } = useDeleteRepository();
+  const [deletingId, setDeletingId] = useState<number | null>(null);
 
   const repositories = data?.repositories ?? [];
   const filtered = useMemo(() => {
@@ -45,8 +46,10 @@ export default function RepositoriesTab() {
   }, []);
 
   const handleDelete = (repositoryId: number) => {
+    setDeletingId(repositoryId);
     deleteRepository(repositoryId, {
       onError: () => showToast('레포지토리 삭제 중 오류가 발생했습니다.'),
+      onSettled: () => setDeletingId(null),
     });
   };
 
@@ -77,7 +80,7 @@ export default function RepositoriesTab() {
               key={repo.repositoryId}
               repo={repo}
               onDelete={handleDelete}
-              isDeleting={isDeleting}
+              isDeleting={deletingId === repo.repositoryId}
             />
           ))
         ) : repositories.length === 0 ? (

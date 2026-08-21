@@ -16,3 +16,8 @@ vi.mock('next/image', () => ({
     return React.createElement('img', props);
   },
 }));
+
+vi.mock('@/shared/lib/viewTransition', () => ({
+  // 순정 react 패키지엔 없는 canary API라, 자식을 그대로 렌더링해 통과시킨다.
+  ViewTransition: ({ children }: { children?: React.ReactNode }) => children,
+}));
