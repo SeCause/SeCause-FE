@@ -127,7 +127,7 @@
   }
 }
 
-/* ===== View Transitions */
+/* ===== View Transitions (PageTransition 컴포넌트) ===== */
 @keyframes page-fade-in {
   from {
     opacity: 0;
@@ -142,11 +142,11 @@
   }
 }
 
-::view-transition-old(root) {
+::view-transition-old(.page-fade-out) {
   animation: 150ms ease-out both page-fade-out;
 }
 
-::view-transition-new(root) {
+::view-transition-new(.page-fade-in) {
   animation: 200ms ease-in both page-fade-in;
 }
 

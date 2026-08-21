@@ -6,6 +6,7 @@ import { RepositoryDashboard } from '@/features/repositories';
 import { getRepositoryDashboardServer } from '@/features/repositories/api/repositories.server';
 import { repositoryDashboardKey } from '@/features/repositories/model/queryKeys';
 import { createServerQueryClient } from '@/shared/lib/queryClient';
+import PageTransition from '@/shared/ui/PageTransition';
 
 export const metadata: Metadata = {
   title: '대시보드',
@@ -32,8 +33,10 @@ export default async function RepositoryDetailPage({ params }: Props) {
   });
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <RepositoryDashboard repositoryId={repositoryId} />
-    </HydrationBoundary>
+    <PageTransition>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <RepositoryDashboard repositoryId={repositoryId} />
+      </HydrationBoundary>
+    </PageTransition>
   );
 }
