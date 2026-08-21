@@ -50,7 +50,9 @@ export default function Header() {
           <Link
             href={ROUTES.home}
             className="text-blue text-heading-md hidden md:block"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={() => {
+              if (isHome) window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           >
             SeCause
           </Link>
@@ -62,7 +64,7 @@ export default function Header() {
           href={ROUTES.home}
           className="text-blue text-heading-md md:hidden"
           onClick={() => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (isHome) window.scrollTo({ top: 0, behavior: 'smooth' });
             setIsMobileMenuOpen(false);
           }}
         >
