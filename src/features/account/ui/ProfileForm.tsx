@@ -3,13 +3,33 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
+import { useUpdateUser } from '@/features/auth/hooks/useAuthApi';
 import type { GetUserResponse } from '@/features/auth/model/types';
 import CameraIcon from '@/icons/icon_camera.svg';
 import Button from '@/shared/ui/Button';
 import Input from '@/shared/ui/Input';
+import { useToast } from '@/shared/ui/Toast';
 
 export default function ProfileForm({ user }: { user: GetUserResponse }) {
   const [name, setName] = useState(user.name);
+  const { showToast } = useToast();
+  const { mutate: updateUser, isPending } = useUpdateUser();
+
+  const trimmedName = name.trim();
+  const isUnchanged = trimmedName === user.name;
+
+  const handleSave = () => {
+    if (!trimmedName || isUnchanged) return;
+
+    updateUser(
+      { name: trimmedName },
+      {
+        onSuccess: () => showToast('프로필이 저장됐습니다.', 'success'),
+        onError: (error) =>
+          showToast(error instanceof Error ? error.message : '프로필 저장 중 오류가 발생했습니다.'),
+      },
+    );
+  };
 
   return (
     <div className="flex flex-col gap-6 md:flex-row md:gap-10">
@@ -44,12 +64,15 @@ export default function ProfileForm({ user }: { user: GetUserResponse }) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="이름"
+            maxLength={50}
             className="flex-1"
           />
         </div>
 
         <div className="flex justify-end">
-          <Button>저장</Button>
+          <Button onClick={handleSave} disabled={isPending || isUnchanged || !trimmedName}>
+            {isPending ? '저장 중...' : '저장'}
+          </Button>
         </div>
       </div>
     </div>
