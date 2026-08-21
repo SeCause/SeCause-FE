@@ -1,6 +1,6 @@
 'use client';
 
-import { ViewTransition } from 'react';
+import { ViewTransition } from '@/shared/lib/viewTransition';
 
 interface Props {
   children: React.ReactNode;
