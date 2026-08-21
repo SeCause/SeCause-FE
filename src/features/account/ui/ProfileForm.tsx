@@ -36,7 +36,7 @@ export default function ProfileForm({ user }: { user: GetUserResponse }) {
       <div className="flex min-w-0 flex-1 flex-col gap-5">
         <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-2">
           <span className="text-body-lg shrink-0 text-gray-700 md:w-12">이메일</span>
-          <Input type="email" value={user.email} readOnly className="md:flex-1" />
+          <p className="text-body-lg ml-3 text-gray-900">{user.email}</p>
         </div>
         <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-2">
           <span className="text-body-lg shrink-0 text-gray-700 md:w-12">이름</span>
