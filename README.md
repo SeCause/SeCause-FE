@@ -169,4 +169,6 @@ pnpm analyze
 
 ### API 타입 재생성 (백엔드 스펙 변경 시)
 
+```bash
 pnpm generate:api-types
+```
