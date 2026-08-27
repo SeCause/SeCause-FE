@@ -57,17 +57,17 @@ SeCause는 GitHub 저장소의 코드를 분석해 보안 취약점을 탐지하
 
 ## 기술 스택
 
-| 구분              | 스택                                                                           |
-| ----------------- | ------------------------------------------------------------------------------ |
-| **Framework**     | Next.js 16.2 (App Router), React 19.2, TypeScript 5                            |
-| **Styling**       | Tailwind CSS 4                                                                 |
-| **상태/데이터**   | TanStack Query 5, ky 2                                                         |
-| **UI/시각화**     | Recharts 3, lucide-react, diff                                                 |
-| **UI 개발/검증**  | Storybook 10, Chromatic                                                        |
-| **코드 품질**     | ESLint 9 (boundaries, simple-import-sort), Prettier 3, Husky 9, lint-staged 16 |
-| **테스트**        | Vitest 4, React Testing Library, Playwright (E2E)                              |
-| **배포/모니터링** | Vercel, Vercel Analytics, Speed Insights                                       |
-| **패키지 매니저** | pnpm                                                                           |
+| 구분              | 스택                                                                                                                                                                                                                                                                                                                                                                            |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Framework**     | ![Next.js](https://img.shields.io/badge/Next.js-16.2-000000?style=flat-square&logo=nextdotjs&logoColor=white) ![React](https://img.shields.io/badge/React-19.2-61DAFB?style=flat-square&logo=react&logoColor=black) ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)                                           |
+| **Styling**       | ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)                                                                                                                                                                                                                                                          |
+| **상태/데이터**   | ![TanStack Query](https://img.shields.io/badge/TanStack_Query-5-FF4154?style=flat-square&logo=reactquery&logoColor=white) ![ky](https://img.shields.io/badge/ky-2-333333?style=flat-square&logo=npm&logoColor=white)                                                                                                                                                            |
+| **UI/시각화**     | ![Recharts](https://img.shields.io/badge/Recharts-3-22B5BF?style=flat-square&logo=chartdotjs&logoColor=white) ![lucide-react](https://img.shields.io/badge/lucide--react-1-F56565?style=flat-square&logo=lucide&logoColor=white) ![diff](https://img.shields.io/badge/diff-9-CB3837?style=flat-square&logo=npm&logoColor=white)                                                 |
+| **UI 개발/검증**  | ![Storybook](https://img.shields.io/badge/Storybook-10-FF4785?style=flat-square&logo=storybook&logoColor=white) ![Chromatic](https://img.shields.io/badge/Chromatic-Visual_Testing-FC521F?style=flat-square&logo=chromatic&logoColor=white)                                                                                                                                     |
+| **코드 품질**     | ![ESLint](https://img.shields.io/badge/ESLint-9-4B32C3?style=flat-square&logo=eslint&logoColor=white) ![Prettier](https://img.shields.io/badge/Prettier-3-F7B93E?style=flat-square&logo=prettier&logoColor=black) ![Husky](https://img.shields.io/badge/Husky-9-333333?style=flat-square) ![lint-staged](https://img.shields.io/badge/lint--staged-16-2F74C0?style=flat-square) |
+| **테스트**        | ![Vitest](https://img.shields.io/badge/Vitest-4-6E9F18?style=flat-square&logo=vitest&logoColor=white) ![Testing Library](https://img.shields.io/badge/Testing_Library-React-E33332?style=flat-square&logo=testinglibrary&logoColor=white) ![Playwright](https://img.shields.io/badge/Playwright-E2E-2EAD33?style=flat-square&logo=playwright&logoColor=white)                   |
+| **배포/모니터링** | ![Vercel](https://img.shields.io/badge/Vercel-Deploy-000000?style=flat-square&logo=vercel&logoColor=white) ![Vercel Analytics](https://img.shields.io/badge/Vercel_Analytics-Monitoring-000000?style=flat-square&logo=vercel&logoColor=white) ![Speed Insights](https://img.shields.io/badge/Speed_Insights-Web_Vitals-000000?style=flat-square&logo=vercel&logoColor=white)    |
+| **패키지 매니저** | ![pnpm](https://img.shields.io/badge/pnpm-10-F69220?style=flat-square&logo=pnpm&logoColor=white)                                                                                                                                                                                                                                                                                |
 
 <br />
 
