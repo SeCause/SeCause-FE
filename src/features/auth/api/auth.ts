@@ -1,5 +1,6 @@
 import { isHTTPError } from 'ky';
 
+import { getUserResponseSchema, githubLoginResponseSchema } from '@/features/auth/model/schema';
 import type {
   GetUserResponse,
   GithubLoginResponse,
@@ -9,23 +10,24 @@ import type {
 import { apiClient } from '@/shared/api/client';
 import { ENDPOINTS } from '@/shared/api/endpoints';
 import type { components } from '@/shared/api/schema';
+import { parseApiResult } from '@/shared/api/validate';
 
 type ErrorBody = Pick<components['schemas']['ApiResponse'], 'message' | 'error'>;
 
 export async function postGithubLogin(body: LoginRequest): Promise<GithubLoginResponse> {
-  const res = await apiClient.post<GithubLoginResponse>(ENDPOINTS.auth.githubLogin, { json: body });
-  return res.result;
+  const res = await apiClient.post<unknown>(ENDPOINTS.auth.githubLogin, { json: body });
+  return parseApiResult(githubLoginResponseSchema, res.result);
 }
 
 export async function getUser(): Promise<GetUserResponse> {
-  const res = await apiClient.get<GetUserResponse>(ENDPOINTS.users.me);
-  return res.result;
+  const res = await apiClient.get<unknown>(ENDPOINTS.users.me);
+  return parseApiResult(getUserResponseSchema, res.result);
 }
 
 export async function patchUser(body: UpdateUserRequest): Promise<GetUserResponse> {
   try {
-    const res = await apiClient.patch<GetUserResponse>(ENDPOINTS.users.me, { json: body });
-    return res.result;
+    const res = await apiClient.patch<unknown>(ENDPOINTS.users.me, { json: body });
+    return parseApiResult(getUserResponseSchema, res.result);
   } catch (error) {
     if (isHTTPError(error)) {
       const body = (await error.response.json().catch(() => ({}))) as ErrorBody;
