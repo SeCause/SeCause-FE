@@ -1,7 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
 
 import {
   AnalysisProgress,
@@ -29,8 +29,10 @@ const HEADINGS: Record<AnalysisStep, { title: string; subtitle: string }> = {
   },
 };
 
-export default function AnalysisPage() {
+function AnalysisPageContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialAccountName = searchParams.get('account');
   const { showToast } = useToast();
   const [step, setStep] = useState<AnalysisStep>('repo');
   const [selectedRepo, setSelectedRepo] = useState<AnalysisRepository | null>(null);
@@ -112,7 +114,11 @@ export default function AnalysisPage() {
 
               <div className="rounded-2xl border border-gray-300 bg-gray-100/40 p-6">
                 {step === 'repo' ? (
-                  <RepoStep value={selectedRepo} onChange={handleRepoSelect} />
+                  <RepoStep
+                    value={selectedRepo}
+                    onChange={handleRepoSelect}
+                    initialAccountName={initialAccountName}
+                  />
                 ) : (
                   <BranchStep
                     repo={selectedRepo!}
@@ -136,5 +142,13 @@ export default function AnalysisPage() {
         </div>
       </div>
     </PageTransition>
+  );
+}
+
+export default function AnalysisPage() {
+  return (
+    <Suspense fallback={null}>
+      <AnalysisPageContent />
+    </Suspense>
   );
 }

@@ -10,6 +10,7 @@ import { useClickOutside } from '@/shared/lib/useClickOutside';
 export interface DropdownOption {
   value: string;
   label: string;
+  icon?: React.ReactNode;
 }
 
 interface Props {
@@ -71,9 +72,13 @@ export default function Dropdown({
             {leadingIcon}
           </span>
         )}
+        {!leadingIcon && selected?.icon && (
+          <span className="shrink-0 text-gray-700">{selected.icon}</span>
+        )}
         <span
+          title={selected?.label}
           className={cn(
-            'flex-1 text-left font-medium',
+            'min-w-0 flex-1 truncate text-left font-medium',
             selected ? 'text-gray-900' : 'text-gray-500',
           )}
         >
@@ -121,6 +126,9 @@ export default function Dropdown({
                   <span className="shrink-0 text-gray-700" aria-hidden="true">
                     {leadingIcon}
                   </span>
+                )}
+                {!leadingIcon && option.icon && (
+                  <span className="shrink-0 text-gray-700">{option.icon}</span>
                 )}
                 {option.label}
               </button>

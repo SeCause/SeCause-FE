@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
 
 import {
@@ -8,6 +7,7 @@ import {
   useGithubAccounts,
 } from '@/features/analysis/hooks/useAnalysisApi';
 import type { AnalysisRepository } from '@/features/analysis/model/types';
+import { createGithubAccountOptions } from '@/features/analysis/ui/githubAccountOptions';
 import Dropdown from '@/shared/ui/Dropdown';
 import SearchBar from '@/shared/ui/SearchBar';
 
@@ -16,23 +16,23 @@ import RepoIcon from './RepoIcon';
 interface Props {
   value: AnalysisRepository | null;
   onChange: (repo: AnalysisRepository) => void;
+  initialAccountName?: string | null;
 }
 
-export default function RepoStep({ value: selectedRepo, onChange }: Props) {
+export default function RepoStep({ value: selectedRepo, onChange, initialAccountName }: Props) {
   const [search, setSearch] = useState('');
   const [selectedAccount, setSelectedAccount] = useState<string | null>(
-    () => selectedRepo?.owner ?? null,
+    () => selectedRepo?.owner ?? initialAccountName ?? null,
   );
 
   const { data: accounts = [] } = useGithubAccounts();
-  const activeAccount = selectedAccount ?? accounts[0]?.name ?? null;
+  const activeAccount = accounts.some((account) => account.name === selectedAccount)
+    ? selectedAccount
+    : (accounts[0]?.name ?? null);
   const { data: repositories = [], isLoading: isReposLoading } =
     useAnalysisRepositories(activeAccount);
 
-  const accountOptions = accounts.map((account) => ({
-    value: account.name,
-    label: account.type === 'ORGANIZATION' ? `${account.name} (Organization)` : account.name,
-  }));
+  const accountOptions = createGithubAccountOptions(accounts);
 
   const filtered = repositories.filter((r) => r.name.toLowerCase().includes(search.toLowerCase()));
 
@@ -52,16 +52,8 @@ export default function RepoStep({ value: selectedRepo, onChange }: Props) {
           value={activeAccount}
           onChange={handleAccountChange}
           aria-labelledby="account-label"
-          leadingIcon={
-            <Image
-              src="/icons/icon_github.svg"
-              width={20}
-              height={20}
-              alt=""
-              aria-hidden="true"
-              className="brightness-0"
-            />
-          }
+          className="w-48"
+          buttonClassName="w-full"
         />
       </div>
 

@@ -3,6 +3,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
+import { createGithubAccountOptions } from '@/features/analysis';
+import type { GithubAccount } from '@/features/analysis/model/types';
 import AccountIcon from '@/icons/icon_account.svg';
 import RepositoryIcon from '@/icons/icon_repository.svg';
 import SidebarIcon from '@/icons/icon_sidebar.svg';
@@ -12,11 +14,6 @@ import Dropdown from '@/shared/ui/Dropdown';
 
 export type MyPageTab = 'repositories' | 'account';
 
-const ACCOUNT_OPTIONS = [
-  { value: 'personal', label: '내 계정' },
-  { value: 'org', label: '조직' },
-];
-
 const NAV_ITEMS: { id: MyPageTab; label: string; icon: string }[] = [
   { id: 'repositories', label: 'Repositories', icon: RepositoryIcon },
   { id: 'account', label: 'Account', icon: AccountIcon },
@@ -25,11 +22,20 @@ const NAV_ITEMS: { id: MyPageTab; label: string; icon: string }[] = [
 interface Props {
   activeTab: MyPageTab;
   onTabChange: (tab: MyPageTab) => void;
+  accounts: GithubAccount[];
+  selectedAccount: string | null;
+  onAccountChange: (accountName: string) => void;
 }
 
-export default function MyPageSidebar({ activeTab, onTabChange }: Props) {
+export default function MyPageSidebar({
+  activeTab,
+  onTabChange,
+  accounts,
+  selectedAccount,
+  onAccountChange,
+}: Props) {
   const [isOpen, setIsOpen] = useState(true);
-  const [selectedAccount, setSelectedAccount] = useState(ACCOUNT_OPTIONS[0].value);
+  const accountOptions = createGithubAccountOptions(accounts);
 
   return (
     <aside
@@ -62,9 +68,10 @@ export default function MyPageSidebar({ activeTab, onTabChange }: Props) {
         )}
       >
         <Dropdown
-          options={ACCOUNT_OPTIONS}
+          options={accountOptions}
           value={selectedAccount}
-          onChange={setSelectedAccount}
+          onChange={onAccountChange}
+          placeholder="GitHub 계정 선택"
           trailingIcon={<Image src={SwitchIcon} alt="" aria-hidden="true" width={12} height={22} />}
           fullWidth
         />
