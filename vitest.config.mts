@@ -15,6 +15,20 @@ export default defineConfig({
     ],
   },
   test: {
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html', 'lcov'],
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: ['src/**/*.stories.{ts,tsx}', 'src/**/*.test.{ts,tsx}', 'src/**/*.d.ts'],
+      // 지금 수치를 하한선으로 고정해 커버리지가 역행하지 않도록 막는다.
+      // 테스트를 추가해 실제 수치가 올라가면 이 값도 같이 올린다.
+      thresholds: {
+        statements: 13,
+        branches: 9,
+        functions: 12,
+        lines: 13,
+      },
+    },
     projects: [
       {
         extends: true,
