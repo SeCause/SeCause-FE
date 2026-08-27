@@ -29,5 +29,6 @@ export const ENDPOINTS = {
     branches: (ownerName: string, repositoryName: string) =>
       `analysis/request/repositories/${ownerName}/${repositoryName}/branches`,
     request: 'analysis/request',
+    status: (analysisId: number) => `analysis/request/${analysisId}/status`,
   },
 } as const;

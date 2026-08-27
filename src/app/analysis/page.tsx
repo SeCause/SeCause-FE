@@ -1,16 +1,19 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
+  AnalysisProgress,
   type AnalysisRepository,
   AnalysisSidebar,
   type AnalysisStep,
   BranchStep,
   RepoStep,
+  useAnalysisStatus,
   useCreateAnalysisRequest,
 } from '@/features/analysis';
+import type { AnalysisRequestResult } from '@/features/analysis/model/types';
 import { ROUTES } from '@/shared/config/routes';
 import PageTransition from '@/shared/ui/PageTransition';
 import { useToast } from '@/shared/ui/Toast';
@@ -32,7 +35,17 @@ export default function AnalysisPage() {
   const [step, setStep] = useState<AnalysisStep>('repo');
   const [selectedRepo, setSelectedRepo] = useState<AnalysisRepository | null>(null);
   const [selectedBranch, setSelectedBranch] = useState<string | null>(null);
+  const [analysisRequest, setAnalysisRequest] = useState<AnalysisRequestResult | null>(null);
   const { mutate: createAnalysisRequest, isPending } = useCreateAnalysisRequest();
+  const { data: analysisStatus, isError: isStatusError } = useAnalysisStatus(
+    analysisRequest?.analysisId ?? null,
+  );
+
+  useEffect(() => {
+    if (analysisStatus?.analysisStatus === 'COMPLETED' && analysisRequest) {
+      router.replace(ROUTES.repositoryDetail(analysisRequest.repositoryId));
+    }
+  }, [analysisRequest, analysisStatus?.analysisStatus, router]);
 
   const handleRepoSelect = (repo: AnalysisRepository) => {
     setSelectedRepo(repo);
@@ -54,14 +67,28 @@ export default function AnalysisPage() {
         branch: selectedBranch,
       },
       {
-        onSuccess: () => {
-          showToast('분석 요청이 완료됐습니다.', 'success');
-          router.push(ROUTES.mypage);
+        onSuccess: (result) => {
+          setAnalysisRequest(result);
+          showToast('분석 요청을 접수했습니다.', 'success');
         },
         onError: () => showToast('분석 요청 중 오류가 발생했습니다.'),
       },
     );
   };
+
+  if (analysisRequest) {
+    return (
+      <PageTransition>
+        <AnalysisProgress
+          status={analysisStatus?.analysisStatus ?? analysisRequest.analysisStatus}
+          progressPercent={analysisStatus?.progressPercent ?? 0}
+          failureReason={analysisStatus?.failureReason ?? null}
+          isError={isStatusError}
+          onBack={() => setAnalysisRequest(null)}
+        />
+      </PageTransition>
+    );
+  }
 
   return (
     <PageTransition>

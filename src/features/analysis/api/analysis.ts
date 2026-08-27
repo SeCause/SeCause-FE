@@ -2,6 +2,7 @@ import type {
   AnalysisRepository,
   AnalysisRequestParams,
   AnalysisRequestResult,
+  AnalysisStatusResult,
   GithubAccount,
   GithubBranch,
 } from '@/features/analysis/model/types';
@@ -37,5 +38,10 @@ export async function postAnalysisRequest(
   const res = await apiClient.post<AnalysisRequestResult>(ENDPOINTS.analysis.request, {
     json: body,
   });
+  return res.result;
+}
+
+export async function getAnalysisStatus(analysisId: number): Promise<AnalysisStatusResult> {
+  const res = await apiClient.get<AnalysisStatusResult>(ENDPOINTS.analysis.status(analysisId));
   return res.result;
 }

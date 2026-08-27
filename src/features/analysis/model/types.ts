@@ -24,10 +24,22 @@ export interface AnalysisRequestParams {
   branch: string;
 }
 
-export type AnalysisRequestStatus = 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'FAILED';
+export type AnalysisRequestStatus =
+  | 'PENDING'
+  | 'IN_PROGRESS'
+  | 'COMPLETED'
+  | 'FAILED'
+  | 'CANCELLED';
 
 export interface AnalysisRequestResult {
   analysisId: number;
   repositoryId: number;
   analysisStatus: AnalysisRequestStatus;
+}
+
+export interface AnalysisStatusResult {
+  analysisId: number;
+  analysisStatus: AnalysisRequestStatus;
+  progressPercent: number;
+  failureReason: string | null;
 }
