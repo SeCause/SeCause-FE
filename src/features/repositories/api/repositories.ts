@@ -66,10 +66,13 @@ export async function getRepositoryIssueFiles(
     return getMockRepositoryIssueFiles(severity);
   }
 
-  const res = await apiClient.get<RepositoryIssueFile[]>(ENDPOINTS.issues.files(repositoryId), {
-    searchParams: severity && severity !== 'ALL' ? { severity } : undefined,
-  });
-  return res.result;
+  const res = await apiClient.get<RepositoryIssueFile[] | { files: RepositoryIssueFile[] }>(
+    ENDPOINTS.issues.files(repositoryId),
+    {
+      searchParams: severity && severity !== 'ALL' ? { severity } : undefined,
+    },
+  );
+  return Array.isArray(res.result) ? res.result : res.result.files;
 }
 
 export async function getRepositoryIssueDetail(
