@@ -61,13 +61,16 @@ pnpm test           # 두 Vitest 프로젝트를 함께 실행
 
 Storybook을 실행한 상태에서는 사이드바 하단의 테스트 위젯으로 전체·컴포넌트·개별 Story 단위 테스트를 실행하고 실패한 Story를 바로 디버깅할 수 있다.
 
-## Chromatic 적용 시점
+## Chromatic
 
-Chromatic은 Story를 클라우드 브라우저에서 캡처하고 이전 기준 이미지와 비교하는 시각적 회귀 검사 도구다. 로컬 Story 구조가 안정된 후 다음 순서로 도입한다.
+Chromatic은 Story의 시각적 변경을 비교하고 Storybook을 배포한다. GitHub Actions에서 사용하려면 Repository secret을 등록한다.
 
-1. `shared/ui`의 안정된 Story만 첫 기준 이미지로 등록한다.
-2. 랜덤 값, 현재 시간, 실제 API 응답 등 매번 달라지는 데이터를 Story에서 제거한다.
-3. 의도한 UI 변경은 기준 이미지로 승인하고, 의도하지 않은 차이는 수정한다.
-4. 팀 사용량과 검토 흐름이 정해진 뒤 PR 필수 검사 여부를 결정한다.
+```text
+CHROMATIC_PROJECT_TOKEN
+```
 
-초기부터 모든 페이지를 캡처하면 변경 잡음과 스냅샷 사용량이 커질 수 있으므로 단계적으로 확장한다.
+로컬에서는 `.env`에 같은 환경변수를 추가한 뒤 실행한다.
+
+```bash
+pnpm chromatic
+```
