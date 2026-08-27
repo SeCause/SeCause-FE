@@ -147,6 +147,15 @@ pnpm test
 pnpm test:watch
 ```
 
+### Storybook
+
+```bash
+pnpm storybook
+pnpm build-storybook
+```
+
+Storybook은 http://localhost:6006에서 확인할 수 있습니다. Story 작성 기준과 CDD 작업 흐름은 [`docs/storybook.md`](docs/storybook.md)를 참고해주세요.
+
 ### E2E 테스트
 
 ```bash
