@@ -1,5 +1,6 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 
 import { getRepositoriesServer } from '@/features/repositories/api/repositories.server';
 import { repositoriesKey } from '@/features/repositories/model/queryKeys';
@@ -24,7 +25,9 @@ export default async function MyPage() {
   return (
     <PageTransition>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <MyPageClient />
+        <Suspense fallback={null}>
+          <MyPageClient />
+        </Suspense>
       </HydrationBoundary>
     </PageTransition>
   );
