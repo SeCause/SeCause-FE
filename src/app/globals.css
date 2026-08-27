@@ -9,6 +9,10 @@
   /* brand */
   --color-blue: #487cff;
   --color-blue-dark: #3a6fe0;
+  --color-blue-action: #356de6;
+  --color-blue-action-hover: #2d61d3;
+  --color-danger-action: #df2730;
+  --color-danger-action-hover: #c91f28;
 
   /* severity */
   --color-severity-critical: #fc4f4f;

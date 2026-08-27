@@ -5,8 +5,8 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const VARIANT_STYLES = {
-  primary: 'bg-blue text-white hover:bg-blue-dark',
-  danger: 'bg-red-500 text-white hover:bg-red-600',
+  primary: 'bg-blue-action hover:bg-blue-action-hover text-white',
+  danger: 'bg-danger-action hover:bg-danger-action-hover text-white',
 } as const;
 
 export default function Button({ variant = 'primary', className, children, ...props }: Props) {

@@ -15,6 +15,7 @@
 /playwright-report
 /test-results
 /blob-report
+/storybook-static
 
 # next.js
 /.next/
@@ -35,6 +36,12 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+
+# Chromatic
+build-storybook.log
+chromatic.log
+chromatic-build-*.xml
+chromatic-diagnostics.json
 
 # vercel
 .vercel

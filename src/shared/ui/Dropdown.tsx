@@ -79,7 +79,7 @@ export default function Dropdown({
           title={selected?.label}
           className={cn(
             'min-w-0 flex-1 truncate text-left font-medium',
-            selected ? 'text-gray-900' : 'text-gray-500',
+            selected ? 'text-gray-900' : 'text-gray-700',
           )}
         >
           {selected ? selected.label : placeholder}

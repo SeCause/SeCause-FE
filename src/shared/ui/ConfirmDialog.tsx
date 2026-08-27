@@ -54,7 +54,7 @@ export default function ConfirmDialog({
       >
         <h2 className="text-label-lg text-gray-900">{title}</h2>
         {description && (
-          <p className="text-body-md mt-2 whitespace-pre-line text-gray-600">{description}</p>
+          <p className="text-body-md mt-2 whitespace-pre-line text-gray-700">{description}</p>
         )}
 
         <div className="mt-6 flex justify-end gap-2">
