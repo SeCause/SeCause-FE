@@ -51,7 +51,7 @@ export const Primary = {} satisfies Story;
 
 ## Story 테스트 실행
 
-Storybook의 Vitest 애드온은 각 Story를 Chromium에서 렌더링하고, `play` 함수가 있으면 사용자 상호작용과 assertion까지 실행한다. 전역 a11y 설정이 `error`이므로 axe 접근성 위반도 테스트 실패로 처리한다.
+Storybook의 Vitest 애드온은 각 Story를 Chromium에서 렌더링하고, `play` 함수가 있으면 사용자 상호작용과 assertion까지 실행한다. axe 접근성 위반은 현재 `a11y.test: 'todo'`로 설정되어 테스트를 실패시키지 않고 위반 내역만 로그로 남긴다
 
 ```bash
 pnpm test:storybook # Story 렌더링, play, a11y 테스트
