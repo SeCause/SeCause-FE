@@ -63,6 +63,7 @@ SeCause는 GitHub 저장소의 코드를 분석해 보안 취약점을 탐지하
 | **Styling**       | Tailwind CSS 4                                                                 |
 | **상태/데이터**   | TanStack Query 5, ky 2                                                         |
 | **UI/시각화**     | Recharts 3, lucide-react, diff                                                 |
+| **UI 개발/검증**  | Storybook 10, Chromatic                                                        |
 | **코드 품질**     | ESLint 9 (boundaries, simple-import-sort), Prettier 3, Husky 9, lint-staged 16 |
 | **테스트**        | Vitest 4, React Testing Library, Playwright (E2E)                              |
 | **배포/모니터링** | Vercel, Vercel Analytics, Speed Insights                                       |
