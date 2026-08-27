@@ -17,19 +17,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Critical = {} satisfies Story;
-
-export const High = {
-  args: { severity: 'HIGH' },
-} satisfies Story;
-
-export const Medium = {
-  args: { severity: 'MEDIUM' },
-} satisfies Story;
-
-export const Low = {
-  args: { severity: 'LOW' },
-} satisfies Story;
+export const Playground = {} satisfies Story;
 
 export const AllSeverities = {
   render: () => (

@@ -1,31 +1,47 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { Building2, UserRound } from 'lucide-react';
+import { FileText, Folder } from 'lucide-react';
 import { useState } from 'react';
 import { expect, fn, userEvent, within } from 'storybook/test';
 
 import Dropdown from './Dropdown';
 
-const ACCOUNT_OPTIONS = [
+const OPTIONS = [
   {
-    value: 'secause-user',
-    label: 'secause-user',
-    icon: <UserRound size={18} aria-label="개인 계정" />,
+    value: 'option-1',
+    label: '첫 번째 옵션',
   },
   {
-    value: 'secause-organization',
-    label: 'secause-organization-with-a-very-long-name',
-    icon: <Building2 size={18} aria-label="조직" />,
+    value: 'option-2',
+    label: '두 번째 옵션',
   },
 ];
+
+const ICON_OPTIONS = [
+  {
+    value: 'folder',
+    label: '폴더',
+    icon: <Folder size={18} aria-hidden="true" />,
+  },
+  {
+    value: 'document',
+    label: '문서',
+    icon: <FileText size={18} aria-hidden="true" />,
+  },
+];
+
+const LONG_LABEL_OPTION = {
+  value: 'long-label',
+  label: '고정 너비에서 말줄임 처리를 확인하기 위한 매우 긴 옵션 이름',
+};
 
 const meta = {
   title: 'Shared/Dropdown',
   component: Dropdown,
   args: {
-    options: ACCOUNT_OPTIONS,
+    options: OPTIONS,
     value: null,
     onChange: fn(),
-    placeholder: 'GitHub 계정 선택',
+    placeholder: '옵션을 선택해주세요',
     className: 'w-48',
     buttonClassName: 'w-full',
   },
@@ -52,23 +68,31 @@ export const Placeholder = {} satisfies Story;
 
 export const Selected = {
   args: {
-    value: ACCOUNT_OPTIONS[0].value,
+    value: OPTIONS[0].value,
   },
 } satisfies Story;
 
 export const LongLabel = {
   args: {
-    value: ACCOUNT_OPTIONS[1].value,
+    options: [LONG_LABEL_OPTION],
+    value: LONG_LABEL_OPTION.value,
   },
 } satisfies Story;
 
-export const SelectOrganization = {
+export const WithIcon = {
+  args: {
+    options: ICON_OPTIONS,
+    value: ICON_OPTIONS[0].value,
+  },
+} satisfies Story;
+
+export const Interaction = {
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
-    await userEvent.click(canvas.getByRole('button', { name: 'GitHub 계정 선택' }));
-    await userEvent.click(canvas.getByRole('option', { name: /조직/ }));
+    await userEvent.click(canvas.getByRole('button', { name: '옵션을 선택해주세요' }));
+    await userEvent.click(canvas.getByRole('option', { name: '두 번째 옵션' }));
 
-    await expect(args.onChange).toHaveBeenCalledWith('secause-organization');
+    await expect(args.onChange).toHaveBeenCalledWith('option-2');
   },
 } satisfies Story;

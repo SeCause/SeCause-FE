@@ -4,12 +4,13 @@ import { userEvent, within } from 'storybook/test';
 import Button from './Button';
 import { ToastProvider, useToast } from './Toast';
 
-interface ToastDemoProps {
+interface ToastStoryExampleProps {
   message: string;
   type: 'success' | 'error';
 }
 
-function ToastDemo({ message, type }: ToastDemoProps) {
+// Toast는 Provider의 훅으로 실행되므로, Story에서 알림을 호출하기 위한 전용 예시 컴포넌트다.
+function ToastStoryExample({ message, type }: ToastStoryExampleProps) {
   const { showToast } = useToast();
 
   return (
@@ -24,7 +25,15 @@ function ToastDemo({ message, type }: ToastDemoProps) {
 
 const meta = {
   title: 'Shared/Toast',
-  component: ToastDemo,
+  component: ToastStoryExample,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'ToastProvider 안에서 useToast를 호출하는 사용 예시입니다. 각 Story는 play 함수로 알림을 자동 표시합니다.',
+      },
+    },
+  },
   decorators: [
     (Story) => (
       <ToastProvider>
@@ -40,7 +49,7 @@ const meta = {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByRole('button', { name: '알림 표시' }));
   },
-} satisfies Meta<typeof ToastDemo>;
+} satisfies Meta<typeof ToastStoryExample>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
