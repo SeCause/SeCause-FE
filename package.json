@@ -10,6 +10,8 @@
     "lint": "eslint",
     "generate:api-types": "node scripts/generate-api-types.mjs",
     "test": "vitest run",
+    "test:unit": "vitest run --project=unit",
+    "test:storybook": "vitest run --project=storybook",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
@@ -35,6 +37,7 @@
     "@playwright/test": "^1.61.1",
     "@storybook/addon-a11y": "^10.5.10",
     "@storybook/addon-docs": "^10.5.10",
+    "@storybook/addon-vitest": "^10.5.10",
     "@storybook/nextjs-vite": "^10.5.10",
     "@tailwindcss/postcss": "^4",
     "@tanstack/eslint-plugin-query": "^5.100.11",
@@ -45,6 +48,8 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitest/browser-playwright": "^4.1.11",
+    "@vitest/coverage-v8": "4.1.11",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "eslint-plugin-boundaries": "^6.0.2",
@@ -58,7 +63,7 @@
     "storybook": "^10.5.10",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   },
   "lint-staged": {
     "*.{ts,tsx}": [

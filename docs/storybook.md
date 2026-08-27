@@ -49,6 +49,18 @@ export const Primary = {} satisfies Story;
 
 `satisfies`와 `StoryObj<typeof meta>`를 사용하면 컴포넌트 props와 Story args가 함께 타입 검사된다.
 
+## Story 테스트 실행
+
+Storybook의 Vitest 애드온은 각 Story를 Chromium에서 렌더링하고, `play` 함수가 있으면 사용자 상호작용과 assertion까지 실행한다. 전역 a11y 설정이 `error`이므로 axe 접근성 위반도 테스트 실패로 처리한다.
+
+```bash
+pnpm test:storybook # Story 렌더링, play, a11y 테스트
+pnpm test:unit      # 기존 jsdom 단위 테스트만 실행
+pnpm test           # 두 Vitest 프로젝트를 함께 실행
+```
+
+Storybook을 실행한 상태에서는 사이드바 하단의 테스트 위젯으로 전체·컴포넌트·개별 Story 단위 테스트를 실행하고 실패한 Story를 바로 디버깅할 수 있다.
+
 ## Chromatic 적용 시점
 
 Chromatic은 Story를 클라우드 브라우저에서 캡처하고 이전 기준 이미지와 비교하는 시각적 회귀 검사 도구다. 로컬 Story 구조가 안정된 후 다음 순서로 도입한다.
