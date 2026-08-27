@@ -38,7 +38,6 @@ export default function RepositoryDashboard({ repositoryId }: Props) {
           ) : (
             <>
               <RepositoryDashboardHeader
-                repositoryId={repositoryId}
                 owner={dashboard.owner}
                 name={dashboard.name}
                 githubUrl={dashboard.githubUrl}

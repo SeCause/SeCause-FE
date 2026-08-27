@@ -9,7 +9,6 @@ import TrashIcon from '@/icons/icon_trash.svg';
 import { ROUTES } from '@/shared/config/routes';
 import { cn } from '@/shared/lib/cn';
 import { formatAnalysisDate } from '@/shared/lib/formatDate';
-import { ViewTransition } from '@/shared/lib/viewTransition';
 import ConfirmDialog from '@/shared/ui/ConfirmDialog';
 
 import SeverityBadges from './SeverityBadges';
@@ -58,11 +57,9 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
       <div className="pointer-events-none flex min-w-0 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3 lg:items-center">
         <div className="flex min-w-0 gap-x-3 gap-y-2 max-lg:flex-col lg:items-center">
           <div className="flex items-center gap-2">
-            <ViewTransition name={`repo-${repo.repositoryId}`}>
-              <span className="text-label-lg text-blue max-w-full min-w-0 font-bold wrap-break-word sm:truncate">
-                {repo.owner} / {repo.name}
-              </span>
-            </ViewTransition>
+            <span className="text-label-lg text-blue max-w-full min-w-0 font-bold wrap-break-word sm:truncate">
+              {repo.owner} / {repo.name}
+            </span>
           </div>
 
           <SeverityBadges
