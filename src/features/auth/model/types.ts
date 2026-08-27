@@ -1,23 +1,14 @@
+import type { z } from 'zod';
+
+import type { getUserResponseSchema, githubLoginResponseSchema } from './schema';
+
 export interface LoginRequest {
   code: string;
 }
 
-export interface GithubLoginResponse {
-  userId: number;
-  githubId: number;
-  githubLoginId: string;
-  name: string;
-  email: string;
-  avatarUrl: string;
-}
+export type GithubLoginResponse = z.infer<typeof githubLoginResponseSchema>;
 
-export interface GetUserResponse {
-  userId: number;
-  githubLoginId: string;
-  email: string;
-  name: string;
-  avatarUrl: string;
-}
+export type GetUserResponse = z.infer<typeof getUserResponseSchema>;
 
 export type UserProfile = GetUserResponse;
 

@@ -2,6 +2,8 @@ name: Chromatic
 
 on:
   push:
+    branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -45,5 +47,5 @@ jobs:
             public/**
             src/app/*.css
             .storybook/**
-          exitZeroOnChanges: false
+          exitZeroOnChanges: true
           autoAcceptChanges: main
