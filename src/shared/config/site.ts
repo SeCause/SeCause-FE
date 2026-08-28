@@ -2,4 +2,8 @@
 export const SITE_URL = 'https://www.secause.site';
 
 export const SITE_NAME = 'SeCause';
-export const SITE_DESCRIPTION = 'AI 기반 코드 보안 취약점 분석 및 수정 가이드 제공 서비스';
+
+export const SITE_TITLE = `${SITE_NAME} | AI 코드 보안 분석`;
+
+export const SITE_DESCRIPTION =
+  'AI가 GitHub 저장소의 코드를 분석해 보안 취약점을 찾고, 원인과 수정 방법을 알려드립니다. 설치 없이 바로 시작하세요.';

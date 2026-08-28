@@ -4,7 +4,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/shared/config/site';
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from '@/shared/config/site';
 import { Header } from '@/widgets/header';
 
 import { pretendard } from './fonts';
@@ -13,12 +13,12 @@ import Providers from './providers';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: SITE_NAME,
+    default: SITE_TITLE,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   openGraph: {
-    title: SITE_NAME,
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     type: 'website',
     locale: 'ko_KR',
