@@ -4,7 +4,7 @@ test('랜딩 페이지가 정상적으로 렌더링된다', async ({ page }) => 
   await page.goto('/');
 
   await expect(page.getByRole('link', { name: 'SeCause' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: /Turn your code into secure/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /See why/i })).toBeVisible();
 });
 
 test('데스크톱 네비게이션으로 섹션 이동이 가능하다', async ({ page }) => {

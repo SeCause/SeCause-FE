@@ -2,17 +2,15 @@ import PageTransition from '@/shared/ui/PageTransition';
 import FaqSection from '@/widgets/landing/ui/FaqSection';
 import HeroSection from '@/widgets/landing/ui/HeroSection';
 import HowItWorksSection from '@/widgets/landing/ui/how-it-works/HowItWorksSection';
+import LandingFooter from '@/widgets/landing/ui/LandingFooter';
 
 export default function Home() {
   return (
-    <>
-      <div className="bg-mesh z-below fixed inset-0" />
-      <div className="bg-dot-grid z-below fixed inset-0" />
-      <PageTransition>
-        <HeroSection />
-        <HowItWorksSection />
-        <FaqSection />
-      </PageTransition>
-    </>
+    <PageTransition>
+      <HeroSection />
+      <HowItWorksSection />
+      <FaqSection />
+      <LandingFooter />
+    </PageTransition>
   );
 }

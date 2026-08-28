@@ -1,67 +1,56 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
-import GithubIcon from '@/icons/icon_github.svg';
 import { ROUTES, SECTION_IDS } from '@/shared/config/routes';
+
+import LogoAssembly from './LogoAssembly';
 
 export default function HeroSection() {
   return (
     <section
       id={SECTION_IDS.overview}
-      className="scroll-mt-header flex h-[calc(100dvh-var(--spacing-header))] snap-start items-center px-6 md:px-20"
+      className="scroll-mt-header relative flex min-h-[calc(100svh-var(--spacing-header))] items-center overflow-hidden bg-white px-6 py-14 md:min-h-[calc(100dvh-var(--spacing-header))] md:snap-start md:px-10 lg:py-16"
     >
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-12 md:flex-row md:gap-16">
-        <div className="flex flex-col items-center gap-6 text-center md:items-start md:text-left">
-          <h1 className="text-display">
-            Turn your code
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:gap-12">
+        <div className="relative z-10 max-w-2xl">
+          <div className="mb-8 flex items-center gap-3">
+            <span className="bg-blue h-px w-9" />
+            <span className="text-blue text-[10px] font-semibold tracking-[0.18em]">
+              AI CODE SECURITY
+            </span>
+          </div>
+          <h1 className="text-[clamp(3.8rem,7.5vw,7.8rem)] leading-[0.84] font-semibold tracking-[-0.075em] text-gray-900">
+            See why.
             <br />
-            into <span className="text-blue">secure code</span>
+            <span className="text-blue">Fix right.</span>
           </h1>
-          <p className="text-body-lg max-w-sm text-gray-600">
-            취약점을 분석하고, 위험성을 이해하고,
-            <br />
-            AI 기반 가이드를 통해 빠르게 해결하세요.
+          <p className="mt-8 max-w-md text-base leading-7 text-gray-600 md:text-lg md:leading-8">
+            취약점을 찾는 데서 끝내지 않고, 코드가 위험한 이유와 안전하게 고치는 방법까지
+            연결합니다.
           </p>
-          <Link
-            href={ROUTES.login}
-            className="text-label-lg flex h-10 w-full items-center justify-center gap-4 rounded-lg bg-black text-white hover:bg-gray-800 md:h-12"
-          >
-            <Image src={GithubIcon} alt="" aria-hidden="true" width={20} height={20} />
-            Get Started
-          </Link>
+          <div className="mt-9 flex flex-wrap items-center gap-5">
+            <Link
+              href={ROUTES.login}
+              className="text-label-md hover:bg-blue rounded-full bg-gray-900 px-6 py-3 text-white transition-all hover:-translate-y-0.5"
+            >
+              GitHub로 시작하기
+            </Link>
+            <a
+              href={`#${SECTION_IDS.howItWorks}`}
+              className="text-label-md hover:border-blue hover:text-blue border-b border-gray-400 pb-1 text-gray-700 transition-colors"
+            >
+              분석 과정 보기
+            </a>
+          </div>
+          <div className="mt-12 flex gap-8 border-t border-gray-900/15 pt-5 font-mono text-[9px] tracking-widest text-gray-500 sm:gap-12">
+            <span>NO INSTALL</span>
+            <span>PRIVATE REPO</span>
+            <span>CODE NOT STORED</span>
+          </div>
         </div>
 
-        {/* 임시, 추후 이미지로 교체 */}
-        <div className="hidden w-full flex-1 md:block">
-          <div className="overflow-hidden rounded-2xl border border-gray-200 bg-gray-50 shadow-xl">
-            <div className="flex items-center gap-2 border-b border-gray-200 bg-white px-4 py-3">
-              <span className="h-3 w-3 rounded-full bg-red-400" />
-              <span className="h-3 w-3 rounded-full bg-yellow-400" />
-              <span className="h-3 w-3 rounded-full bg-green-400" />
-              <span className="text-body-sm ml-2 text-gray-400">server/api/auth/login.php</span>
-            </div>
-            <div className="space-y-1 p-5 font-mono text-sm">
-              {[
-                { num: 11, text: "$query = '';" },
-                { num: 12, text: '$username = $_GET["username"];' },
-                { num: 13, text: '$password = $_GET["password"];' },
-                { num: 14, text: '' },
-                { num: 15, text: '// ...중략...' },
-                { num: 16, text: '' },
-                { num: 17, highlighted: true, text: '$result = mysql_query($query);' },
-                { num: 18, highlighted: true, text: '' },
-                { num: 19, text: 'if (!$result) {' },
-                { num: 20, text: '  $result = mysql_query($query, $username, $password);' },
-              ].map(({ num, text, highlighted }) => (
-                <div
-                  key={num}
-                  className={`flex gap-4 rounded px-2 py-0.5 ${highlighted ? 'bg-red-50' : ''}`}
-                >
-                  <span className="w-5 shrink-0 text-right text-gray-400">{num}</span>
-                  <span className={highlighted ? 'text-red-600' : 'text-gray-700'}>{text}</span>
-                </div>
-              ))}
-            </div>
+        <div className="relative mx-auto flex min-h-88 w-full max-w-145 items-center justify-center px-3 py-5 sm:min-h-100 lg:min-h-120">
+          <div className="w-full max-w-110">
+            <LogoAssembly />
           </div>
         </div>
       </div>

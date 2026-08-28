@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
-import { AnalysisSidebar, RepoIcon } from '@/features/analysis';
+import { RepoIcon } from '@/features/analysis';
 import GithubIcon from '@/icons/icon_github.svg';
 import { cn } from '@/shared/lib/cn';
 import Dropdown from '@/shared/ui/Dropdown';
@@ -12,13 +12,10 @@ import PreviewShell from './PreviewShell';
 
 const SELECT_DELAY_MS = 200;
 const ENABLE_DELAY_MS = 600;
-const PRESS_DELAY_MS = 500;
-const PRESS_DURATION_MS = 300;
 
 export default function AnalysisRequestPreview() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-  const [isPressed, setIsPressed] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const headingRef = useRef<HTMLDivElement>(null);
 
@@ -45,15 +42,10 @@ export default function AnalysisRequestPreview() {
 
     const selectTimer = setTimeout(() => setSelectedIndex(0), SELECT_DELAY_MS);
     const enableTimer = setTimeout(() => setIsButtonEnabled(true), ENABLE_DELAY_MS);
-    const pressTimer = setTimeout(() => {
-      setIsPressed(true);
-      setTimeout(() => setIsPressed(false), PRESS_DURATION_MS);
-    }, ENABLE_DELAY_MS + PRESS_DELAY_MS);
 
     return () => {
       clearTimeout(selectTimer);
       clearTimeout(enableTimer);
-      clearTimeout(pressTimer);
     };
   }, [hasStarted]);
 
@@ -66,7 +58,7 @@ export default function AnalysisRequestPreview() {
         </p>
       </div>
 
-      <div className="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_180px] lg:items-start lg:gap-8">
+      <div className="flex flex-col gap-4 sm:grid sm:grid-cols-[1fr_180px] sm:items-start sm:gap-8">
         <div className="rounded-2xl border border-gray-300 bg-gray-100/40 p-4 sm:p-6">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
@@ -112,15 +104,15 @@ export default function AnalysisRequestPreview() {
           </div>
         </div>
 
-        <AnalysisSidebar
-          label="Select Repository"
-          disabled={!isButtonEnabled}
-          onClick={() => {}}
-          buttonClassName={cn(
-            'h-9 text-label-md rounded-lg transition-transform duration-150',
-            isPressed && 'scale-95',
-          )}
-        />
+        <div className="flex flex-col gap-3 rounded-xl border border-gray-900/10 bg-white p-4">
+          <p className="text-body-sm text-gray-500">선택한 저장소의 기본 브랜치를 분석합니다.</p>
+          <button
+            disabled={!isButtonEnabled}
+            className="text-label-md h-10 rounded-lg bg-gray-900 text-white disabled:bg-gray-100 disabled:text-gray-400"
+          >
+            Select Repository
+          </button>
+        </div>
       </div>
     </PreviewShell>
   );

@@ -1,75 +1,82 @@
 'use client';
 
-import Image from 'next/image';
+import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 
-import ArrowIcon from '@/icons/icon_arrow.svg';
 import { SECTION_IDS } from '@/shared/config/routes';
 
 const FAQ_ITEMS = [
   {
-    question: '코드는 서버에 계속 저장되나요?',
-    answer: '분석 완료 후 원본 코드는 서버에 보관되지 않습니다. 분석 결과 데이터만 저장됩니다.',
-  },
-  {
-    question: '어떤 프로그래밍 언어를 지원하나요?',
+    question: '분석한 코드는 계속 저장되나요?',
     answer:
-      'JavaScript, TypeScript, Python, Java, PHP, Go 등 주요 언어를 지원하며, 지속적으로 확장하고 있습니다.',
+      '아니요. 분석이 끝나면 원본 코드는 서버에 보관하지 않으며 분석 결과 데이터만 저장합니다.',
   },
   {
-    question: '분석 결과의 정확도는 어느 정도인가요?',
-    answer: 'OWASP Top 10 기반의 정적 분석과 AI 모델을 결합하여 높은 정확도를 제공합니다.',
+    question: '어떤 언어를 분석할 수 있나요?',
+    answer:
+      'JavaScript, TypeScript, Python, Java, PHP, Go 등 주요 언어를 지원하며 계속 확장하고 있습니다.',
   },
   {
     question: 'Private Repository도 분석할 수 있나요?',
-    answer:
-      'GitHub OAuth 인증을 통해 Private Repository에 대한 접근 권한을 부여하면 분석이 가능합니다.',
+    answer: '가능합니다. GitHub OAuth로 접근 권한을 받은 저장소만 안전하게 분석합니다.',
   },
   {
-    question: 'AI 설명 기능은 어떻게 동작하나요?',
+    question: '취약점 수정 방법도 알려주나요?',
     answer:
-      '탐지된 취약점의 코드 컨텍스트를 AI가 분석하여 원인, 위험도, 수정 방법을 자연어로 설명해드립니다.',
+      '발견된 취약점의 코드 맥락을 읽고 원인과 위험도, 실제로 적용할 수 있는 수정 방법을 설명합니다.',
+  },
+  {
+    question: '분석이 완료되기까지 얼마나 걸리나요?',
+    answer:
+      '저장소의 크기와 사용 언어에 따라 달라질 수 있습니다. 분석 중에는 현재 진행률을 실시간으로 확인할 수 있습니다.',
   },
 ] as const;
 
 export default function FaqSection() {
-  const [openIdx, setOpenIdx] = useState<number | null>(null);
-
+  const [open, setOpen] = useState<number | null>(0);
   return (
     <section
       id={SECTION_IDS.faq}
-      className="scroll-mt-header flex h-[calc(100dvh-var(--spacing-header))] snap-start items-center px-6 md:px-20"
+      className="scroll-mt-header flex min-h-[calc(100svh-var(--spacing-header))] items-center bg-white px-6 py-12 md:h-[calc(100dvh-var(--spacing-header))] md:min-h-160 md:snap-start md:px-10"
     >
-      <div className="mx-auto w-full max-w-3xl">
-        <h2 className="text-heading-lg mb-10 text-center">Frequently asked questions</h2>
+      <div className="mx-auto grid w-full max-w-7xl items-start gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
+        <div>
+          <p className="text-blue mb-5 text-xs font-semibold tracking-[0.16em]">QUESTIONS</p>
+          <h2 className="text-[clamp(3rem,6vw,6.8rem)] leading-[0.86] font-semibold tracking-[-0.07em] text-gray-900">
+            Good to
+            <br />
+            know.
+          </h2>
+          <p className="mt-7 max-w-xs text-sm leading-6 text-gray-600">
+            시작하기 전 자주 궁금해하는 내용을 모았습니다.
+          </p>
+        </div>
 
-        <div className="flex flex-col gap-3">
-          {FAQ_ITEMS.map((item, idx) => (
-            <div
-              key={item.question}
-              className="w-full overflow-hidden rounded-2xl bg-white/60 shadow-sm backdrop-blur-sm transition-shadow hover:shadow-md"
-            >
+        <div className="min-h-118 border-t border-gray-900">
+          {FAQ_ITEMS.map((item, index) => (
+            <div key={item.question} className="border-b border-gray-900/20">
               <button
-                onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
-                className="flex w-full items-center justify-between px-6 py-4"
-                aria-expanded={openIdx === idx}
+                onClick={() => setOpen(open === index ? null : index)}
+                aria-expanded={open === index}
+                className="flex w-full items-center gap-5 py-6 text-left"
               >
-                <span className="text-label-lg max-sm:text-body-sm text-left text-gray-900">
+                <span className="font-mono text-[10px] text-gray-400">0{index + 1}</span>
+                <span className="flex-1 text-base font-semibold tracking-tight text-gray-900 md:text-lg">
                   {item.question}
                 </span>
-                <span
-                  className={`icon-gray ml-4 shrink-0 ${openIdx === idx ? 'rotate-0' : 'rotate-180'}`}
-                >
-                  <Image src={ArrowIcon} alt="" aria-hidden="true" width={18} height={18} />
-                </span>
+                <ChevronDown
+                  aria-hidden="true"
+                  strokeWidth={1.5}
+                  className={`h-5 w-5 shrink-0 ${open === index ? 'text-blue rotate-180' : 'text-gray-500'}`}
+                />
               </button>
               <div
-                className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${openIdx === idx ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+                className={`grid transition-[grid-template-rows] duration-300 ${open === index ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
               >
                 <div className="overflow-hidden">
-                  <div className="border-t border-gray-100 px-6 py-4 text-left">
-                    <p className="text-body-md max-sm:text-body-sm text-gray-600">{item.answer}</p>
-                  </div>
+                  <p className="max-w-3xl pr-12 pb-7 pl-10 text-sm leading-7 text-gray-600">
+                    {item.answer}
+                  </p>
                 </div>
               </div>
             </div>
