@@ -13,13 +13,15 @@ export default function IssueSummaryCards({ totalIssues, criticalIssues }: Props
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <div className="rounded-xl border border-gray-200 p-4">
-        <p className="text-label-md text-gray-500">Total Issues</p>
-        <p className="text-heading-lg mt-1 text-gray-900">{animatedTotal}</p>
+      <div className="bg-blue rounded-2xl p-5 text-white">
+        <p className="text-xs text-white/65">Total Issues</p>
+        <p className="mt-3 text-3xl font-semibold tracking-[-0.04em]">{animatedTotal}</p>
       </div>
-      <div className="rounded-xl border border-gray-200 p-4">
-        <p className="text-label-md text-gray-500">Critical Issues</p>
-        <p className="text-heading-lg text-severity-critical mt-1">{animatedCritical}</p>
+      <div className="rounded-2xl border border-gray-900/10 bg-white p-5">
+        <p className="text-xs text-gray-500">Critical Issues</p>
+        <p className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-red-500">
+          {animatedCritical}
+        </p>
       </div>
     </div>
   );

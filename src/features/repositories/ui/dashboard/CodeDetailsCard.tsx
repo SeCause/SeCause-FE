@@ -23,13 +23,13 @@ export default function CodeDetailsCard({ codeDetails, lastAnalysisAt }: Props) 
   ];
 
   return (
-    <div className="rounded-xl border border-gray-200 p-4">
-      <h2 className="text-label-lg mb-3 text-gray-900">Code Details</h2>
-      <dl className="flex flex-col gap-2">
+    <div className="rounded-2xl border border-gray-900/10 bg-white p-5">
+      <h2 className="mb-3 text-xs font-semibold tracking-[0.08em] text-gray-500">CODE DETAILS</h2>
+      <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {rows.map(({ label, value }) => (
-          <div key={label} className="text-body-md flex items-center gap-2">
-            <dt className="w-28 shrink-0 text-gray-500">{label}</dt>
-            <dd className="text-gray-900">{value}</dd>
+          <div key={label} className="flex flex-col gap-1 border-l border-gray-900/10 pl-4">
+            <dt className="text-xs font-medium text-gray-600">{label}</dt>
+            <dd className="text-sm font-semibold text-gray-900">{value}</dd>
           </div>
         ))}
       </dl>

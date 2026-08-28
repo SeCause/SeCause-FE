@@ -47,7 +47,7 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
   };
 
   return (
-    <article className="relative flex flex-col gap-3 rounded-xl border border-gray-200 px-4 py-3.5 shadow-sm transition-colors hover:bg-gray-50 sm:px-5">
+    <article className="group hover:border-blue/30 relative flex flex-col gap-4 rounded-2xl border border-gray-900/10 bg-white px-5 py-5 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_35px_rgba(27,43,75,0.07)] sm:px-6">
       <Link
         href={ROUTES.repositoryDetail(repo.repositoryId)}
         aria-label={`${repo.owner} / ${repo.name} 분석 결과 보기`}
@@ -57,7 +57,7 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
       <div className="pointer-events-none flex min-w-0 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3 lg:items-center">
         <div className="flex min-w-0 gap-x-3 gap-y-2 max-lg:flex-col lg:items-center">
           <div className="flex items-center gap-2">
-            <span className="text-label-lg text-blue max-w-full min-w-0 font-bold wrap-break-word sm:truncate">
+            <span className="group-hover:text-blue max-w-full min-w-0 text-lg font-semibold tracking-[-0.025em] wrap-break-word text-gray-900 sm:truncate">
               {repo.owner} / {repo.name}
             </span>
           </div>
@@ -81,7 +81,7 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
       </div>
 
       <div className="pointer-events-none flex min-w-0 items-start justify-between gap-2.5">
-        <p className="text-body-md min-w-0 wrap-break-word text-gray-600">
+        <p className="text-body-sm min-w-0 wrap-break-word text-gray-500">
           {repo.completedAt ? (
             <>
               <span className="font-semibold text-gray-800">Last analysis:</span>{' '}
