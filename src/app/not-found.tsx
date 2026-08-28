@@ -42,12 +42,12 @@ export default function NotFound() {
         </div>
 
         <div aria-hidden="true" className="relative mx-auto hidden w-full max-w-145 lg:block">
-          <div className="flex aspect-[4/3] items-center justify-center rounded-3xl border border-gray-900/15">
+          <div className="flex aspect-4/3 items-center justify-center rounded-3xl border border-gray-900/15">
             <span className="font-mono text-[clamp(6rem,12vw,11rem)] leading-none font-bold tracking-[-0.04em] text-gray-900">
               404
             </span>
           </div>
-          <div className="absolute -right-3 -bottom-3 -z-10 h-full w-full rounded-3xl border border-gray-900/15" />
+          <div className="z-below absolute -right-3 -bottom-3 h-full w-full rounded-3xl border border-gray-900/15" />
         </div>
       </div>
     </section>

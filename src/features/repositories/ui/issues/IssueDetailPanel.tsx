@@ -1,6 +1,7 @@
 'use client';
 
 import { useRepositoryIssueDetail } from '@/features/repositories/hooks/useRepositoriesApi';
+import CopyButton from '@/shared/ui/CopyButton';
 
 import CodeDiffView from './CodeDiffView';
 
@@ -51,7 +52,10 @@ export default function IssueDetailPanel({ repositoryId, analysisResultId }: Pro
         </div>
 
         <div className="rounded-lg border border-gray-200 p-4">
-          <p className="text-label-lg mb-2 text-gray-900">수정 방법</p>
+          <div className="mb-2 flex items-start justify-between gap-3">
+            <p className="text-label-lg text-gray-900">수정 방법</p>
+            <CopyButton text={detail.fixCode} label="코드 복사" />
+          </div>
           <p className="text-body-md text-gray-700">{detail.fixSummary}</p>
           <pre className="text-body-sm mt-2 rounded bg-gray-50 p-3 font-mono wrap-break-word whitespace-pre-wrap text-gray-700">
             {detail.fixCode}

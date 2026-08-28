@@ -1,0 +1,10 @@
+/* 장식용 프리뷰라 스크롤바를 노출하지 않는다. */
+.frame,
+.frame * {
+  scrollbar-width: none;
+}
+
+.frame::-webkit-scrollbar,
+.frame *::-webkit-scrollbar {
+  display: none;
+}

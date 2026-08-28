@@ -88,7 +88,7 @@ export default function HowItWorksSection() {
           </div>
         </div>
 
-        <div className="relative">
+        <div className="relative min-w-0">
           <div className="h-155 overflow-hidden rounded-3xl border border-gray-900/15 bg-white shadow-[0_30px_80px_rgba(26,42,79,0.12)] lg:h-147">
             <div key={active} className="h-full">
               <Preview />

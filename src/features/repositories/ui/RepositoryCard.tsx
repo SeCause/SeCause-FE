@@ -54,10 +54,10 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
         className="focus-visible:outline-blue absolute inset-0 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2"
       />
 
-      <div className="pointer-events-none flex min-w-0 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3 lg:items-center">
-        <div className="flex min-w-0 gap-x-3 gap-y-2 max-lg:flex-col lg:items-center">
-          <div className="flex items-center gap-2">
-            <span className="group-hover:text-blue max-w-full min-w-0 text-lg font-semibold tracking-[-0.025em] wrap-break-word text-gray-900 sm:truncate">
+      <div className="pointer-events-none flex min-w-0 items-start justify-between gap-3 lg:items-center">
+        <div className="flex min-w-0 flex-1 gap-x-3 gap-y-2 max-lg:flex-col lg:items-center">
+          <div className="flex min-w-0 items-center gap-2">
+            <span className="group-hover:text-blue min-w-0 truncate text-lg font-semibold tracking-[-0.025em] text-gray-900">
               {repo.owner} / {repo.name}
             </span>
           </div>
