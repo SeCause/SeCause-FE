@@ -29,9 +29,12 @@ export default function LoginCallbackClient() {
   }, [mutate, searchParams, router, showToast]);
 
   return (
-    <div className="flex flex-1 items-center justify-center">
+    <div className="flex flex-1 flex-col items-center justify-center gap-5">
       {isPending && (
-        <div className="border-blue h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
+        <>
+          <div className="border-t-blue size-8 animate-spin rounded-full border-2 border-gray-900/15" />
+          <span className="font-mono text-[10px] tracking-[0.14em] text-gray-400">SIGNING IN</span>
+        </>
       )}
     </div>
   );

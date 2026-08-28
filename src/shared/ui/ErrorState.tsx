@@ -1,4 +1,3 @@
-import { House, RotateCcw } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect } from 'react';
 
@@ -22,26 +21,36 @@ export default function ErrorState({
   }, [error]);
 
   return (
-    <section className="flex min-h-[calc(100dvh-var(--spacing-header))] flex-col items-center justify-center gap-3 px-6 py-14 text-center">
-      <h2 className="text-heading-md text-gray-900">{title}</h2>
-      <p className="text-body-md max-w-md text-gray-600">{description}</p>
+    <section className="flex min-h-[calc(100dvh-var(--spacing-header))] items-center bg-white px-6 py-14 md:px-10">
+      <div className="mx-auto w-full max-w-xl">
+        <div className="mb-8 flex items-center gap-3">
+          <span className="bg-blue h-px w-9" />
+          <span className="text-blue text-[10px] font-semibold tracking-[0.18em]">
+            SOMETHING WENT WRONG
+          </span>
+        </div>
 
-      <div className="mt-5 flex flex-wrap justify-center gap-3">
-        <button
-          onClick={onRetry}
-          className="text-label-md inline-flex h-12 items-center gap-2 rounded-lg bg-black px-5 text-white transition-all hover:-translate-y-0.5 hover:bg-gray-800"
-        >
-          <RotateCcw className="size-4" />
-          다시 시도
-        </button>
+        <h2 className="text-[clamp(2.4rem,4.5vw,3.6rem)] leading-[0.9] font-semibold tracking-[-0.06em] text-gray-900">
+          {title}
+        </h2>
 
-        <Link
-          href={ROUTES.mypage}
-          className="text-label-md inline-flex h-12 items-center gap-2 rounded-lg border border-gray-300 bg-white px-5 text-gray-700 transition-all hover:-translate-y-0.5 hover:bg-gray-100 hover:text-gray-900"
-        >
-          <House className="size-4" />
-          마이페이지로 이동
-        </Link>
+        <p className="mt-7 max-w-md text-sm leading-6 text-gray-600">{description}</p>
+
+        <div className="mt-9 flex flex-wrap items-center gap-5 border-t border-gray-900/15 pt-7">
+          <button
+            onClick={onRetry}
+            className="text-label-md hover:bg-blue rounded-full bg-gray-900 px-6 py-3 text-white transition-all hover:-translate-y-0.5"
+          >
+            다시 시도
+          </button>
+
+          <Link
+            href={ROUTES.mypage}
+            className="text-label-md hover:border-blue hover:text-blue border-b border-gray-400 pb-1 text-gray-700 transition-colors"
+          >
+            마이페이지로 이동
+          </Link>
+        </div>
       </div>
     </section>
   );
