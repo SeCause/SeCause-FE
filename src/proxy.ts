@@ -9,6 +9,10 @@ export default function proxy(request: NextRequest) {
   const isProtected = PROTECTED_ROUTES.some((route) => pathname.startsWith(route));
   const hasAuthCookie = request.cookies.has('access_token') || request.cookies.has('refresh_token');
 
+  if (pathname === ROUTES.login && hasAuthCookie) {
+    return NextResponse.redirect(new URL(ROUTES.mypage, request.url));
+  }
+
   if (isProtected && !hasAuthCookie) {
     return NextResponse.redirect(new URL(ROUTES.login, request.url));
   }
@@ -17,5 +21,5 @@ export default function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/mypage/:path*', '/analysis/:path*'],
+  matcher: ['/login', '/mypage/:path*', '/analysis/:path*'],
 };

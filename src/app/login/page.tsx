@@ -1,10 +1,7 @@
 import { Check } from 'lucide-react';
 import type { Metadata } from 'next';
-import Image from 'next/image';
 
-import SeCauseIcon from '@/app/icon.svg';
 import GithubLoginButton from '@/features/auth/ui/GithubLoginButton';
-import BackgroundGrid from '@/shared/ui/BackgroundGrid';
 import PageTransition from '@/shared/ui/PageTransition';
 
 import styles from './page.module.css';
@@ -27,58 +24,73 @@ const LOGIN_NOTES = [
 export default function Login() {
   return (
     <PageTransition>
-      <div className="relative flex flex-1 items-center justify-center overflow-hidden bg-white px-6 py-14">
-        <BackgroundGrid />
-
-        <section className="relative z-10 w-full max-w-md">
-          <div className="mb-8 text-center">
-            <div className="border-blue/35 mx-auto mb-5 flex size-12 items-center justify-center rounded-2xl border bg-white">
-              <Image src={SeCauseIcon} alt="SeCause" width={28} height={28} priority />{' '}
+      <div className="flex flex-1 items-center bg-white px-6 py-10 md:px-10 md:py-14">
+        <section className="mx-auto grid w-full max-w-7xl items-center gap-8 sm:gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:grid-rows-[auto_auto] lg:gap-x-16 lg:gap-y-12">
+          <div className="lg:col-start-1 lg:row-start-1">
+            <div className="mb-8 flex items-center gap-3">
+              <span className="bg-blue h-px w-9" />
+              <span className="text-blue text-[10px] font-semibold tracking-[0.18em]">
+                SIGN IN WITH GITHUB
+              </span>
             </div>
 
-            <h1 className="text-heading-lg text-gray-900">SeCause에 로그인</h1>
+            <h1 className="text-[clamp(3rem,6vw,5.6rem)] leading-[0.86] font-semibold tracking-[-0.07em] text-gray-900">
+              Start
+              <br />
+              secure.
+            </h1>
 
-            <p className="text-body-md mx-auto mt-3 max-w-sm text-gray-600">
+            <p className="mt-8 max-w-md text-sm leading-6 text-gray-600">
               GitHub 계정으로 로그인하고 프로젝트의 보안 분석을 시작하세요.
             </p>
           </div>
 
-          <div className="rounded-2xl border border-gray-200 bg-white p-7 shadow-[0_18px_45px_rgba(15,23,42,0.05)] md:p-8">
-            <ul className="mb-4 space-y-2">
-              {LOGIN_NOTES.map((note) => (
-                <li key={note} className="text-body-sm flex items-start gap-2.5 text-gray-700">
-                  <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-500">
-                    <Check className="size-3" />
-                  </span>
-                  <span>{note}</span>
-                </li>
-              ))}
-            </ul>
+          <div className="relative mx-auto w-full max-w-md lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mx-0 lg:ml-auto lg:self-center">
+            <div className="rounded-3xl border border-gray-900/10 bg-white p-7 shadow-[0_18px_50px_rgba(27,43,75,0.05)] md:p-8">
+              <p className="font-mono text-[10px] tracking-[0.14em] text-gray-400">GET STARTED</p>
+              <h2 className="text-heading-md mt-3 text-gray-900">SeCause에 로그인</h2>
 
-            <div className="flex w-full justify-center">
-              <GithubLoginButton />
+              <ul className="mt-6 space-y-2.5">
+                {LOGIN_NOTES.map((note) => (
+                  <li
+                    key={note}
+                    className="flex items-start gap-2.5 text-xs leading-5 text-gray-600"
+                  >
+                    <span className="text-blue mt-0.5 flex size-4 shrink-0 items-center justify-center">
+                      <Check className="size-3.5" />
+                    </span>
+                    <span>{note}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-7 flex w-full">
+                <GithubLoginButton />
+              </div>
+
+              <div className="mt-7 flex items-center gap-2 border-t border-gray-900/10 pt-5 font-mono text-[10px] tracking-[0.12em] text-gray-400">
+                <span className={`${styles.cursorBlink} bg-blue inline-block h-3 w-0.5`} />
+                <span>READY TO CONNECT</span>
+              </div>
             </div>
 
-            <div className="my-7 h-px bg-gray-100" />
-
-            <p className="text-label-sm mb-4 text-gray-500">로그인 후 이용할 수 있는 기능</p>
-
-            <ul className="space-y-3">
-              {BENEFIT_ITEMS.map((item) => (
-                <li key={item} className="text-body-sm flex items-center gap-3 text-gray-600">
-                  <span className="bg-blue/8 text-blue flex size-5 shrink-0 items-center justify-center rounded-full">
-                    <Check className="size-3.5" />
-                  </span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-6 flex items-center justify-center gap-2 font-mono text-xs text-gray-400">
-              <span className={`${styles.cursorBlink} bg-blue inline-block h-3.5 w-0.5`} />
-              <span>Ready to connect</span>
-            </div>
+            <div
+              aria-hidden="true"
+              className="z-below absolute -right-3 -bottom-3 h-full w-full rounded-3xl border border-gray-900/15"
+            />
           </div>
+
+          <ul className="border-t border-gray-900/15 lg:col-start-1 lg:row-start-2">
+            {BENEFIT_ITEMS.map((item, index) => (
+              <li
+                key={item}
+                className="grid grid-cols-[2.5rem_1fr] items-center gap-3 border-b border-gray-900/20 py-4"
+              >
+                <span className="font-mono text-[10px] text-gray-400">0{index + 1}</span>
+                <span className="text-sm font-medium tracking-tight text-gray-900">{item}</span>
+              </li>
+            ))}
+          </ul>
         </section>
       </div>
     </PageTransition>

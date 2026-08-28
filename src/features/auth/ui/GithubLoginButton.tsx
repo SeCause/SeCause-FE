@@ -13,19 +13,17 @@ export default function GithubLoginButton() {
   return (
     <button
       onClick={handleLogin}
-      className="flex h-10 w-fit items-center justify-center gap-2 rounded-lg bg-black px-14 md:h-12"
+      className="hover:bg-blue flex h-12 w-full items-center justify-center gap-2.5 rounded-full bg-gray-900 px-6 transition-all hover:-translate-y-0.5"
     >
       <Image
         src={GithubIcon}
         alt=""
         aria-hidden="true"
-        className="h-4 w-4 md:h-6 md:w-6"
+        className="h-5 w-5"
         width={24}
         height={24}
       />
-      <span className="text-label-md md:text-body-lg whitespace-nowrap text-white md:font-semibold">
-        Github 계정으로 계속하기
-      </span>
+      <span className="text-label-md whitespace-nowrap text-white">Github 계정으로 계속하기</span>
     </button>
   );
 }

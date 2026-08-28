@@ -63,22 +63,31 @@ export default function RepositoriesTab({ accountName }: Props) {
   };
 
   return (
-    <div className="mx-auto w-full max-w-4xl">
-      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-        <h1 className="text-heading-lg text-gray-900">My Repositories</h1>
+    <div className="mx-auto w-full max-w-6xl">
+      <div className="mb-5 flex flex-col gap-4 border-b border-gray-900/15 pb-5 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-blue mb-2 font-mono text-[10px] tracking-[0.14em]">YOUR WORKSPACE</p>
+          <h1 className="text-heading-lg text-gray-900">Repositories</h1>
+          <p className="mt-2 text-sm text-gray-500">분석한 프로젝트의 보안 상태를 확인하세요.</p>
+        </div>
         <Button className="w-full px-4! sm:w-auto" onClick={handleAnalyzeRepository}>
           Analyze New Repository
         </Button>
       </div>
 
-      <SearchBar
-        onChange={handleSearch}
-        placeholder="Search analyzed repositories ..."
-        containerClassName="mb-4 w-full sm:max-w-xs"
-        aria-label="레포지토리 검색"
-      />
+      <div className="mb-4 flex items-center justify-between">
+        <SearchBar
+          onChange={handleSearch}
+          placeholder="Search repositories"
+          containerClassName="w-full sm:max-w-sm"
+          aria-label="레포지토리 검색"
+        />
+        <span className="hidden font-mono text-[10px] text-gray-400 sm:block">
+          {filtered.length} PROJECTS
+        </span>
+      </div>
 
-      <div className="flex min-h-100 flex-col gap-2.5">
+      <div className="flex min-h-100 flex-col gap-3">
         {isLoading ? (
           <p className="text-body-md m-auto text-gray-500">불러오는 중...</p>
         ) : isError ? (

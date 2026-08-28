@@ -65,7 +65,7 @@ test.describe('저장소 분석 결과 사용자 흐름', () => {
   }) => {
     // Given
     await page.goto('/mypage');
-    await expect(page.getByRole('heading', { name: 'My Repositories' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Repositories' })).toBeVisible();
 
     // When
     const search = page.getByRole('textbox', { name: '레포지토리 검색' });
@@ -102,7 +102,10 @@ test.describe('저장소 분석 결과 사용자 흐름', () => {
     await page.getByRole('button', { name: 'Issues', exact: true }).click();
 
     // Then
-    await expect(page.getByRole('heading', { name: 'Issues' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Issues', exact: true })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
     await expect(page.getByRole('button', { name: /src\/utils\/database\.ts/ })).toBeVisible();
     await expect(page.getByRole('button', { name: 'View Issue' }).first()).toBeVisible();
   });
@@ -111,10 +114,13 @@ test.describe('저장소 분석 결과 사용자 흐름', () => {
     page,
   }) => {
     // When
-    const response = await page.goto('/mypage/repositories/not-a-number');
+    await page.goto('/mypage/repositories/not-a-number');
 
     // Then
-    expect(response?.status()).toBe(404);
-    await expect(page.getByRole('heading', { name: '페이지를 찾을 수 없습니다.' })).toBeVisible();
+    // HTTP 상태는 200이다. 조상 경로의 loading.tsx가 만드는 Suspense 경계 때문에 셸이 먼저
+    // 스트리밍되어 헤더가 확정된 뒤에 notFound()가 던져지기 때문. 인증 뒤 noindex 경로라
+    // 상태 코드를 볼 크롤러가 없으므로, 사용자가 실제로 겪는 404 화면 노출만 검증한다.
+    await expect(page.getByRole('heading', { name: 'Page not found.' })).toBeVisible();
+    await expect(page.getByRole('link', { name: '홈으로 돌아가기' })).toBeVisible();
   });
 });

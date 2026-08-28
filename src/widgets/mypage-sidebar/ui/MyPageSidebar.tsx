@@ -40,11 +40,11 @@ export default function MyPageSidebar({
   return (
     <aside
       className={cn(
-        'top-header sticky flex h-[calc(100dvh-var(--spacing-header))] shrink-0 flex-col overflow-hidden border-r border-gray-200 bg-white transition-[width] duration-200 ease-in-out',
+        'top-header sticky flex h-[calc(100dvh-var(--spacing-header))] shrink-0 flex-col overflow-hidden border-r border-gray-900/10 bg-white transition-[width] duration-200 ease-in-out',
         isOpen ? 'w-64' : 'w-14 items-center',
       )}
     >
-      <div className="flex shrink-0 items-center justify-end border-b border-gray-200 px-3 py-3">
+      <div className="flex shrink-0 items-center justify-end border-b border-gray-900/10 px-3 py-3">
         <button
           onClick={() => setIsOpen((prev) => !prev)}
           aria-label={isOpen ? '사이드바 닫기' : '사이드바 열기'}
@@ -83,8 +83,8 @@ export default function MyPageSidebar({
               onClick={() => onTabChange(id)}
               aria-current={activeTab === id ? 'page' : undefined}
               className={cn(
-                'text-label-lg flex items-center gap-2 rounded-lg px-3 py-2 text-left transition-colors',
-                activeTab === id ? 'bg-blue/10 text-blue' : 'text-gray-700 hover:bg-gray-100',
+                'text-label-md flex items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors',
+                activeTab === id ? 'bg-blue text-white' : 'text-gray-600 hover:bg-gray-100',
               )}
             >
               <Image
@@ -93,7 +93,7 @@ export default function MyPageSidebar({
                 aria-hidden="true"
                 width={18}
                 height={18}
-                className={activeTab === id ? 'icon-blue' : 'icon-gray'}
+                className={activeTab === id ? 'brightness-0 invert' : 'icon-gray'}
               />
               {label}
             </button>

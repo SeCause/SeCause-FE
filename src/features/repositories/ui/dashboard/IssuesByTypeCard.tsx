@@ -7,8 +7,8 @@ interface Props {
 
 export default function IssuesByTypeCard({ issuesByType }: Props) {
   return (
-    <div className="rounded-xl border border-gray-200 p-4">
-      <h2 className="text-label-lg mb-3 text-gray-900">Issues by Type</h2>
+    <div className="rounded-2xl border border-gray-900/10 bg-white p-6">
+      <h2 className="mb-5 text-xs font-semibold tracking-[0.08em] text-gray-500">ISSUES BY TYPE</h2>
       {issuesByType.length === 0 ? (
         <p className="text-body-md text-gray-500">발견된 이슈가 없습니다.</p>
       ) : (

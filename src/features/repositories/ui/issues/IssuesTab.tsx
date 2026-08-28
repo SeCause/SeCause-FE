@@ -99,16 +99,13 @@ export default function IssuesTab({ repositoryId }: Props) {
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-heading-md text-gray-900">Issues</h2>
-          {data && (
-            <p className="text-label-md mt-1 text-gray-900">
-              {data.totalElements} / {selectedFileIssueCount} Security Issues
-            </p>
-          )}
-        </div>
+    <div className="flex min-h-0 flex-1 flex-col gap-4">
+      <div className="flex shrink-0 items-center justify-between">
+        <p className="text-body-sm text-gray-500">
+          {data
+            ? `선택한 파일의 이슈 ${data.totalElements}개 · 전체 ${totalIssueCount}개`
+            : '보안 이슈를 불러오는 중입니다.'}
+        </p>
 
         <Dropdown
           options={SEVERITY_FILTER_OPTIONS}
@@ -120,7 +117,7 @@ export default function IssuesTab({ repositoryId }: Props) {
         />
       </div>
 
-      <div className="grid min-h-100 grid-cols-1 gap-3 lg:grid-cols-[13rem_1fr]">
+      <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-hidden lg:grid-cols-[15rem_1fr]">
         <IssueFileTabs
           files={files}
           selectedFilePath={effectiveSelectedFilePath}
@@ -128,8 +125,7 @@ export default function IssuesTab({ repositoryId }: Props) {
           isError={isFilesError}
           onSelect={handleFileSelect}
         />
-
-        <div className="flex min-h-100 min-w-0 flex-col gap-3">
+        <div className="scrollbar-custom-gray flex min-h-0 min-w-0 flex-col gap-3 overflow-y-auto pr-3">
           {isFilesLoading || isIssuesLoading ? (
             <p className="text-body-md m-auto text-gray-500">불러오는 중...</p>
           ) : isFilesError || isIssuesError ? (
@@ -157,7 +153,9 @@ export default function IssuesTab({ repositoryId }: Props) {
       </div>
 
       {data && (
-        <Pagination current={data.page} total={data.totalPages} onChange={handlePageChange} />
+        <div className="shrink-0">
+          <Pagination current={data.page} total={data.totalPages} onChange={handlePageChange} />
+        </div>
       )}
     </div>
   );

@@ -26,9 +26,9 @@ export default function RepositoryDashboard({ repositoryId }: Props) {
 
       <div
         ref={scrollContainerRef}
-        className="h-[calc(100dvh-var(--spacing-header))] min-w-0 flex-1 overflow-auto px-4 py-8 md:px-8 md:py-12"
+        className="h-[calc(100dvh-var(--spacing-header))] min-w-0 flex-1 overflow-auto bg-white px-5 py-7 md:px-8 md:py-9"
       >
-        <div className="mx-auto flex w-full max-w-4xl flex-col gap-4">
+        <div className="mx-auto flex h-full w-full max-w-5xl flex-col gap-5">
           {isLoading ? (
             <p className="text-body-md m-auto text-gray-500">불러오는 중...</p>
           ) : isError || !dashboard ? (

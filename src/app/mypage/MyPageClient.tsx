@@ -47,7 +47,7 @@ export default function MyPageClient() {
         onAccountChange={handleAccountChange}
       />
 
-      <div className="h-[calc(100dvh-var(--spacing-header))] min-w-0 flex-1 overflow-auto px-4 py-8 md:px-8 md:py-12">
+      <div className="h-[calc(100dvh-var(--spacing-header))] min-w-0 flex-1 overflow-auto bg-white px-5 pt-7 pb-14 md:px-8 md:pt-9 md:pb-16">
         {activeTab === 'repositories' && <RepositoriesTab accountName={activeAccount} />}
         {activeTab === 'account' && <AccountTab />}
       </div>

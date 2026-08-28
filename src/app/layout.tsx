@@ -36,7 +36,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={`${pretendard.variable} scrollbar-hide h-full snap-y snap-mandatory scroll-smooth antialiased`}
+      className={`${pretendard.variable} scrollbar-hide h-full scroll-smooth antialiased md:snap-y md:snap-mandatory`}
       data-scroll-behavior="smooth"
     >
       <body className="flex min-h-full flex-col">

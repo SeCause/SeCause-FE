@@ -16,7 +16,7 @@ interface Props {
 
 export default function IssueCard({ issue, repositoryId, expanded, onToggle }: Props) {
   return (
-    <div className="flex min-w-0 flex-col gap-2 rounded-xl border border-gray-200 px-5 py-4">
+    <div className="hover:border-blue/25 flex min-w-0 flex-col gap-3 rounded-2xl border border-gray-900/10 bg-white px-5 py-5 transition-colors md:px-6">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex min-w-0 flex-wrap items-center gap-2.5">
@@ -32,7 +32,7 @@ export default function IssueCard({ issue, repositoryId, expanded, onToggle }: P
         <button
           type="button"
           onClick={() => onToggle(issue.analysisResultId)}
-          className="text-label-md flex shrink-0 items-center gap-1 rounded-md border border-gray-300 px-3 py-2 text-gray-700 transition-colors hover:bg-gray-100"
+          className="text-label-md hover:border-blue hover:text-blue flex shrink-0 items-center gap-1 rounded-full border border-gray-900/15 px-4 py-2 text-gray-700"
         >
           {expanded ? 'Close Issue' : 'View Issue'}
           <Image

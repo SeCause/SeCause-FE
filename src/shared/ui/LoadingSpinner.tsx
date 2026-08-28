@@ -7,9 +7,10 @@ export default function LoadingSpinner() {
     <section
       role="status"
       aria-label="로딩 중"
-      className="flex min-h-[calc(100dvh-var(--spacing-header))] items-center justify-center"
+      className="flex min-h-[calc(100dvh-var(--spacing-header))] flex-col items-center justify-center gap-5"
     >
-      <div className="border-t-blue-action size-8 animate-spin rounded-full border-4 border-gray-200" />
+      <div className="border-t-blue size-8 animate-spin rounded-full border-2 border-gray-900/15" />
+      <span className="font-mono text-[10px] tracking-[0.14em] text-gray-400">LOADING</span>
     </section>
   );
 }

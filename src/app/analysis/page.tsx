@@ -94,25 +94,28 @@ function AnalysisPageContent() {
 
   return (
     <PageTransition>
-      <div className="flex h-full flex-1 flex-col items-center px-6 py-7 md:px-16 md:py-12">
-        <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
-          <div className="flex flex-col gap-2.5">
+      <div className="flex h-full flex-1 flex-col items-center bg-white px-6 py-7 md:px-10 md:py-10">
+        <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
+          <div className="border-b border-gray-900/15 pb-5">
+            <p className="text-blue mb-2.5 font-mono text-[10px] tracking-[0.14em]">
+              NEW ANALYSIS / {step === 'repo' ? '01' : '02'}
+            </p>
             <h1 className="text-heading-lg text-gray-900">{HEADINGS[step].title}</h1>
-            <p className="text-body-md text-gray-700">{HEADINGS[step].subtitle}</p>
+            <p className="mt-2 text-sm text-gray-600">{HEADINGS[step].subtitle}</p>
           </div>
 
-          <div className="flex flex-col gap-6 md:grid md:grid-cols-[1fr_300px] md:items-start md:gap-8">
+          <div className="flex flex-col gap-6 md:grid md:grid-cols-[1fr_280px] md:items-start md:gap-6">
             <div className="flex flex-col gap-4">
               {step === 'branch' && (
                 <button
                   onClick={() => setStep('repo')}
-                  className="text-body-md flex w-fit items-center gap-1 rounded-lg border border-gray-300 px-4 py-2 text-gray-700 transition-colors hover:text-gray-900"
+                  className="text-body-md hover:border-blue hover:text-blue flex w-fit items-center gap-1 border-b border-gray-400 pb-1 text-gray-700"
                 >
                   ← 저장소 선택으로 돌아가기
                 </button>
               )}
 
-              <div className="rounded-2xl border border-gray-300 bg-gray-100/40 p-6">
+              <div className="rounded-2xl border border-gray-900/10 bg-white p-5 shadow-[0_12px_32px_rgba(27,43,75,0.05)] md:p-6">
                 {step === 'repo' ? (
                   <RepoStep
                     value={selectedRepo}
