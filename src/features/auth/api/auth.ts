@@ -1,5 +1,6 @@
 import { isHTTPError } from 'ky';
 
+import { clearSessionHint, setSessionHint } from '@/features/auth/lib/sessionHint';
 import { getUserResponseSchema, githubLoginResponseSchema } from '@/features/auth/model/schema';
 import type {
   GetUserResponse,
@@ -20,8 +21,15 @@ export async function postGithubLogin(body: LoginRequest): Promise<GithubLoginRe
 }
 
 export async function getUser(): Promise<GetUserResponse> {
-  const res = await apiClient.get<unknown>(ENDPOINTS.users.me);
-  return parseApiResult(getUserResponseSchema, res.result);
+  try {
+    const res = await apiClient.get<unknown>(ENDPOINTS.users.me);
+    const user = parseApiResult(getUserResponseSchema, res.result);
+    setSessionHint();
+    return user;
+  } catch (error) {
+    if (isHTTPError(error) && error.response.status === 401) clearSessionHint();
+    throw error;
+  }
 }
 
 export async function patchUser(body: UpdateUserRequest): Promise<GetUserResponse> {

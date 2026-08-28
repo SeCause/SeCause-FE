@@ -39,14 +39,25 @@ const logResponse: AfterResponseHook = ({ request, response }) => {
   }
 };
 
+// 동시에 401이 나도 재발급은 한 번만 이루어지도록 한다.
+let pendingReissue: Promise<boolean> | null = null;
+
+function reissueOnce(): Promise<boolean> {
+  pendingReissue ??= baseClient
+    .post(ENDPOINTS.auth.reissue)
+    .then(() => true)
+    .catch(() => false)
+    .finally(() => {
+      pendingReissue = null;
+    });
+
+  return pendingReissue;
+}
+
 const handleUnauthorized: AfterResponseHook = async ({ request, response, retryCount }) => {
   if (response.status !== 401 || retryCount > 0) return;
 
-  const reissued = await baseClient
-    .post(ENDPOINTS.auth.reissue)
-    .then(() => true)
-    .catch(() => false);
-  if (reissued) return ky.retry({ request });
+  if (await reissueOnce()) return ky.retry({ request });
 };
 
 const kyClient = baseClient.extend({

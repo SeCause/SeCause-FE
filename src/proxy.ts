@@ -1,12 +1,10 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
-import { ROUTES } from '@/shared/config/routes';
-
-const PROTECTED_ROUTES = [ROUTES.mypage, ROUTES.analysis];
+import { isProtectedRoute, ROUTES } from '@/shared/config/routes';
 
 export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const isProtected = PROTECTED_ROUTES.some((route) => pathname.startsWith(route));
+  const isProtected = isProtectedRoute(pathname);
   const hasAuthCookie = request.cookies.has('access_token') || request.cookies.has('refresh_token');
 
   if (pathname === ROUTES.login && hasAuthCookie) {

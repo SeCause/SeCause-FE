@@ -6,6 +6,12 @@ export const ROUTES = {
   repositoryDetail: (repositoryId: number) => `/mypage/repositories/${repositoryId}`,
 } as const;
 
+export const PROTECTED_ROUTES = [ROUTES.mypage, ROUTES.analysis];
+
+export function isProtectedRoute(pathname: string): boolean {
+  return PROTECTED_ROUTES.some((route) => pathname.startsWith(route));
+}
+
 export const SECTION_IDS = {
   overview: 'overview',
   howItWorks: 'how-it-works',

@@ -6,9 +6,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { useLogout, useUser } from '@/features/auth/hooks/useAuthApi';
+import { useLogout, useSessionHint, useUser } from '@/features/auth/hooks/useAuthApi';
 import AuthButton from '@/features/auth/ui/AuthButton';
-import { ROUTES } from '@/shared/config/routes';
+import { isProtectedRoute, ROUTES } from '@/shared/config/routes';
 import { useClickOutside } from '@/shared/lib/useClickOutside';
 
 import NavLinks, { NAV_ITEMS } from './NavLinks';
@@ -18,7 +18,10 @@ export default function Header() {
   const pathname = usePathname();
   const isHome = pathname === ROUTES.home;
   const isAuthPage = pathname.startsWith(ROUTES.login);
-  const { data: user } = useUser({ enabled: !isAuthPage });
+  const hasSessionHint = useSessionHint();
+  const { data: user } = useUser({
+    enabled: (hasSessionHint || isProtectedRoute(pathname)) && !isAuthPage,
+  });
   const { mutate: logout } = useLogout();
 
   const hamburgerRef = useRef<HTMLButtonElement>(null);
