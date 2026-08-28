@@ -31,7 +31,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="site-header z-header h-header sticky top-0 grid grid-cols-[1fr_auto_1fr] items-center border-b border-gray-200 bg-white/60 px-4 backdrop-blur-xl md:flex md:justify-between md:px-10">
+      <header className="site-header z-header h-header sticky top-0 grid grid-cols-[1fr_auto_1fr] items-center border-b border-gray-900/10 bg-white/90 px-4 backdrop-blur-xl md:flex md:justify-between md:px-10">
         <div className="flex h-full items-center gap-20">
           {isHome && (
             <button
@@ -49,7 +49,7 @@ export default function Header() {
           )}
           <Link
             href={ROUTES.home}
-            className="text-blue text-heading-md hidden md:block"
+            className="text-heading-md hidden tracking-[-0.04em] text-gray-900 md:block"
             onClick={() => {
               if (isHome) window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
@@ -62,7 +62,7 @@ export default function Header() {
 
         <Link
           href={ROUTES.home}
-          className="text-blue text-heading-md md:hidden"
+          className="text-heading-md tracking-[-0.04em] text-gray-900 md:hidden"
           onClick={() => {
             if (isHome) window.scrollTo({ top: 0, behavior: 'smooth' });
             setIsMobileMenuOpen(false);
