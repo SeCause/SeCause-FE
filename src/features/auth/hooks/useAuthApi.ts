@@ -17,8 +17,8 @@ export function useGithubLogin() {
 
   return useMutation<GithubLoginResponse, Error, string>({
     mutationFn: (code: string) => postGithubLogin({ code }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user'] });
+    onSuccess: (user) => {
+      queryClient.setQueryData<GetUserResponse>(['user'], user);
       router.replace(ROUTES.mypage);
     },
   });
