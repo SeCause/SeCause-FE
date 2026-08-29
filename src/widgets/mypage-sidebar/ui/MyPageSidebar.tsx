@@ -10,6 +10,7 @@ import RepositoryIcon from '@/icons/icon_repository.svg';
 import SidebarIcon from '@/icons/icon_sidebar.svg';
 import SwitchIcon from '@/icons/icon_switch.svg';
 import { cn } from '@/shared/lib/cn';
+import { useMediaQuery } from '@/shared/lib/useMediaQuery';
 import Dropdown from '@/shared/ui/Dropdown';
 
 export type MyPageTab = 'repositories' | 'account';
@@ -34,19 +35,27 @@ export default function MyPageSidebar({
   selectedAccount,
   onAccountChange,
 }: Props) {
-  const [isOpen, setIsOpen] = useState(true);
+  // null이면 뷰포트 기본값(모바일 접힘 / 데스크톱 펼침)을 CSS로 따른다. 토글하면 그 선택이 이긴다.
+  const [toggledOpen, setToggledOpen] = useState<boolean | null>(null);
+  const isDesktop = useMediaQuery('(min-width: 48rem)');
+  const isOpen = toggledOpen ?? isDesktop;
+  const followsViewport = toggledOpen === null;
   const accountOptions = createGithubAccountOptions(accounts);
 
   return (
     <aside
       className={cn(
         'top-header sticky flex h-[calc(100dvh-var(--spacing-header))] shrink-0 flex-col overflow-hidden border-r border-gray-900/10 bg-white transition-[width] duration-200 ease-in-out',
-        isOpen ? 'w-64' : 'w-14 items-center',
+        followsViewport
+          ? 'w-14 items-center md:w-64 md:items-stretch'
+          : isOpen
+            ? 'w-64'
+            : 'w-14 items-center',
       )}
     >
       <div className="flex shrink-0 items-center justify-end border-b border-gray-900/10 px-3 py-3">
         <button
-          onClick={() => setIsOpen((prev) => !prev)}
+          onClick={() => setToggledOpen(!isOpen)}
           aria-label={isOpen ? '사이드바 닫기' : '사이드바 열기'}
           className="flex h-8 w-8 items-center justify-center rounded-md transition-colors hover:bg-gray-100"
         >
@@ -64,7 +73,11 @@ export default function MyPageSidebar({
       <div
         className={cn(
           'flex w-64 flex-col gap-4 px-3 py-4 transition-opacity duration-200 ease-in-out',
-          isOpen ? 'opacity-100' : 'pointer-events-none invisible opacity-0',
+          followsViewport
+            ? 'pointer-events-none invisible opacity-0 md:pointer-events-auto md:visible md:opacity-100'
+            : isOpen
+              ? 'opacity-100'
+              : 'pointer-events-none invisible opacity-0',
         )}
       >
         <Dropdown
