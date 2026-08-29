@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import { useRepositoryDashboard } from '@/features/repositories/hooks/useRepositoriesApi';
 import type { RepositoryDetailTab } from '@/features/repositories/model/types';
 import IssuesTab from '@/features/repositories/ui/issues/IssuesTab';
+import { cn } from '@/shared/lib/cn';
 import ScrollToTopButton from '@/shared/ui/ScrollToTopButton';
 
 import OverviewTab from './OverviewTab';
@@ -21,14 +22,19 @@ export default function RepositoryDashboard({ repositoryId }: Props) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="flex min-h-0 flex-1 overflow-hidden">
+    <div className="flex min-h-0 flex-1 overflow-hidden max-md:flex-col">
       <RepositoryDetailSidebar activeTab={activeTab} onTabChange={setActiveTab} />
 
       <div
         ref={scrollContainerRef}
-        className="h-[calc(100dvh-var(--spacing-header))] min-w-0 flex-1 overflow-auto bg-white px-5 py-7 md:px-8 md:py-9"
+        className="h-[calc(100dvh-var(--spacing-header)-3rem)] min-w-0 flex-1 overflow-auto bg-white px-5 py-7 max-md:flex-none md:h-[calc(100dvh-var(--spacing-header))] md:px-8 md:py-9"
       >
-        <div className="mx-auto flex h-full w-full max-w-5xl flex-col gap-5">
+        <div
+          className={cn(
+            'mx-auto flex w-full max-w-5xl flex-col gap-5',
+            activeTab === 'issues' ? 'h-full' : 'min-h-full',
+          )}
+        >
           {isLoading ? (
             <p className="text-body-md m-auto text-gray-500">불러오는 중...</p>
           ) : isError || !dashboard ? (

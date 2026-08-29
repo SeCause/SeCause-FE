@@ -125,7 +125,7 @@ export default function IssuesTab({ repositoryId }: Props) {
           isError={isFilesError}
           onSelect={handleFileSelect}
         />
-        <div className="scrollbar-custom-gray flex min-h-0 min-w-0 flex-col gap-3 overflow-y-auto pr-3">
+        <div className="scrollbar-hide lg:scrollbar-custom-gray flex min-h-0 min-w-0 flex-col gap-3 overflow-y-auto lg:pr-3">
           {isFilesLoading || isIssuesLoading ? (
             <p className="text-body-md m-auto text-gray-500">불러오는 중...</p>
           ) : isFilesError || isIssuesError ? (

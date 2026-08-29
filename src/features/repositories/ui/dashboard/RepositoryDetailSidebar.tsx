@@ -23,24 +23,31 @@ export default function RepositoryDetailSidebar({ activeTab, onTabChange }: Prop
   const router = useRouter();
 
   return (
-    <aside className="top-header sticky flex h-[calc(100dvh-var(--spacing-header))] w-64 shrink-0 flex-col gap-4 border-r border-gray-200 bg-white px-3 py-4">
+    <aside className="md:top-header flex shrink-0 bg-white max-md:h-12 max-md:w-full max-md:items-center max-md:gap-1 max-md:border-b max-md:border-gray-200 max-md:px-3 md:sticky md:h-[calc(100dvh-var(--spacing-header))] md:w-64 md:flex-col md:gap-4 md:border-r md:border-gray-200 md:px-3 md:py-4">
       <button
         onClick={() => router.push(ROUTES.mypage)}
-        className="text-label-lg flex items-center gap-2 rounded-lg px-3 py-2 text-left text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900"
+        aria-label="저장소 목록으로 돌아가기"
+        className="text-label-lg flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-left text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900"
       >
-        ← Back to Repositories
+        <span aria-hidden="true">←</span>
+        <span aria-hidden="true" className="max-md:hidden">
+          Back to Repositories
+        </span>
       </button>
 
-      <div className="border-t border-gray-200" />
+      <div className="border-t border-gray-200 max-md:hidden" />
 
-      <nav className="flex flex-col gap-1" aria-label="레포지토리 상세 메뉴">
+      <nav
+        className="flex gap-1 max-md:min-w-0 max-md:flex-1 md:flex-col"
+        aria-label="레포지토리 상세 메뉴"
+      >
         {NAV_ITEMS.map(({ id, label, icon }) => (
           <button
             key={id}
             onClick={() => onTabChange(id)}
             aria-current={activeTab === id ? 'page' : undefined}
             className={cn(
-              'text-label-lg flex items-center gap-2 rounded-lg px-3 py-2 text-left transition-colors',
+              'text-label-lg flex items-center gap-2 rounded-lg px-3 py-2 text-left transition-colors max-md:flex-1 max-md:justify-center',
               activeTab === id ? 'bg-blue/10 text-blue' : 'text-gray-700 hover:bg-gray-100',
             )}
           >
