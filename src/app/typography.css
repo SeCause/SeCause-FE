@@ -1,8 +1,4 @@
 @theme {
-  --text-display: clamp(2rem, 4vw + 0.5rem, 3rem);
-  --text-display--font-weight: 800;
-  --text-display--line-height: 115%;
-  --text-display--letter-spacing: -0.025em;
 
   --text-heading-lg: clamp(1.5rem, 2.5vw + 0.25rem, 2rem);
   --text-heading-lg--font-weight: 700;
@@ -19,10 +15,6 @@
   --text-heading-base--line-height: 130%;
   --text-heading-base--letter-spacing: -0.01em;
 
-  --text-heading-sm: clamp(1rem, 1vw + 0.125rem, 1.125rem);
-  --text-heading-sm--font-weight: 600;
-  --text-heading-sm--line-height: 135%;
-  --text-heading-sm--letter-spacing: -0.01em;
 
   --text-body-lg: 1rem;
   --text-body-lg--font-weight: 400;
@@ -59,8 +51,13 @@
   --text-caption--line-height: 140%;
   --text-caption--letter-spacing: 0.01em;
 
-  --text-overline: 0.6875rem;
-  --text-overline--font-weight: 600;
-  --text-overline--line-height: 120%;
-  --text-overline--letter-spacing: 0.08em;
+  /* mono 계열. 글꼴은 다른 토큰과 같이 font-mono로 따로 지정한다. */
+  --text-label-mono: 0.625rem;
+  --text-label-mono--line-height: 140%;
+  --text-label-mono--letter-spacing: 0.14em;
+
+  --text-num-mono: 0.625rem;
+  --text-num-mono--line-height: 140%;
+  --text-num-mono--letter-spacing: 0;
+
 }

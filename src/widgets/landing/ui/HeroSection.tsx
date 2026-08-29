@@ -41,7 +41,7 @@ export default function HeroSection() {
               분석 과정 보기
             </a>
           </div>
-          <div className="mt-12 flex gap-8 border-t border-gray-900/15 pt-5 font-mono text-[9px] tracking-widest text-gray-500 sm:gap-12">
+          <div className="text-label-mono mt-12 flex gap-8 border-t border-gray-900/15 pt-5 font-mono text-gray-500 sm:gap-12">
             <span>NO INSTALL</span>
             <span>PRIVATE REPO</span>
             <span>CODE NOT STORED</span>

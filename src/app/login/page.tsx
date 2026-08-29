@@ -47,7 +47,7 @@ export default function Login() {
 
           <div className="relative mx-auto w-full max-w-md lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mx-0 lg:ml-auto lg:self-center">
             <div className="rounded-3xl border border-gray-900/10 bg-white p-7 shadow-[0_18px_50px_rgba(27,43,75,0.05)] md:p-8">
-              <p className="font-mono text-[10px] tracking-[0.14em] text-gray-400">GET STARTED</p>
+              <p className="text-label-mono font-mono text-gray-400">GET STARTED</p>
               <h2 className="text-heading-md mt-3 text-gray-900">SeCause에 로그인</h2>
 
               <ul className="mt-6 space-y-2.5">
@@ -68,7 +68,7 @@ export default function Login() {
                 <GithubLoginButton />
               </div>
 
-              <div className="mt-7 flex items-center gap-2 border-t border-gray-900/10 pt-5 font-mono text-[10px] tracking-[0.12em] text-gray-400">
+              <div className="text-label-mono mt-7 flex items-center gap-2 border-t border-gray-900/10 pt-5 font-mono text-gray-400">
                 <span className={`${styles.cursorBlink} bg-blue inline-block h-3 w-0.5`} />
                 <span>READY TO CONNECT</span>
               </div>
@@ -86,7 +86,7 @@ export default function Login() {
                 key={item}
                 className="grid grid-cols-[2.5rem_1fr] items-center gap-3 border-b border-gray-900/20 py-4"
               >
-                <span className="font-mono text-[10px] text-gray-400">0{index + 1}</span>
+                <span className="text-num-mono font-mono text-gray-400">0{index + 1}</span>
                 <span className="text-sm font-medium tracking-tight text-gray-900">{item}</span>
               </li>
             ))}

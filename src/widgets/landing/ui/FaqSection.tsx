@@ -60,7 +60,7 @@ export default function FaqSection() {
                 aria-expanded={open === index}
                 className="flex w-full items-center gap-5 py-6 text-left"
               >
-                <span className="font-mono text-[10px] text-gray-400">0{index + 1}</span>
+                <span className="text-num-mono font-mono text-gray-400">0{index + 1}</span>
                 <span className="flex-1 text-base font-semibold tracking-tight text-gray-900 md:text-lg">
                   {item.question}
                 </span>

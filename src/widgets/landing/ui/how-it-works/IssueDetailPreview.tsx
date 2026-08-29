@@ -28,7 +28,7 @@ export default function IssueDetailPreview() {
         </div>
 
         <div className="mt-4 border-t border-gray-900/10 pt-3">
-          <p className="font-mono text-[9px] tracking-[0.14em] text-gray-400">ATTACK SCENARIO</p>
+          <p className="text-label-mono font-mono text-gray-400">ATTACK SCENARIO</p>
           <p className="text-body-sm mt-1.5 text-gray-600">{MOCK_ISSUE_DETAIL.attackScenario}</p>
         </div>
 

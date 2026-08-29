@@ -12,9 +12,7 @@ export default function LandingFooter() {
             </p>
           </div>
           <div className="flex flex-col gap-2 text-left sm:text-right">
-            <span className="font-mono text-[9px] tracking-[0.12em] text-white/35">
-              BUILT ON GITHUB
-            </span>
+            <span className="text-label-mono font-mono text-white/35">BUILT ON GITHUB</span>
             <span className="text-sm text-white/70">AI-powered code security analysis</span>
           </div>
         </div>
@@ -30,7 +28,7 @@ export default function LandingFooter() {
               GitHub ↗
             </a>
           </nav>
-          <p className="font-mono text-[10px] tracking-widest text-white/35">
+          <p className="text-label-mono font-mono text-white/35">
             © {year} SECAUSE. ALL RIGHTS RESERVED.
           </p>
         </div>

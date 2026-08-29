@@ -102,7 +102,7 @@ export default function RepoStep({ value: selectedRepo, onChange, initialAccount
                 >
                   <RepoIcon name={repo.name} />
                   <span className="truncate">{repo.name}</span>
-                  <span className="ml-auto shrink-0 font-mono text-[9px] tracking-[0.12em] text-gray-500">
+                  <span className="text-label-mono ml-auto shrink-0 font-mono text-gray-500">
                     {repo.private ? 'PRIVATE' : 'PUBLIC'}
                   </span>
                 </button>

@@ -33,7 +33,7 @@ export default function LoginCallbackClient() {
       {isPending && (
         <>
           <div className="border-t-blue size-8 animate-spin rounded-full border-2 border-gray-900/15" />
-          <span className="font-mono text-[10px] tracking-[0.14em] text-gray-400">SIGNING IN</span>
+          <span className="text-label-mono font-mono text-gray-400">SIGNING IN</span>
         </>
       )}
     </div>

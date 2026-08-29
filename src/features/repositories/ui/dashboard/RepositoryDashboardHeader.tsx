@@ -11,7 +11,7 @@ interface Props {
 export default function RepositoryDashboardHeader({ owner, name, githubUrl }: Props) {
   return (
     <div className="border-b border-gray-900/15 pb-5">
-      <p className="text-blue mb-2 font-mono text-[10px] tracking-[0.14em]">REPOSITORY SECURITY</p>
+      <p className="text-blue text-label-mono mb-2 font-mono">REPOSITORY SECURITY</p>
       <a
         href={githubUrl}
         target="_blank"

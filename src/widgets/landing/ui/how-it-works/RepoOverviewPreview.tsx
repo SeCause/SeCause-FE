@@ -55,7 +55,7 @@ export default function RepoOverviewPreview() {
           </ul>
 
           <div className="mt-3 border-t border-gray-900/10 pt-4">
-            <p className="font-mono text-[9px] tracking-[0.14em] text-gray-400">TOP TYPES</p>
+            <p className="text-label-mono font-mono text-gray-400">TOP TYPES</p>
             <ul className="mt-2.5 space-y-1.5">
               {MOCK_DASHBOARD.issuesByType.slice(0, 3).map((item) => (
                 <li key={item.type} className="flex items-baseline justify-between gap-3">

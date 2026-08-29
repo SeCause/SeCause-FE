@@ -97,7 +97,7 @@ function AnalysisPageContent() {
       <div className="flex h-full flex-1 flex-col items-center bg-white px-6 pt-7 pb-28 md:px-10 md:py-10">
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
           <div className="border-b border-gray-900/15 pb-5">
-            <p className="text-blue mb-2.5 font-mono text-[10px] tracking-[0.14em]">
+            <p className="text-blue text-label-mono mb-2.5 font-mono">
               NEW ANALYSIS / {step === 'repo' ? '01' : '02'}
             </p>
             <h1 className="text-heading-lg text-gray-900">{HEADINGS[step].title}</h1>

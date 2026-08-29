@@ -66,7 +66,7 @@ export default function RepositoriesTab({ accountName }: Props) {
     <div className="mx-auto w-full max-w-6xl">
       <div className="mb-5 flex flex-col gap-4 border-b border-gray-900/15 pb-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-blue mb-2 font-mono text-[10px] tracking-[0.14em]">YOUR WORKSPACE</p>
+          <p className="text-blue text-label-mono mb-2 font-mono">YOUR WORKSPACE</p>
           <h1 className="text-heading-lg text-gray-900">Repositories</h1>
           <p className="mt-2 text-sm text-gray-500">분석한 프로젝트의 보안 상태를 확인하세요.</p>
         </div>
@@ -82,7 +82,7 @@ export default function RepositoriesTab({ accountName }: Props) {
           containerClassName="w-full sm:max-w-sm"
           aria-label="레포지토리 검색"
         />
-        <span className="hidden font-mono text-[10px] text-gray-400 sm:block">
+        <span className="text-num-mono hidden font-mono text-gray-400 sm:block">
           {filtered.length} PROJECTS
         </span>
       </div>

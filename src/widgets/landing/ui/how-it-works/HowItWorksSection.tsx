@@ -62,7 +62,7 @@ export default function HowItWorksSection() {
                 aria-pressed={active === index}
               >
                 <span
-                  className={`font-mono text-[10px] ${active === index ? 'text-blue' : 'text-gray-400'}`}
+                  className={`text-num-mono font-mono ${active === index ? 'text-blue' : 'text-gray-400'}`}
                 >
                   {feature.number}
                 </span>

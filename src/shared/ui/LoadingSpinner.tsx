@@ -10,7 +10,7 @@ export default function LoadingSpinner() {
       className="flex min-h-[calc(100dvh-var(--spacing-header))] flex-col items-center justify-center gap-5"
     >
       <div className="border-t-blue size-8 animate-spin rounded-full border-2 border-gray-900/15" />
-      <span className="font-mono text-[10px] tracking-[0.14em] text-gray-400">LOADING</span>
+      <span className="text-label-mono font-mono text-gray-400">LOADING</span>
     </section>
   );
 }
