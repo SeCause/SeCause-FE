@@ -1,5 +1,4 @@
 @theme {
-
   --text-heading-lg: clamp(1.5rem, 2.5vw + 0.25rem, 2rem);
   --text-heading-lg--font-weight: 700;
   --text-heading-lg--line-height: 120%;
@@ -14,7 +13,6 @@
   --text-heading-base--font-weight: 700;
   --text-heading-base--line-height: 130%;
   --text-heading-base--letter-spacing: -0.01em;
-
 
   --text-body-lg: 1rem;
   --text-body-lg--font-weight: 400;
@@ -59,5 +57,4 @@
   --text-num-mono: 0.625rem;
   --text-num-mono--line-height: 140%;
   --text-num-mono--letter-spacing: 0;
-
 }
