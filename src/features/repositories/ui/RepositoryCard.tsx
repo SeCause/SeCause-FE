@@ -57,7 +57,7 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
       <div className="pointer-events-none flex min-w-0 items-start justify-between gap-3 lg:items-center">
         <div className="flex min-w-0 flex-1 gap-x-3 gap-y-2 max-lg:flex-col lg:items-center">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="group-hover:text-blue min-w-0 truncate text-lg font-semibold tracking-[-0.025em] text-gray-900">
+            <span className="group-hover:text-blue min-w-0 truncate text-lg font-semibold tracking-tight text-gray-900">
               {repo.owner} / {repo.name}
             </span>
           </div>
