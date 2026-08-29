@@ -94,14 +94,17 @@ export default function RepoStep({ value: selectedRepo, onChange, initialAccount
                   aria-pressed={
                     selectedRepo?.owner === repo.owner && selectedRepo?.name === repo.name
                   }
-                  className={`text-body-md flex w-full items-center gap-3 rounded-lg border bg-white px-4 py-3 text-left font-medium transition-colors ${
+                  className={`text-body-md flex w-full min-w-0 items-center gap-3 rounded-lg border bg-white px-4 py-3 text-left font-medium transition-colors ${
                     selectedRepo?.owner === repo.owner && selectedRepo?.name === repo.name
                       ? 'border-blue bg-blue/5 text-blue font-semibold'
                       : 'border-gray-300 text-gray-900 hover:bg-gray-100'
                   }`}
                 >
                   <RepoIcon name={repo.name} />
-                  {repo.name}
+                  <span className="truncate">{repo.name}</span>
+                  <span className="ml-auto shrink-0 font-mono text-[9px] tracking-[0.12em] text-gray-500">
+                    {repo.private ? 'PRIVATE' : 'PUBLIC'}
+                  </span>
                 </button>
               </li>
             ))

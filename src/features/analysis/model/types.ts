@@ -11,6 +11,7 @@ export interface AnalysisRepository {
   name: string;
   owner: string;
   defaultBranch: string;
+  githubUrl: string;
   private: boolean;
 }
 
