@@ -59,37 +59,34 @@
 }
 
 /* ===== Utilities ===== */
-@layer utilities {
-  .scrollbar-hide {
-    scrollbar-width: none;
-  }
+@utility scrollbar-hide {
+  scrollbar-width: none;
 
-  .scrollbar-hide::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     display: none;
   }
+}
 
-  .scrollbar-custom-gray {
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-gray-400) transparent;
-    scrollbar-gutter: stable;
-  }
+@utility scrollbar-custom-gray {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gray-400) transparent;
+  scrollbar-gutter: stable;
 
-  .scrollbar-custom-gray::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     width: 4px;
   }
 
-  .scrollbar-custom-gray::-webkit-scrollbar-track {
+  &::-webkit-scrollbar-track {
     background: transparent;
   }
+}
 
-  .icon-gray {
-    filter: brightness(0) saturate(100%) invert(40%);
-  }
+@utility icon-gray {
+  filter: brightness(0) saturate(100%) invert(40%);
+}
 
-  .icon-blue {
-    filter: brightness(0) saturate(100%) invert(48%) sepia(98%) saturate(2000%) hue-rotate(210deg);
-  }
-
+@utility icon-blue {
+  filter: brightness(0) saturate(100%) invert(48%) sepia(98%) saturate(2000%) hue-rotate(210deg);
 }
 
 /* ===== Keyframes ===== */
