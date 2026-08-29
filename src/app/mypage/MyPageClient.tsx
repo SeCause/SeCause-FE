@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import { AccountTab } from '@/features/account';
 import { useGithubAccounts } from '@/features/analysis/hooks/useAnalysisApi';
@@ -10,29 +10,30 @@ import { ROUTES } from '@/shared/config/routes';
 import { MyPageSidebar, type MyPageTab } from '@/widgets/mypage-sidebar';
 
 export default function MyPageClient() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const { data: accounts = [] } = useGithubAccounts();
   const activeAccount = resolveActiveAccount(accounts, searchParams.get('account'));
   const activeTab: MyPageTab = searchParams.get('tab') === 'account' ? 'account' : 'repositories';
 
-  const handleTabChange = (tab: MyPageTab) => {
+  const updateQuery = (mutate: (params: URLSearchParams) => void, replace = false) => {
     const params = new URLSearchParams(searchParams.toString());
-
-    if (tab === 'repositories') {
-      params.delete('tab');
-    } else {
-      params.set('tab', tab);
-    }
+    mutate(params);
 
     const query = params.toString();
-    router.push(query ? `${ROUTES.mypage}?${query}` : ROUTES.mypage, { scroll: false });
+    const url = query ? `${ROUTES.mypage}?${query}` : ROUTES.mypage;
+    if (replace) window.history.replaceState(null, '', url);
+    else window.history.pushState(null, '', url);
+  };
+
+  const handleTabChange = (tab: MyPageTab) => {
+    updateQuery((params) => {
+      if (tab === 'repositories') params.delete('tab');
+      else params.set('tab', tab);
+    });
   };
 
   const handleAccountChange = (accountName: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('account', accountName);
-    router.replace(`${ROUTES.mypage}?${params.toString()}`, { scroll: false });
+    updateQuery((params) => params.set('account', accountName), true);
   };
 
   return (
