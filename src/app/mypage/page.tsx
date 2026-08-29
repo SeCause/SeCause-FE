@@ -2,6 +2,9 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
+import { getGithubAccountsServer } from '@/features/analysis/api/analysis.server';
+import { resolveActiveAccount } from '@/features/analysis/model/activeAccount';
+import { githubAccountsKey } from '@/features/analysis/model/queryKeys';
 import { getRepositoriesServer } from '@/features/repositories/api/repositories.server';
 import { repositoriesKey } from '@/features/repositories/model/queryKeys';
 import { createServerQueryClient } from '@/shared/lib/queryClient';
@@ -13,13 +16,26 @@ export const metadata: Metadata = {
   title: '마이페이지',
 };
 
-export default async function MyPage() {
+interface Props {
+  searchParams: Promise<{ account?: string }>;
+}
+
+export default async function MyPage({ searchParams }: Props) {
+  const { account } = await searchParams;
   const queryClient = createServerQueryClient();
-  // 기본 진입 탭이 'repositories'이므로 그 목록만 미리 가져온다. 실패해도 던지기만 할 뿐
-  // 여기서 잡지 않는다 — 실패한 쿼리는 dehydrate 대상에서 빠지고 클라이언트가 재요청한다.
+
+  // 저장소 목록 쿼리 키에 계정명이 들어가므로 계정을 먼저 확정해야 한다. 여기서 건너뛰면
+  // 클라이언트가 계정을 받는 순간 키가 바뀌어 프리페치한 목록이 버려진다.
+  const accounts = await queryClient
+    .fetchQuery({ queryKey: githubAccountsKey(), queryFn: getGithubAccountsServer })
+    .catch(() => []);
+
+  const activeAccount = resolveActiveAccount(accounts, account ?? null);
+  const params = activeAccount ? { accountName: activeAccount } : undefined;
+
   await queryClient.prefetchQuery({
-    queryKey: repositoriesKey(),
-    queryFn: () => getRepositoriesServer(),
+    queryKey: repositoriesKey(params),
+    queryFn: () => getRepositoriesServer(params),
   });
 
   return (

@@ -9,11 +9,12 @@ import {
   getGithubBranches,
   postAnalysisRequest,
 } from '@/features/analysis/api/analysis';
+import { githubAccountsKey } from '@/features/analysis/model/queryKeys';
 import type { AnalysisRequestParams, AnalysisRequestResult } from '@/features/analysis/model/types';
 
 export function useGithubAccounts() {
   return useQuery({
-    queryKey: ['analysisAccounts'],
+    queryKey: githubAccountsKey(),
     queryFn: getGithubAccounts,
   });
 }

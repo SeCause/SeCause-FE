@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { AccountTab } from '@/features/account';
 import { useGithubAccounts } from '@/features/analysis/hooks/useAnalysisApi';
+import { resolveActiveAccount } from '@/features/analysis/model/activeAccount';
 import { RepositoriesTab } from '@/features/repositories';
 import { ROUTES } from '@/shared/config/routes';
 import { MyPageSidebar, type MyPageTab } from '@/widgets/mypage-sidebar';
@@ -12,10 +13,7 @@ export default function MyPageClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { data: accounts = [] } = useGithubAccounts();
-  const requestedAccount = searchParams.get('account');
-  const activeAccount = accounts.some((account) => account.name === requestedAccount)
-    ? requestedAccount
-    : (accounts[0]?.name ?? null);
+  const activeAccount = resolveActiveAccount(accounts, searchParams.get('account'));
   const activeTab: MyPageTab = searchParams.get('tab') === 'account' ? 'account' : 'repositories';
 
   const handleTabChange = (tab: MyPageTab) => {
