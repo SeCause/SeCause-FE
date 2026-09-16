@@ -1,6 +1,7 @@
 'use client';
 
-import { createContext, useCallback, useContext, useState } from 'react';
+import { X } from 'lucide-react';
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 type ToastType = 'error' | 'success';
 
@@ -21,16 +22,40 @@ const STYLE = {
   success: 'border border-blue bg-blue/10 text-blue',
 } as const;
 
+const TOAST_DURATION_MS = 3500;
+
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<ToastItem[]>([]);
+  const timersRef = useRef(new Map<string, ReturnType<typeof setTimeout>>());
 
-  const showToast = useCallback((message: string, type: ToastType = 'error') => {
-    const id = Math.random().toString(36).slice(2);
-    setToasts((prev) => [...prev, { id, message, type }]);
-    setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 3500);
+  const dismissToast = useCallback((id: string) => {
+    const timer = timersRef.current.get(id);
+    if (timer) clearTimeout(timer);
+    timersRef.current.delete(id);
+    setToasts((prev) => prev.filter((toast) => toast.id !== id));
   }, []);
+
+  const showToast = useCallback(
+    (message: string, type: ToastType = 'error') => {
+      const id = crypto.randomUUID();
+
+      timersRef.current.forEach(clearTimeout);
+      timersRef.current.clear();
+      setToasts([{ id, message, type }]);
+
+      const timer = setTimeout(() => dismissToast(id), TOAST_DURATION_MS);
+      timersRef.current.set(id, timer);
+    },
+    [dismissToast],
+  );
+
+  useEffect(
+    () => () => {
+      timersRef.current.forEach(clearTimeout);
+      timersRef.current.clear();
+    },
+    [],
+  );
 
   return (
     <ToastContext.Provider value={{ showToast }}>
@@ -39,9 +64,19 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className={`text-label-md flex animate-[fadeSlideDown_0.25s_ease] items-center gap-2 rounded-xl px-5 py-3 shadow-lg ${STYLE[toast.type]}`}
+            role={toast.type === 'error' ? 'alert' : 'status'}
+            aria-atomic="true"
+            className={`text-label-md pointer-events-auto flex animate-[fadeSlideDown_0.25s_ease] items-center gap-3 rounded-xl py-3 pr-3 pl-5 shadow-lg ${STYLE[toast.type]}`}
           >
-            {toast.message}
+            <span>{toast.message}</span>
+            <button
+              type="button"
+              onClick={() => dismissToast(toast.id)}
+              aria-label="알림 닫기"
+              className="rounded p-0.5 opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2"
+            >
+              <X size={16} aria-hidden="true" />
+            </button>
           </div>
         ))}
       </div>
