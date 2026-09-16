@@ -45,7 +45,7 @@ export default function MyPageSidebar({
   return (
     <aside
       className={cn(
-        'top-header sticky flex h-[calc(100dvh-var(--spacing-header))] shrink-0 flex-col overflow-hidden border-r border-gray-900/10 bg-white transition-[width] duration-200 ease-in-out',
+        'top-header border-border-subtle bg-surface sticky flex h-[calc(100dvh-var(--spacing-header))] shrink-0 flex-col overflow-hidden border-r transition-[width] duration-200 ease-in-out',
         followsViewport
           ? 'w-14 items-center md:w-64 md:items-stretch'
           : isOpen
@@ -53,11 +53,11 @@ export default function MyPageSidebar({
             : 'w-14 items-center',
       )}
     >
-      <div className="flex shrink-0 items-center justify-end border-b border-gray-900/10 px-3 py-3">
+      <div className="border-border-subtle flex shrink-0 items-center justify-end border-b px-3 py-3">
         <button
           onClick={() => setToggledOpen(!isOpen)}
           aria-label={isOpen ? '사이드바 닫기' : '사이드바 열기'}
-          className="flex h-8 w-8 items-center justify-center rounded-md transition-colors hover:bg-gray-100"
+          className="hover:bg-surface-muted flex h-8 w-8 items-center justify-center rounded-md transition-colors"
         >
           <Image
             src={SidebarIcon}
@@ -97,7 +97,9 @@ export default function MyPageSidebar({
               aria-current={activeTab === id ? 'page' : undefined}
               className={cn(
                 'text-label-md flex items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors',
-                activeTab === id ? 'bg-blue text-white' : 'text-gray-600 hover:bg-gray-100',
+                activeTab === id
+                  ? 'bg-blue text-white'
+                  : 'text-foreground-secondary hover:bg-surface-muted',
               )}
             >
               <Image

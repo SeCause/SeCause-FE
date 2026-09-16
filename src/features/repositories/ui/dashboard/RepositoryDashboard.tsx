@@ -27,7 +27,7 @@ export default function RepositoryDashboard({ repositoryId }: Props) {
 
       <div
         ref={scrollContainerRef}
-        className="h-[calc(100dvh-var(--spacing-header)-3rem)] min-w-0 flex-1 overflow-auto bg-white px-5 py-7 max-md:flex-none md:h-[calc(100dvh-var(--spacing-header))] md:px-8 md:py-9"
+        className="bg-canvas h-[calc(100dvh-var(--spacing-header)-3rem)] min-w-0 flex-1 overflow-auto px-5 py-7 max-md:flex-none md:h-[calc(100dvh-var(--spacing-header))] md:px-8 md:py-9"
       >
         <div
           className={cn(
@@ -36,9 +36,9 @@ export default function RepositoryDashboard({ repositoryId }: Props) {
           )}
         >
           {isLoading ? (
-            <p className="text-body-md m-auto text-gray-500">불러오는 중...</p>
+            <p className="text-body-md text-foreground-tertiary m-auto">불러오는 중...</p>
           ) : isError || !dashboard ? (
-            <p className="text-body-md m-auto text-gray-500">
+            <p className="text-body-md text-foreground-tertiary m-auto">
               레포지토리 정보를 불러오지 못했습니다.
             </p>
           ) : (

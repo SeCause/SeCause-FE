@@ -9,15 +9,15 @@ export default function IssueDetailPreview() {
     <PreviewShell align="start">
       <MockRepositoryHeader />
 
-      <article className="flex shrink-0 grow flex-col rounded-2xl border border-gray-900/10 bg-white p-5">
+      <article className="border-border-subtle bg-surface flex shrink-0 grow flex-col rounded-2xl border p-5">
         <div className="flex flex-wrap items-center gap-2.5">
           <SeverityBadge severity={MOCK_ISSUE_DETAIL.severity} />
-          <h3 className="text-label-lg text-gray-900">{MOCK_ISSUE_DETAIL.vulnerabilityType}</h3>
-          <span className="text-body-sm text-gray-500">
+          <h3 className="text-label-lg text-foreground">{MOCK_ISSUE_DETAIL.vulnerabilityType}</h3>
+          <span className="text-body-sm text-foreground-tertiary">
             {MOCK_ISSUE_DETAIL.filePath}:{MOCK_ISSUE_DETAIL.lineStart}-{MOCK_ISSUE_DETAIL.lineEnd}
           </span>
         </div>
-        <p className="text-body-sm mt-2 text-gray-600">{MOCK_ISSUE_DETAIL.summary}</p>
+        <p className="text-body-sm text-foreground-secondary mt-2">{MOCK_ISSUE_DETAIL.summary}</p>
 
         <div className="mt-4">
           <CodeDiffView
@@ -27,15 +27,19 @@ export default function IssueDetailPreview() {
           />
         </div>
 
-        <div className="mt-4 border-t border-gray-900/10 pt-3">
-          <p className="text-label-mono font-mono text-gray-400">ATTACK SCENARIO</p>
-          <p className="text-body-sm mt-1.5 text-gray-600">{MOCK_ISSUE_DETAIL.attackScenario}</p>
+        <div className="border-border-subtle mt-4 border-t pt-3">
+          <p className="text-label-mono text-foreground-disabled font-mono">ATTACK SCENARIO</p>
+          <p className="text-body-sm text-foreground-secondary mt-1.5">
+            {MOCK_ISSUE_DETAIL.attackScenario}
+          </p>
         </div>
 
         <div className="mt-auto pt-4">
-          <div className="rounded-xl border border-gray-900/10 p-4">
-            <p className="text-label-md text-gray-900">수정 방법</p>
-            <p className="text-body-sm mt-2 text-gray-600">{MOCK_ISSUE_DETAIL.fixSummary}</p>
+          <div className="border-border-subtle rounded-xl border p-4">
+            <p className="text-label-md text-foreground">수정 방법</p>
+            <p className="text-body-sm text-foreground-secondary mt-2">
+              {MOCK_ISSUE_DETAIL.fixSummary}
+            </p>
           </div>
         </div>
       </article>

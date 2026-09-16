@@ -9,8 +9,8 @@ export default function LoadingSpinner() {
       aria-label="로딩 중"
       className="flex min-h-[calc(100dvh-var(--spacing-header))] flex-col items-center justify-center gap-5"
     >
-      <div className="border-t-blue size-8 animate-spin rounded-full border-2 border-gray-900/15" />
-      <span className="text-label-mono font-mono text-gray-400">LOADING</span>
+      <div className="border-t-blue border-border-subtle size-8 animate-spin rounded-full border-2" />
+      <span className="text-label-mono text-foreground-disabled font-mono">LOADING</span>
     </section>
   );
 }

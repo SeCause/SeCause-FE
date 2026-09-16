@@ -67,7 +67,7 @@ export default function ProfileDropdown({ avatarUrl, username, onLogout }: Props
         aria-expanded={open}
         aria-controls={menuId}
         aria-label={`${username} 프로필 메뉴`}
-        className="flex items-center gap-2 rounded-lg bg-white px-2 py-1 hover:bg-gray-100"
+        className="bg-surface hover:bg-surface-muted flex items-center gap-2 rounded-lg px-2 py-1"
       >
         <Avatar avatarUrl={avatarUrl} username={username} size={28} />
         <span className={`inline-block ${open ? 'rotate-0' : 'rotate-180'}`} aria-hidden="true">
@@ -80,23 +80,23 @@ export default function ProfileDropdown({ avatarUrl, username, onLogout }: Props
           id={menuId}
           role="menu"
           aria-label={`${username} 메뉴`}
-          className="absolute right-0 mt-2 w-56 overflow-hidden rounded-xl border border-gray-300 bg-white shadow-lg"
+          className="border-border-default bg-surface absolute right-0 mt-2 w-56 overflow-hidden rounded-xl border shadow-lg"
         >
           <Link
             href={ROUTES.mypage}
             role="menuitem"
-            className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100"
+            className="hover:bg-surface-muted flex items-center gap-3 px-4 py-3"
             onClick={() => setOpen(false)}
           >
             <Avatar avatarUrl={avatarUrl} username={username} size={36} />
             <span className="text-body-lg font-semibold">{username}</span>
           </Link>
 
-          <div className="border-t border-gray-300" />
+          <div className="border-border-default border-t" />
           <button
             role="menuitem"
             onClick={onLogout}
-            className="text-body-md flex w-full items-center gap-2 px-4 py-3 text-gray-700 hover:bg-gray-100"
+            className="text-body-md text-foreground-secondary hover:bg-surface-muted flex w-full items-center gap-2 px-4 py-3"
           >
             <Image src={LogoutIcon} alt="" aria-hidden="true" />
             Logout

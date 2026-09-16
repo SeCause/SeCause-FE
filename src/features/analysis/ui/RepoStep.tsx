@@ -44,7 +44,7 @@ export default function RepoStep({ value: selectedRepo, onChange, initialAccount
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <p id="account-label" className="text-label-md text-gray-900">
+        <p id="account-label" className="text-label-md text-foreground">
           Select Github Account
         </p>
         <Dropdown
@@ -58,7 +58,7 @@ export default function RepoStep({ value: selectedRepo, onChange, initialAccount
       </div>
 
       <div className="flex flex-col gap-3">
-        <p id="repo-search-label" className="text-label-md text-gray-900">
+        <p id="repo-search-label" className="text-label-md text-foreground">
           Import Git Repository
         </p>
         <SearchBar
@@ -70,7 +70,7 @@ export default function RepoStep({ value: selectedRepo, onChange, initialAccount
         <p
           aria-live="polite"
           aria-atomic="true"
-          className="text-caption self-end pr-3.5 text-gray-700"
+          className="text-caption text-foreground-secondary self-end pr-3.5"
         >
           {!isReposLoading && `${filtered.length} results`}
         </p>
@@ -83,7 +83,7 @@ export default function RepoStep({ value: selectedRepo, onChange, initialAccount
             <li className="flex justify-center py-6">
               <span
                 aria-label="레포지토리 불러오는 중"
-                className="block h-6 w-6 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600"
+                className="border-border-default block h-6 w-6 animate-spin rounded-full border-2 border-t-gray-600"
               />
             </li>
           ) : (
@@ -94,15 +94,15 @@ export default function RepoStep({ value: selectedRepo, onChange, initialAccount
                   aria-pressed={
                     selectedRepo?.owner === repo.owner && selectedRepo?.name === repo.name
                   }
-                  className={`text-body-md flex w-full min-w-0 items-center gap-3 rounded-lg border bg-white px-4 py-3 text-left font-medium transition-colors ${
+                  className={`text-body-md bg-surface flex w-full min-w-0 items-center gap-3 rounded-lg border px-4 py-3 text-left font-medium transition-colors ${
                     selectedRepo?.owner === repo.owner && selectedRepo?.name === repo.name
                       ? 'border-blue bg-blue/5 text-blue font-semibold'
-                      : 'border-gray-300 text-gray-900 hover:bg-gray-100'
+                      : 'border-border-default text-foreground hover:bg-surface-muted'
                   }`}
                 >
                   <RepoIcon name={repo.name} />
                   <span className="truncate">{repo.name}</span>
-                  <span className="text-label-mono ml-auto shrink-0 font-mono text-gray-500">
+                  <span className="text-label-mono text-foreground-tertiary ml-auto shrink-0 font-mono">
                     {repo.private ? 'PRIVATE' : 'PUBLIC'}
                   </span>
                 </button>

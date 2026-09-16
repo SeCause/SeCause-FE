@@ -65,8 +65,8 @@ export default function NavLinks() {
           aria-current={activeSection === sectionId ? 'true' : undefined}
           className={`flex w-24 items-center justify-center text-sm transition-colors ${
             activeSection === sectionId
-              ? 'font-semibold text-black'
-              : 'font-medium text-gray-600 hover:text-gray-900'
+              ? 'text-foreground font-semibold'
+              : 'text-foreground-secondary hover:text-foreground font-medium'
           }`}
         >
           {label}
@@ -76,7 +76,7 @@ export default function NavLinks() {
       {indicatorStyle && (
         <span
           aria-hidden="true"
-          className="absolute bottom-[-1.5px] h-0.5 bg-black transition-all duration-300 ease-in-out"
+          className="bg-inverse absolute bottom-[-1.5px] h-0.5 transition-all duration-300 ease-in-out"
           style={{ left: indicatorStyle.left, width: indicatorStyle.width }}
         />
       )}

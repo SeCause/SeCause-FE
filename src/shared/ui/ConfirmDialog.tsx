@@ -89,13 +89,16 @@ export default function ConfirmDialog({
         aria-labelledby={titleId}
         aria-describedby={description ? descriptionId : undefined}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-sm rounded-xl bg-white p-6 shadow-lg"
+        className="bg-surface w-full max-w-sm rounded-xl p-6 shadow-lg"
       >
-        <h2 id={titleId} className="text-label-lg text-gray-900">
+        <h2 id={titleId} className="text-label-lg text-foreground">
           {title}
         </h2>
         {description && (
-          <p id={descriptionId} className="text-body-md mt-2 whitespace-pre-line text-gray-700">
+          <p
+            id={descriptionId}
+            className="text-body-md text-foreground-secondary mt-2 whitespace-pre-line"
+          >
             {description}
           </p>
         )}
@@ -106,7 +109,7 @@ export default function ConfirmDialog({
             type="button"
             onClick={onCancel}
             disabled={isConfirming}
-            className="text-label-md rounded-lg px-4 py-2 text-gray-700 transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+            className="text-label-md text-foreground-secondary hover:bg-surface-muted rounded-lg px-4 py-2 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
           >
             {cancelLabel}
           </button>

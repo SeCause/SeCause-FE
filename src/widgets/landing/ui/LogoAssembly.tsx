@@ -15,7 +15,7 @@ export default function LogoAssembly() {
         className={`${styles.orbit} border-blue/20 absolute inset-[3%] rounded-full border border-dashed`}
       />
 
-      <div className="absolute inset-[23%] flex items-center justify-center rounded-[30%] bg-[#f3f6fd] shadow-[0_25px_65px_rgba(53,109,230,0.13)]">
+      <div className="dark:bg-surface-muted absolute inset-[23%] flex items-center justify-center rounded-[30%] bg-[#f3f6fd] shadow-[0_25px_65px_rgba(53,109,230,0.13)]">
         <div className={styles.scanLine} aria-hidden="true" />
         <div className="flex flex-col items-center">
           <svg
@@ -112,7 +112,7 @@ export default function LogoAssembly() {
               &lt;/&gt;
             </p>
             <p
-              className={`${styles.wordmark} absolute text-2xl font-semibold tracking-[-0.055em] text-gray-900 md:text-3xl`}
+              className={`${styles.wordmark} text-foreground absolute text-2xl font-semibold tracking-[-0.055em] md:text-3xl`}
             >
               SeCause
             </p>
@@ -123,11 +123,13 @@ export default function LogoAssembly() {
       {STEPS.map((step, index) => (
         <div
           key={step.label}
-          className={`${styles.step} border-blue/15 absolute rounded-full border bg-white px-4 py-2.5 shadow-[0_12px_35px_rgba(53,109,230,0.1)] ${step.className}`}
+          className={`${styles.step} border-blue/15 bg-surface absolute rounded-full border px-4 py-2.5 shadow-[0_12px_35px_rgba(53,109,230,0.1)] ${step.className}`}
         >
           <span className="text-blue mr-2 font-mono text-[9px]">0{index + 1}</span>
-          <span className="text-xs font-semibold text-gray-900">{step.label}</span>
-          <span className="ml-2 hidden text-[10px] text-gray-500 sm:inline">{step.detail}</span>
+          <span className="text-foreground text-xs font-semibold">{step.label}</span>
+          <span className="text-foreground-tertiary ml-2 hidden text-[10px] sm:inline">
+            {step.detail}
+          </span>
         </div>
       ))}
     </div>

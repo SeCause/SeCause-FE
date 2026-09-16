@@ -49,10 +49,10 @@ export default function AnalysisProgress({
           </div>
         )}
 
-        <h1 className="text-heading-md text-gray-900">
+        <h1 className="text-heading-md text-foreground">
           {isError ? '분석 상태를 확인할 수 없습니다' : getProgressMessage(status, progress)}
         </h1>
-        <p className="text-body-md mt-3 text-gray-500">
+        <p className="text-body-md text-foreground-tertiary mt-3">
           {stopped
             ? getFailureMessage(status, failureReason, isError)
             : '분석이 완료될 때까지 이 페이지를 유지해주세요.'}
@@ -60,7 +60,7 @@ export default function AnalysisProgress({
 
         {!stopped && (
           <div className="mt-8 w-full">
-            <div className="h-2 overflow-hidden rounded-full bg-gray-200">
+            <div className="bg-surface-muted h-2 overflow-hidden rounded-full">
               <div
                 className="bg-blue relative h-full overflow-hidden rounded-full transition-[width] duration-700 ease-out"
                 style={{ width: `${progress}%` }}
@@ -68,7 +68,7 @@ export default function AnalysisProgress({
                 <span className={styles.shimmer} aria-hidden="true" />
               </div>
             </div>
-            <p className="text-label-md mt-2 text-gray-600">{progress}%</p>
+            <p className="text-label-md text-foreground-secondary mt-2">{progress}%</p>
           </div>
         )}
 

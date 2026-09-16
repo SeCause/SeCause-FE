@@ -23,11 +23,11 @@ export default function RepositoryDetailSidebar({ activeTab, onTabChange }: Prop
   const router = useRouter();
 
   return (
-    <aside className="md:top-header flex shrink-0 bg-white max-md:h-12 max-md:w-full max-md:items-center max-md:gap-1 max-md:border-b max-md:border-gray-200 max-md:px-3 md:sticky md:h-[calc(100dvh-var(--spacing-header))] md:w-64 md:flex-col md:gap-4 md:border-r md:border-gray-200 md:px-3 md:py-4">
+    <aside className="md:top-header bg-surface max-md:border-border-subtle md:border-border-subtle flex shrink-0 max-md:h-12 max-md:w-full max-md:items-center max-md:gap-1 max-md:border-b max-md:px-3 md:sticky md:h-[calc(100dvh-var(--spacing-header))] md:w-64 md:flex-col md:gap-4 md:border-r md:px-3 md:py-4">
       <button
         onClick={() => router.push(ROUTES.mypage)}
         aria-label="저장소 목록으로 돌아가기"
-        className="text-label-lg flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-left text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900"
+        className="text-label-lg text-foreground-secondary hover:bg-surface-muted hover:text-foreground flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-left transition-colors"
       >
         <span aria-hidden="true">←</span>
         <span aria-hidden="true" className="max-md:hidden">
@@ -35,7 +35,7 @@ export default function RepositoryDetailSidebar({ activeTab, onTabChange }: Prop
         </span>
       </button>
 
-      <div className="border-t border-gray-200 max-md:hidden" />
+      <div className="border-border-subtle border-t max-md:hidden" />
 
       <nav
         className="flex gap-1 max-md:min-w-0 max-md:flex-1 md:flex-col"
@@ -48,7 +48,9 @@ export default function RepositoryDetailSidebar({ activeTab, onTabChange }: Prop
             aria-current={activeTab === id ? 'page' : undefined}
             className={cn(
               'text-label-lg flex items-center gap-2 rounded-lg px-3 py-2 text-left transition-colors max-md:flex-1 max-md:justify-center',
-              activeTab === id ? 'bg-blue/10 text-blue' : 'text-gray-700 hover:bg-gray-100',
+              activeTab === id
+                ? 'bg-blue/10 text-blue'
+                : 'text-foreground-secondary hover:bg-surface-muted',
             )}
           >
             <Image

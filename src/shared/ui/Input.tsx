@@ -7,10 +7,10 @@ export default function Input({ readOnly, className, ...props }: Props) {
     <input
       readOnly={readOnly}
       className={cn(
-        'text-body-lg w-full rounded-lg border px-4 py-3 outline-none placeholder:text-gray-400',
+        'text-body-lg placeholder:text-foreground-disabled w-full rounded-lg border px-4 py-3 outline-none',
         readOnly
-          ? 'cursor-default border-gray-200 bg-gray-50 text-gray-900'
-          : 'focus:border-blue border-gray-300 text-gray-900',
+          ? 'border-border-subtle bg-surface-subtle text-foreground cursor-default'
+          : 'focus:border-blue border-border-default text-foreground',
         className,
       )}
       {...props}

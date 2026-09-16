@@ -26,7 +26,9 @@ export default function Pagination({ current, total, onChange }: Props) {
         aria-label="이전 페이지"
         className={cn(
           NAV_BTN,
-          hasPrev ? 'text-gray-600 hover:bg-gray-100' : 'cursor-default text-gray-300',
+          hasPrev
+            ? 'text-foreground-secondary hover:bg-surface-muted'
+            : 'text-foreground-disabled cursor-default',
         )}
       >
         &lt;
@@ -41,7 +43,7 @@ export default function Pagination({ current, total, onChange }: Props) {
             onClick={() => onChange(pageNum)}
             className={cn(
               NAV_BTN,
-              isActive ? 'bg-blue text-white' : 'text-gray-600 hover:bg-gray-100',
+              isActive ? 'bg-blue text-white' : 'text-foreground-secondary hover:bg-surface-muted',
             )}
             aria-current={isActive ? 'page' : undefined}
           >
@@ -57,7 +59,9 @@ export default function Pagination({ current, total, onChange }: Props) {
         aria-label="다음 페이지"
         className={cn(
           NAV_BTN,
-          hasNext ? 'text-gray-600 hover:bg-gray-100' : 'cursor-default text-gray-300',
+          hasNext
+            ? 'text-foreground-secondary hover:bg-surface-muted'
+            : 'text-foreground-disabled cursor-default',
         )}
       >
         &gt;

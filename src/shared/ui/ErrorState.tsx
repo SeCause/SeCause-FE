@@ -21,7 +21,7 @@ export default function ErrorState({
   }, [error]);
 
   return (
-    <section className="flex min-h-[calc(100dvh-var(--spacing-header))] items-center bg-white px-6 py-14 md:px-10">
+    <section className="bg-canvas flex min-h-[calc(100dvh-var(--spacing-header))] items-center px-6 py-14 md:px-10">
       <div className="mx-auto w-full max-w-xl">
         <div className="mb-8 flex items-center gap-3">
           <span className="bg-blue h-px w-9" />
@@ -30,23 +30,23 @@ export default function ErrorState({
           </span>
         </div>
 
-        <h2 className="text-[clamp(2.4rem,4.5vw,3.6rem)] leading-[0.9] font-semibold tracking-[-0.06em] text-gray-900">
+        <h2 className="text-foreground text-[clamp(2.4rem,4.5vw,3.6rem)] leading-[0.9] font-semibold tracking-[-0.06em]">
           {title}
         </h2>
 
-        <p className="mt-7 max-w-md text-sm leading-6 text-gray-600">{description}</p>
+        <p className="text-foreground-secondary mt-7 max-w-md text-sm leading-6">{description}</p>
 
-        <div className="mt-9 flex flex-wrap items-center gap-5 border-t border-gray-900/15 pt-7">
+        <div className="border-border-subtle mt-9 flex flex-wrap items-center gap-5 border-t pt-7">
           <button
             onClick={onRetry}
-            className="text-label-md hover:bg-blue rounded-full bg-gray-900 px-6 py-3 text-white transition-all hover:-translate-y-0.5"
+            className="text-label-md text-on-inverse hover:bg-blue bg-inverse rounded-full px-6 py-3 transition-all hover:-translate-y-0.5"
           >
             다시 시도
           </button>
 
           <Link
             href={ROUTES.mypage}
-            className="text-label-md hover:border-blue hover:text-blue border-b border-gray-400 pb-1 text-gray-700 transition-colors"
+            className="text-label-md hover:border-blue hover:text-blue border-border-strong text-foreground-secondary border-b pb-1 transition-colors"
           >
             마이페이지로 이동
           </Link>

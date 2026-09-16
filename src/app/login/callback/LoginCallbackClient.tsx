@@ -32,8 +32,8 @@ export default function LoginCallbackClient() {
     <div className="flex flex-1 flex-col items-center justify-center gap-5">
       {isPending && (
         <>
-          <div className="border-t-blue size-8 animate-spin rounded-full border-2 border-gray-900/15" />
-          <span className="text-label-mono font-mono text-gray-400">SIGNING IN</span>
+          <div className="border-t-blue border-border-subtle size-8 animate-spin rounded-full border-2" />
+          <span className="text-label-mono text-foreground-disabled font-mono">SIGNING IN</span>
         </>
       )}
     </div>

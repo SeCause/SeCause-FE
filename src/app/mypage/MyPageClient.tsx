@@ -7,6 +7,7 @@ import { AccountTab } from '@/features/account';
 import { useGithubAccounts } from '@/features/analysis/hooks/useAnalysisApi';
 import { resolveActiveAccount } from '@/features/analysis/model/activeAccount';
 import type { GithubAccount } from '@/features/analysis/model/types';
+import type { GetUserResponse } from '@/features/auth/model/types';
 import { RepositoriesTab } from '@/features/repositories';
 import { ROUTES } from '@/shared/config/routes';
 import { MyPageSidebar, type MyPageTab } from '@/widgets/mypage-sidebar';
@@ -16,9 +17,14 @@ const subscribeToHydration = () => () => {};
 interface Props {
   initialAccounts: GithubAccount[];
   initialActiveAccount: string | null;
+  initialUser: GetUserResponse | null;
 }
 
-export default function MyPageClient({ initialAccounts, initialActiveAccount }: Props) {
+export default function MyPageClient({
+  initialAccounts,
+  initialActiveAccount,
+  initialUser,
+}: Props) {
   const searchParams = useSearchParams();
   const { data: clientAccounts = [] } = useGithubAccounts();
   const isHydrated = useSyncExternalStore(
@@ -63,9 +69,11 @@ export default function MyPageClient({ initialAccounts, initialActiveAccount }: 
         onAccountChange={handleAccountChange}
       />
 
-      <div className="h-[calc(100dvh-var(--spacing-header))] min-w-0 flex-1 overflow-auto bg-white px-5 pt-7 pb-14 md:px-8 md:pt-9 md:pb-16">
+      <div className="bg-canvas h-[calc(100dvh-var(--spacing-header))] min-w-0 flex-1 overflow-auto px-5 pt-7 pb-14 md:px-8 md:pt-9 md:pb-16">
         {activeTab === 'repositories' && <RepositoriesTab accountName={activeAccount} />}
-        {activeTab === 'account' && <AccountTab />}
+        {activeTab === 'account' && (
+          <AccountTab initialUser={initialUser} isHydrated={isHydrated} />
+        )}
       </div>
     </div>
   );

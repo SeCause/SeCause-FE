@@ -10,6 +10,16 @@ import { Header } from '@/widgets/header';
 import { pretendard } from './fonts';
 import Providers from './providers';
 
+const themeScript = `
+  try {
+    const savedTheme = localStorage.getItem('secause-theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = savedTheme ?? (prefersDark ? 'dark' : 'light');
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    document.documentElement.style.colorScheme = theme;
+  } catch {}
+`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -36,9 +46,13 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
+      suppressHydrationWarning
       className={`${pretendard.variable} scrollbar-hide h-full scroll-smooth antialiased md:snap-y md:snap-mandatory`}
       data-scroll-behavior="smooth"
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="flex min-h-full flex-col">
         <Providers>
           <Header />

@@ -34,7 +34,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="site-header z-header h-header sticky top-0 grid grid-cols-[1fr_auto_1fr] items-center border-b border-gray-900/10 bg-white/90 px-4 backdrop-blur-xl md:flex md:justify-between md:px-10">
+      <header className="site-header z-header h-header bg-surface/90 border-border-subtle sticky top-0 grid grid-cols-[1fr_auto_1fr] items-center border-b px-4 backdrop-blur-xl md:flex md:justify-between md:px-10">
         <div className="flex h-full items-center gap-20">
           {isHome && (
             <button
@@ -45,14 +45,14 @@ export default function Header() {
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-nav"
             >
-              <span className="block h-0.5 w-6 bg-black" />
-              <span className="block h-0.5 w-6 bg-black" />
-              <span className="block h-0.5 w-6 bg-black" />
+              <span className="bg-inverse block h-0.5 w-6" />
+              <span className="bg-inverse block h-0.5 w-6" />
+              <span className="bg-inverse block h-0.5 w-6" />
             </button>
           )}
           <Link
             href={ROUTES.home}
-            className="text-heading-md hidden tracking-[-0.04em] text-gray-900 md:block"
+            className="text-heading-md text-foreground hidden tracking-[-0.04em] md:block"
             onClick={() => {
               if (isHome) window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
@@ -65,7 +65,7 @@ export default function Header() {
 
         <Link
           href={ROUTES.home}
-          className="text-heading-md tracking-[-0.04em] text-gray-900 md:hidden"
+          className="text-heading-md text-foreground tracking-[-0.04em] md:hidden"
           onClick={() => {
             if (isHome) window.scrollTo({ top: 0, behavior: 'smooth' });
             setIsMobileMenuOpen(false);
@@ -74,7 +74,7 @@ export default function Header() {
           SeCause
         </Link>
 
-        <div className="flex justify-end">
+        <div className="flex items-center justify-end">
           {!isAuthPage && <AuthButton user={user ?? null} onLogout={() => logout()} />}
         </div>
       </header>
@@ -84,7 +84,7 @@ export default function Header() {
           ref={menuRef}
           id="mobile-nav"
           aria-hidden={!isMobileMenuOpen}
-          className={`z-header top-header fixed right-0 left-0 overflow-hidden border-gray-200 bg-white transition-[max-height] duration-300 ease-in-out md:hidden ${
+          className={`z-header top-header bg-surface border-border-subtle fixed right-0 left-0 overflow-hidden transition-[max-height] duration-300 ease-in-out md:hidden ${
             isMobileMenuOpen ? 'max-h-60 border-b' : 'max-h-0'
           }`}
         >
@@ -93,7 +93,7 @@ export default function Header() {
               <a
                 key={sectionId}
                 href={`${ROUTES.home}#${sectionId}`}
-                className="text-body-lg py-3 font-medium text-gray-600 hover:text-gray-900"
+                className="text-body-lg text-foreground-secondary hover:text-foreground py-3 font-medium"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {label}

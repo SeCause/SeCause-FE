@@ -16,23 +16,23 @@ interface Props {
 
 export default function IssueCard({ issue, repositoryId, expanded, onToggle }: Props) {
   return (
-    <div className="hover:border-blue/25 flex min-w-0 flex-col gap-3 rounded-2xl border border-gray-900/10 bg-white px-5 py-5 transition-colors md:px-6">
+    <div className="hover:border-blue/25 border-border-subtle bg-surface flex min-w-0 flex-col gap-3 rounded-2xl border px-5 py-5 transition-colors md:px-6">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex min-w-0 flex-wrap items-center gap-2.5">
             <SeverityBadge severity={issue.severity} />
-            <span className="text-label-lg text-gray-900">{issue.vulnerabilityType}</span>
-            <span className="text-body-sm truncate text-gray-500">
+            <span className="text-label-lg text-foreground">{issue.vulnerabilityType}</span>
+            <span className="text-body-sm text-foreground-tertiary truncate">
               {issue.filePath}:{issue.lineStart}-{issue.lineEnd}
             </span>
           </div>
-          <p className="text-body-md mt-2 text-gray-700">{issue.summary}</p>
+          <p className="text-body-md text-foreground-secondary mt-2">{issue.summary}</p>
         </div>
 
         <button
           type="button"
           onClick={() => onToggle(issue.analysisResultId)}
-          className="text-label-md hover:border-blue hover:text-blue flex shrink-0 items-center gap-1 rounded-full border border-gray-900/15 px-4 py-2 text-gray-700"
+          className="text-label-md hover:border-blue hover:text-blue border-border-subtle text-foreground-secondary flex shrink-0 items-center gap-1 rounded-full border px-4 py-2"
         >
           {expanded ? 'Close Issue' : 'View Issue'}
           <Image

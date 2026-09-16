@@ -25,9 +25,9 @@ const ROW_STYLES = {
   },
   unchanged: {
     row: '',
-    lineNumber: 'text-gray-400',
-    sign: 'text-gray-300',
-    text: 'text-gray-800',
+    lineNumber: 'text-foreground-disabled',
+    sign: 'text-foreground-disabled',
+    text: 'text-foreground',
     symbol: ' ',
   },
 } as const;
@@ -68,7 +68,7 @@ export default function CodeDiffView({ oldCode, newCode, startLine = 1 }: Props)
   });
 
   return (
-    <div className="scrollbar-custom-gray min-w-0 overflow-x-auto rounded-lg border border-gray-200 font-mono text-xs">
+    <div className="scrollbar-custom-gray border-border-subtle min-w-0 overflow-x-auto rounded-lg border font-mono text-xs">
       <div className="min-w-max">
         {rows.map((row) => {
           const style = ROW_STYLES[row.type];

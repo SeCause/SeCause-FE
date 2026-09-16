@@ -8,14 +8,14 @@ interface Props {
 
 export default function GithubBadge({ username }: Props) {
   return (
-    <span className="text-label-md inline-flex items-center gap-1.5 rounded-full bg-gray-900 px-3 py-1.5 text-white">
+    <span className="text-label-md text-on-inverse bg-inverse inline-flex items-center gap-1.5 rounded-full px-3 py-1.5">
       <Image
         src={GithubIcon}
         alt=""
         aria-hidden="true"
         width={15}
         height={15}
-        className="brightness-0 invert"
+        className="icon-on-inverse"
       />
       {username}
     </span>

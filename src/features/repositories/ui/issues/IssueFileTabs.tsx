@@ -17,11 +17,13 @@ export default function IssueFileTabs({
   onSelect,
 }: Props) {
   return (
-    <div className="scrollbar-hide lg:scrollbar-custom-gray flex max-h-34 min-h-0 flex-col gap-1.5 overflow-y-auto rounded-2xl border border-gray-900/10 bg-white p-3 lg:h-full lg:max-h-none">
+    <div className="scrollbar-hide lg:scrollbar-custom-gray border-border-subtle bg-surface flex max-h-34 min-h-0 flex-col gap-1.5 overflow-y-auto rounded-2xl border p-3 lg:h-full lg:max-h-none">
       {isLoading ? (
-        <p className="text-body-sm px-2 py-3 text-gray-500">불러오는 중...</p>
+        <p className="text-body-sm text-foreground-tertiary px-2 py-3">불러오는 중...</p>
       ) : isError ? (
-        <p className="text-body-sm px-2 py-3 text-gray-500">파일 목록을 불러오지 못했습니다.</p>
+        <p className="text-body-sm text-foreground-tertiary px-2 py-3">
+          파일 목록을 불러오지 못했습니다.
+        </p>
       ) : files.length > 0 ? (
         files.map((file) => (
           <button
@@ -32,7 +34,7 @@ export default function IssueFileTabs({
               'text-body-sm flex w-full items-center gap-1 rounded-xl px-3 py-3 text-left transition-colors',
               selectedFilePath === file.filePath
                 ? 'bg-blue font-semibold text-white'
-                : 'font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700',
+                : 'text-foreground-tertiary hover:bg-surface-muted hover:text-foreground-secondary font-medium',
             )}
             title={file.filePath}
           >
@@ -40,7 +42,7 @@ export default function IssueFileTabs({
             <span
               className={cn(
                 'shrink-0',
-                selectedFilePath === file.filePath ? 'text-white/60' : 'text-gray-400',
+                selectedFilePath === file.filePath ? 'text-white/60' : 'text-foreground-disabled',
               )}
             >
               ({file.issueCount})
@@ -48,7 +50,7 @@ export default function IssueFileTabs({
           </button>
         ))
       ) : (
-        <p className="text-body-sm px-2 py-3 text-gray-500">표시할 파일이 없습니다.</p>
+        <p className="text-body-sm text-foreground-tertiary px-2 py-3">표시할 파일이 없습니다.</p>
       )}
     </div>
   );

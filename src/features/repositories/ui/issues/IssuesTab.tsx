@@ -101,7 +101,7 @@ export default function IssuesTab({ repositoryId }: Props) {
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-4">
       <div className="flex shrink-0 items-center justify-between">
-        <p className="text-body-sm text-gray-500">
+        <p className="text-body-sm text-foreground-tertiary">
           {data
             ? `선택한 파일의 이슈 ${data.totalElements}개 · 전체 ${totalIssueCount}개`
             : '보안 이슈를 불러오는 중입니다.'}
@@ -127,17 +127,21 @@ export default function IssuesTab({ repositoryId }: Props) {
         />
         <div className="scrollbar-hide lg:scrollbar-custom-gray flex min-h-0 min-w-0 flex-col gap-3 overflow-y-auto lg:pr-3">
           {isFilesLoading || isIssuesLoading ? (
-            <p className="text-body-md m-auto text-gray-500">불러오는 중...</p>
+            <p className="text-body-md text-foreground-tertiary m-auto">불러오는 중...</p>
           ) : isFilesError || isIssuesError ? (
-            <p className="text-body-md m-auto text-gray-500">이슈를 불러오지 못했습니다.</p>
+            <p className="text-body-md text-foreground-tertiary m-auto">
+              이슈를 불러오지 못했습니다.
+            </p>
           ) : totalIssueCount === 0 ? (
-            <p className="text-body-md m-auto text-gray-500">발견된 이슈가 없습니다.</p>
+            <p className="text-body-md text-foreground-tertiary m-auto">발견된 이슈가 없습니다.</p>
           ) : selectedFileIssueCount === 0 ? (
-            <p className="text-body-md m-auto text-gray-500">
+            <p className="text-body-md text-foreground-tertiary m-auto">
               선택한 파일에 발견된 이슈가 없습니다.
             </p>
           ) : issues.length === 0 ? (
-            <p className="text-body-md m-auto text-gray-500">현재 조건에 맞는 이슈가 없습니다. </p>
+            <p className="text-body-md text-foreground-tertiary m-auto">
+              현재 조건에 맞는 이슈가 없습니다.{' '}
+            </p>
           ) : (
             issues.map((issue) => (
               <IssueCard

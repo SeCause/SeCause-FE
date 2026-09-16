@@ -21,18 +21,18 @@ export default function BranchStep({ repo, value, onChange }: Props) {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <p className="text-label-md text-gray-900">연결된 리포지토리</p>
+        <p className="text-label-md text-foreground">연결된 리포지토리</p>
         <div
           aria-label={`선택된 리포지토리: ${repo.name}`}
-          className="flex items-center gap-3 rounded-lg border border-gray-300 bg-white px-4 py-3"
+          className="border-border-default bg-surface flex items-center gap-3 rounded-lg border px-4 py-3"
         >
           <RepoIcon name={repo.name} />
-          <span className="text-body-md font-medium text-gray-900">{repo.name}</span>
+          <span className="text-body-md text-foreground font-medium">{repo.name}</span>
         </div>
       </div>
 
       <div className="flex flex-col gap-2">
-        <p id="branch-label" className="text-label-md text-gray-900">
+        <p id="branch-label" className="text-label-md text-foreground">
           Select branch
         </p>
         <Dropdown

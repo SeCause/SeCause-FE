@@ -37,44 +37,46 @@ export default function FaqSection() {
   return (
     <section
       id={SECTION_IDS.faq}
-      className="scroll-mt-header flex min-h-[calc(100svh-var(--spacing-header))] items-center bg-white px-6 py-12 md:h-[calc(100dvh-var(--spacing-header))] md:min-h-160 md:snap-start md:px-10"
+      className="scroll-mt-header bg-canvas flex min-h-[calc(100svh-var(--spacing-header))] items-center px-6 py-12 md:h-[calc(100dvh-var(--spacing-header))] md:min-h-160 md:snap-start md:px-10"
     >
       <div className="mx-auto grid w-full max-w-7xl items-start gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
         <div>
           <p className="text-blue mb-5 text-xs font-semibold tracking-[0.16em]">QUESTIONS</p>
-          <h2 className="text-[clamp(3rem,6vw,6.8rem)] leading-[0.86] font-semibold tracking-[-0.07em] text-gray-900">
+          <h2 className="text-foreground text-[clamp(3rem,6vw,6.8rem)] leading-[0.86] font-semibold tracking-[-0.07em]">
             Good to
             <br />
             know.
           </h2>
-          <p className="mt-7 max-w-xs text-sm leading-6 text-gray-600">
+          <p className="text-foreground-secondary mt-7 max-w-xs text-sm leading-6">
             시작하기 전 자주 궁금해하는 내용을 모았습니다.
           </p>
         </div>
 
-        <div className="min-h-118 border-t border-gray-900">
+        <div className="border-border-strong min-h-118 border-t">
           {FAQ_ITEMS.map((item, index) => (
-            <div key={item.question} className="border-b border-gray-900/20">
+            <div key={item.question} className="border-border-default border-b">
               <button
                 onClick={() => setOpen(open === index ? null : index)}
                 aria-expanded={open === index}
                 className="flex w-full items-center gap-5 py-6 text-left"
               >
-                <span className="text-num-mono font-mono text-gray-400">0{index + 1}</span>
-                <span className="flex-1 text-base font-semibold tracking-tight text-gray-900 md:text-lg">
+                <span className="text-num-mono text-foreground-disabled font-mono">
+                  0{index + 1}
+                </span>
+                <span className="text-foreground flex-1 text-base font-semibold tracking-tight md:text-lg">
                   {item.question}
                 </span>
                 <ChevronDown
                   aria-hidden="true"
                   strokeWidth={1.5}
-                  className={`h-5 w-5 shrink-0 ${open === index ? 'text-blue rotate-180' : 'text-gray-500'}`}
+                  className={`h-5 w-5 shrink-0 ${open === index ? 'text-blue rotate-180' : 'text-foreground-tertiary'}`}
                 />
               </button>
               <div
                 className={`grid transition-[grid-template-rows] duration-300 ${open === index ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
               >
                 <div className="overflow-hidden">
-                  <p className="max-w-3xl pr-12 pb-7 pl-10 text-sm leading-7 text-gray-600">
+                  <p className="text-foreground-secondary max-w-3xl pr-12 pb-7 pl-10 text-sm leading-7">
                     {item.answer}
                   </p>
                 </div>

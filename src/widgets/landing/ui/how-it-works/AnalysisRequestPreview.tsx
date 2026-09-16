@@ -52,17 +52,17 @@ export default function AnalysisRequestPreview() {
   return (
     <PreviewShell>
       <div ref={headingRef} className="flex flex-col gap-1">
-        <p className="text-heading-md text-gray-900">New Project</p>
-        <p className="text-body-md text-gray-700">
+        <p className="text-heading-md text-foreground">New Project</p>
+        <p className="text-body-md text-foreground-secondary">
           보안 분석을 진행할 GitHub 저장소를 선택해주세요.
         </p>
       </div>
 
       <div className="flex flex-col gap-4 sm:grid sm:grid-cols-[1fr_180px] sm:items-start sm:gap-8">
-        <div className="rounded-2xl border border-gray-300 bg-gray-100/40 p-4 sm:p-6">
+        <div className="border-border-default bg-surface-muted/40 rounded-2xl border p-4 sm:p-6">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
-              <p className="text-label-md text-gray-900">Select Github Account</p>
+              <p className="text-label-md text-foreground">Select Github Account</p>
               <Dropdown
                 options={ACCOUNT_OPTIONS}
                 value={ACCOUNT_OPTIONS[0].value}
@@ -81,17 +81,17 @@ export default function AnalysisRequestPreview() {
             </div>
 
             <div className="flex flex-col gap-3">
-              <p className="text-label-md text-gray-900">Import Git Repository</p>
+              <p className="text-label-md text-foreground">Import Git Repository</p>
               <SearchBar onChange={() => {}} placeholder="Search for repositories" />
               <ul className="flex flex-col gap-2">
                 {REPO_OPTIONS.map((name, idx) => (
                   <li key={name}>
                     <button
                       className={cn(
-                        'text-body-md flex w-full items-center gap-3 rounded-lg border bg-white px-4 py-2 text-left font-medium transition-colors',
+                        'text-body-md bg-surface flex w-full items-center gap-3 rounded-lg border px-4 py-2 text-left font-medium transition-colors',
                         idx === selectedIndex
                           ? 'border-blue bg-blue/5 text-blue font-semibold'
-                          : 'border-gray-300 text-gray-900',
+                          : 'border-border-default text-foreground',
                       )}
                     >
                       <RepoIcon name={name} />
@@ -104,11 +104,13 @@ export default function AnalysisRequestPreview() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 rounded-xl border border-gray-900/10 bg-white p-4">
-          <p className="text-body-sm text-gray-500">선택한 저장소의 기본 브랜치를 분석합니다.</p>
+        <div className="bg-surface border-border-subtle flex flex-col gap-3 rounded-xl border p-4">
+          <p className="text-body-sm text-foreground-tertiary">
+            선택한 저장소의 기본 브랜치를 분석합니다.
+          </p>
           <button
             disabled={!isButtonEnabled}
-            className="text-label-md h-10 rounded-lg bg-gray-900 text-white disabled:bg-gray-100 disabled:text-gray-400"
+            className="text-label-md text-on-inverse bg-inverse disabled:bg-surface-muted disabled:text-foreground-disabled h-10 rounded-lg"
           >
             Select Repository
           </button>

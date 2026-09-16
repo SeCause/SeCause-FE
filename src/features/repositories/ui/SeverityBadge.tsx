@@ -13,7 +13,8 @@ export default function SeverityBadge({ severity, className }: Props) {
     <span
       className={cn(
         'text-label-md inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 font-semibold',
-        SEVERITY_TAG_STYLE[severity] ?? 'border-gray-300 bg-gray-50 text-gray-600',
+        SEVERITY_TAG_STYLE[severity] ??
+          'border-border-default bg-surface-subtle text-foreground-secondary',
         className,
       )}
     >

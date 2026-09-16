@@ -64,7 +64,7 @@ export default function SearchBar({
     <div
       role="search"
       className={cn(
-        'flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2',
+        'border-border-default bg-surface flex items-center gap-2 rounded-lg border px-3 py-2',
         containerClassName,
       )}
     >
@@ -77,14 +77,14 @@ export default function SearchBar({
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="text-body-md w-full bg-transparent text-gray-900 outline-none placeholder:text-gray-500"
+        className="text-body-md text-foreground placeholder:text-foreground-tertiary w-full bg-transparent outline-none"
       />
       {input ? (
         <button
           type="button"
           onClick={clearInput}
           aria-label="검색어 지우기"
-          className="focus-visible:outline-blue shrink-0 rounded p-0.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-2 focus-visible:outline-offset-2"
+          className="focus-visible:outline-blue text-foreground-tertiary hover:bg-surface-muted hover:text-foreground shrink-0 rounded p-0.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           <X size={16} aria-hidden="true" />
         </button>

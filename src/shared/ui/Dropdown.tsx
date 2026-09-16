@@ -109,24 +109,24 @@ export default function Dropdown({
         aria-controls={listboxId}
         aria-labelledby={ariaLabelledby}
         className={cn(
-          'text-body-md flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2.5',
+          'text-body-md border-border-default bg-surface flex items-center gap-2 rounded-lg border px-3 py-2.5',
           fullWidth && 'w-full',
           buttonClassName,
         )}
       >
         {leadingIcon && (
-          <span className="shrink-0 text-gray-700" aria-hidden="true">
+          <span className="text-foreground-secondary shrink-0" aria-hidden="true">
             {leadingIcon}
           </span>
         )}
         {!leadingIcon && selected?.icon && (
-          <span className="shrink-0 text-gray-700">{selected.icon}</span>
+          <span className="text-foreground-secondary shrink-0">{selected.icon}</span>
         )}
         <span
           title={selected?.label}
           className={cn(
             'min-w-0 flex-1 truncate text-left font-medium',
-            selected ? 'text-gray-900' : 'text-gray-700',
+            selected ? 'text-foreground' : 'text-foreground-secondary',
           )}
         >
           {selected ? selected.label : placeholder}
@@ -138,7 +138,7 @@ export default function Dropdown({
         ) : (
           <Image
             src={ArrowIcon}
-            className={cn('h-5 w-5 shrink-0 text-gray-700', !open && 'rotate-180')}
+            className={cn('text-foreground-secondary h-5 w-5 shrink-0', !open && 'rotate-180')}
             alt=""
             aria-hidden="true"
           />
@@ -152,7 +152,7 @@ export default function Dropdown({
           aria-labelledby={ariaLabelledby}
           onKeyDown={handleListboxKeyDown}
           className={cn(
-            'scrollbar-custom-gray z-dropdown absolute mt-1 max-h-54 w-full min-w-max overflow-y-auto rounded-lg border border-gray-300 bg-white py-1 drop-shadow-sm',
+            'scrollbar-custom-gray z-dropdown border-border-default bg-surface absolute mt-1 max-h-54 w-full min-w-max overflow-y-auto rounded-lg border py-1 drop-shadow-sm',
             listboxClassName,
           )}
         >
@@ -167,17 +167,17 @@ export default function Dropdown({
                 aria-selected={value === option.value}
                 onClick={() => handleSelect(option.value)}
                 className={cn(
-                  'text-body-md flex w-full items-center gap-2 px-3 py-2.5 text-left font-medium transition-colors hover:bg-gray-100',
-                  value === option.value ? 'text-blue' : 'text-gray-900',
+                  'text-body-md hover:bg-surface-muted flex w-full items-center gap-2 px-3 py-2.5 text-left font-medium transition-colors',
+                  value === option.value ? 'text-blue' : 'text-foreground',
                 )}
               >
                 {leadingIcon && (
-                  <span className="shrink-0 text-gray-700" aria-hidden="true">
+                  <span className="text-foreground-secondary shrink-0" aria-hidden="true">
                     {leadingIcon}
                   </span>
                 )}
                 {!leadingIcon && option.icon && (
-                  <span className="shrink-0 text-gray-700">{option.icon}</span>
+                  <span className="text-foreground-secondary shrink-0">{option.icon}</span>
                 )}
                 {option.label}
               </button>

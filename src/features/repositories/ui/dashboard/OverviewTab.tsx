@@ -8,7 +8,7 @@ import IssueSummaryCards from './IssueSummaryCards';
 
 const SeverityBreakdownChart = dynamic(() => import('./SeverityBreakdownChart'), {
   loading: () => (
-    <div className="h-[13.275rem] animate-pulse rounded-xl border border-gray-200 bg-gray-50" />
+    <div className="border-border-subtle bg-surface-subtle h-[13.275rem] animate-pulse rounded-xl border" />
   ),
 });
 
@@ -28,8 +28,8 @@ export default function OverviewTab({ dashboard }: Props) {
       />
 
       <div className="mt-2 flex flex-col gap-1">
-        <h2 className="text-heading-base text-gray-900">Project dashboard</h2>
-        <p className="text-body-md text-gray-600">
+        <h2 className="text-heading-base text-foreground">Project dashboard</h2>
+        <p className="text-body-md text-foreground-secondary">
           레포지토리의 보안 분석 결과와 위험도 분포를 확인할 수 있습니다.
         </p>
       </div>

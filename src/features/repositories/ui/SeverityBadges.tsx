@@ -38,7 +38,7 @@ export default function SeverityBadges(props: Props) {
         <span key={key} className="text-label-sm flex shrink-0 items-center gap-1">
           <span className={`inline-block h-2 w-2 shrink-0 rounded-full ${dotClass}`} />
           <span className={`font-semibold ${textClass}`}>{COUNT_MAP[key](props)}</span>
-          <span className="text-gray-600">{label}</span>
+          <span className="text-foreground-secondary">{label}</span>
         </span>
       ))}
     </div>

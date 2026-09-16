@@ -2,7 +2,7 @@ export default function LandingFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="snap-start border-t border-gray-900/10 bg-gray-900 px-6 py-12 text-white md:px-10">
+    <footer className="snap-start border-t border-white/10 bg-[#111318] px-6 py-12 text-white md:px-10">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-10">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
           <div>

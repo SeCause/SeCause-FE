@@ -15,11 +15,11 @@ interface Props {
 export default function AnalysisSidebar({ label, disabled, onClick, buttonClassName }: Props) {
   return (
     <div className="flex flex-col gap-4">
-      <div className="rounded-xl bg-blue-50 p-4">
-        <h2 className="text-label-md mb-2 text-gray-900">분석 정보</h2>
+      <div className="bg-surface-subtle rounded-xl p-4">
+        <h2 className="text-label-md text-foreground mb-2">분석 정보</h2>
         <ul className="flex flex-col gap-2">
           {INFO_BULLETS.map((bullet) => (
-            <li key={bullet} className="text-caption flex gap-2 text-gray-700">
+            <li key={bullet} className="text-caption text-foreground-secondary flex gap-2">
               <span aria-hidden="true" className="mt-0.5 shrink-0">
                 •
               </span>
@@ -29,14 +29,14 @@ export default function AnalysisSidebar({ label, disabled, onClick, buttonClassN
         </ul>
       </div>
 
-      <div className="max-md:fixed max-md:inset-x-0 max-md:bottom-0 max-md:z-30 max-md:border-t max-md:border-gray-900/10 max-md:bg-white/95 max-md:px-6 max-md:pt-3 max-md:pb-[calc(0.75rem+env(safe-area-inset-bottom))] max-md:backdrop-blur">
+      <div className="max-md:bg-surface/95 max-md:border-border-subtle max-md:fixed max-md:inset-x-0 max-md:bottom-0 max-md:z-30 max-md:border-t max-md:px-6 max-md:pt-3 max-md:pb-[calc(0.75rem+env(safe-area-inset-bottom))] max-md:backdrop-blur">
         <button
           disabled={disabled}
           onClick={onClick}
           className={cn(
             'text-label-lg h-12 w-full rounded-xl transition-colors',
             disabled
-              ? 'cursor-not-allowed bg-gray-100 text-gray-500'
+              ? 'bg-surface-muted text-foreground-tertiary cursor-not-allowed'
               : 'bg-blue cursor-pointer text-white',
             buttonClassName,
           )}

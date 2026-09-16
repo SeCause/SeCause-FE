@@ -17,8 +17,8 @@ export default function IssueSummaryCards({ totalIssues, criticalIssues }: Props
         <p className="text-xs text-white/65">Total Issues</p>
         <p className="mt-3 text-3xl font-semibold tracking-[-0.04em]">{animatedTotal}</p>
       </div>
-      <div className="rounded-2xl border border-gray-900/10 bg-white p-5">
-        <p className="text-xs text-gray-500">Critical Issues</p>
+      <div className="border-border-subtle bg-surface rounded-2xl border p-5">
+        <p className="text-foreground-tertiary text-xs">Critical Issues</p>
         <p className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-red-500">
           {animatedCritical}
         </p>

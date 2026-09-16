@@ -64,11 +64,13 @@ export default function RepositoriesTab({ accountName }: Props) {
 
   return (
     <div className="mx-auto w-full max-w-6xl">
-      <div className="mb-5 flex flex-col gap-4 border-b border-gray-900/15 pb-5 sm:flex-row sm:items-end sm:justify-between">
+      <div className="border-border-subtle mb-5 flex flex-col gap-4 border-b pb-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-blue text-label-mono mb-2 font-mono">YOUR WORKSPACE</p>
-          <h1 className="text-heading-lg text-gray-900">Repositories</h1>
-          <p className="mt-2 text-sm text-gray-500">분석한 프로젝트의 보안 상태를 확인하세요.</p>
+          <h1 className="text-heading-lg text-foreground">Repositories</h1>
+          <p className="text-foreground-tertiary mt-2 text-sm">
+            분석한 프로젝트의 보안 상태를 확인하세요.
+          </p>
         </div>
         <Button className="w-full px-4! sm:w-auto" onClick={handleAnalyzeRepository}>
           Analyze New Repository
@@ -82,16 +84,18 @@ export default function RepositoriesTab({ accountName }: Props) {
           containerClassName="w-full sm:max-w-sm"
           aria-label="레포지토리 검색"
         />
-        <span className="text-num-mono hidden font-mono text-gray-400 sm:block">
+        <span className="text-num-mono text-foreground-disabled hidden font-mono sm:block">
           {filtered.length} PROJECTS
         </span>
       </div>
 
       <div className="flex min-h-100 flex-col gap-3">
         {isLoading ? (
-          <p className="text-body-md m-auto text-gray-500">불러오는 중...</p>
+          <p className="text-body-md text-foreground-tertiary m-auto">불러오는 중...</p>
         ) : isError ? (
-          <p className="text-body-md m-auto text-gray-500">레포지토리를 불러오지 못했습니다.</p>
+          <p className="text-body-md text-foreground-tertiary m-auto">
+            레포지토리를 불러오지 못했습니다.
+          </p>
         ) : paginated.length > 0 ? (
           paginated.map((repo) => (
             <RepositoryCard
@@ -102,9 +106,11 @@ export default function RepositoriesTab({ accountName }: Props) {
             />
           ))
         ) : repositories.length === 0 ? (
-          <p className="text-body-md m-auto text-gray-500">분석한 레포지토리가 없습니다.</p>
+          <p className="text-body-md text-foreground-tertiary m-auto">
+            분석한 레포지토리가 없습니다.
+          </p>
         ) : (
-          <p className="text-body-md m-auto text-gray-500">검색 결과가 없습니다.</p>
+          <p className="text-body-md text-foreground-tertiary m-auto">검색 결과가 없습니다.</p>
         )}
       </div>
 

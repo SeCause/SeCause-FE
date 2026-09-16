@@ -24,7 +24,7 @@ const STATUS_STYLE: Record<string, string> = {
   COMPLETED: 'text-emerald-600',
   IN_PROGRESS: 'text-blue',
   FAILED: 'text-red-500',
-  PENDING: 'text-gray-500',
+  PENDING: 'text-foreground-tertiary',
 };
 
 interface Props {
@@ -47,7 +47,7 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
   };
 
   return (
-    <article className="group hover:border-blue/30 relative flex flex-col gap-4 rounded-2xl border border-gray-900/10 bg-white px-5 py-5 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_35px_rgba(27,43,75,0.07)] sm:px-6">
+    <article className="group hover:border-blue/30 border-border-subtle bg-surface relative flex flex-col gap-4 rounded-2xl border px-5 py-5 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_35px_rgba(27,43,75,0.07)] sm:px-6">
       <Link
         href={ROUTES.repositoryDetail(repo.repositoryId)}
         aria-label={`${repo.owner} / ${repo.name} 분석 결과 보기`}
@@ -57,7 +57,7 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
       <div className="pointer-events-none flex min-w-0 items-start justify-between gap-3 lg:items-center">
         <div className="flex min-w-0 flex-1 gap-x-3 gap-y-2 max-lg:flex-col lg:items-center">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="group-hover:text-blue min-w-0 truncate text-lg font-semibold tracking-tight text-gray-900">
+            <span className="group-hover:text-blue text-foreground min-w-0 truncate text-lg font-semibold tracking-tight">
               {repo.owner} / {repo.name}
             </span>
           </div>
@@ -74,25 +74,25 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
           onClick={handleDeleteClick}
           disabled={isDeleting}
           aria-label="레포지토리 삭제"
-          className="pointer-events-auto relative z-10 shrink-0 self-start rounded-lg p-1.5 text-gray-500 hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent"
+          className="text-foreground-tertiary hover:bg-surface-muted pointer-events-auto relative z-10 shrink-0 self-start rounded-lg p-1.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent"
         >
           <Image src={TrashIcon} alt="" aria-hidden="true" className="h-4 w-4" />
         </button>
       </div>
 
       <div className="pointer-events-none flex min-w-0 items-start justify-between gap-2.5">
-        <p className="text-body-sm min-w-0 wrap-break-word text-gray-500">
+        <p className="text-body-sm text-foreground-tertiary min-w-0 wrap-break-word">
           {repo.completedAt ? (
             <>
-              <span className="font-semibold text-gray-800">Last analysis:</span>{' '}
+              <span className="text-foreground font-semibold">Last analysis:</span>{' '}
               <span>{formatAnalysisDate(repo.completedAt)}</span>
-              <span className="mx-1 text-gray-300">|</span>
+              <span className="text-foreground-disabled mx-1">|</span>
               <span>{repo.fileCount} Files</span>
-              <span className="mx-1 text-gray-300">|</span>
+              <span className="text-foreground-disabled mx-1">|</span>
               <span className="break-all">{repo.branch}</span>
             </>
           ) : (
-            <span className="text-gray-400">분석 기록 없음</span>
+            <span className="text-foreground-disabled">분석 기록 없음</span>
           )}
         </p>
 
@@ -100,7 +100,7 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
           <span
             className={cn(
               'text-label-md shrink-0 whitespace-nowrap',
-              STATUS_STYLE[status] ?? 'text-gray-500',
+              STATUS_STYLE[status] ?? 'text-foreground-tertiary',
             )}
           >
             {STATUS_LABEL[status] ?? status}

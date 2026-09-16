@@ -5,11 +5,11 @@ import styles from './BrowserFrame.module.css';
 export default function BrowserFrame({ children }: { children: ReactNode }) {
   return (
     <div className={`${styles.frame} flex h-full flex-col`}>
-      <div className="flex h-12 shrink-0 items-center border-b border-gray-900/10 bg-white px-5">
+      <div className="border-border-subtle bg-surface flex h-12 shrink-0 items-center border-b px-5">
         <span className="bg-blue flex h-5 w-5 items-center justify-center rounded-md text-[9px] font-bold text-white">
           S
         </span>
-        <span className="ml-2 text-xs font-semibold tracking-tight text-gray-900">SeCause</span>
+        <span className="text-foreground ml-2 text-xs font-semibold tracking-tight">SeCause</span>
         <span className="ml-auto h-2 w-2 rounded-full bg-emerald-400" />
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto">{children}</div>

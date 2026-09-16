@@ -8,7 +8,7 @@ const SEVERITY_COLORS: Record<string, string> = {
   CRITICAL: 'bg-red-500',
   HIGH: 'bg-amber-400',
   MEDIUM: 'bg-blue',
-  LOW: 'bg-gray-300',
+  LOW: 'bg-surface-muted',
 };
 
 export default function RepoOverviewPreview() {
@@ -30,8 +30,8 @@ export default function RepoOverviewPreview() {
           criticalIssues={criticalIssues}
         />
 
-        <div className="flex flex-col rounded-2xl border border-gray-900/10 bg-white p-4">
-          <p className="mb-3 text-xs font-semibold tracking-[0.08em] text-gray-500">
+        <div className="border-border-subtle bg-surface flex flex-col rounded-2xl border p-4">
+          <p className="text-foreground-tertiary mb-3 text-xs font-semibold tracking-[0.08em]">
             SEVERITY BREAKDOWN
           </p>
           <ul className="space-y-3">
@@ -40,27 +40,29 @@ export default function RepoOverviewPreview() {
                 key={item.severity}
                 className="grid grid-cols-[4.5rem_1fr_1.5rem] items-center gap-3"
               >
-                <span className="text-[10px] text-gray-500">{item.severity}</span>
-                <div className="h-1.5 overflow-hidden rounded-full bg-gray-100">
+                <span className="text-foreground-tertiary text-[10px]">{item.severity}</span>
+                <div className="bg-surface-muted h-1.5 overflow-hidden rounded-full">
                   <div
-                    className={`h-full rounded-full ${SEVERITY_COLORS[item.severity] ?? 'bg-gray-300'}`}
+                    className={`h-full rounded-full ${SEVERITY_COLORS[item.severity] ?? 'bg-surface-muted'}`}
                     style={{ width: `${item.percentage}%` }}
                   />
                 </div>
-                <span className="text-right text-[10px] font-semibold text-gray-700">
+                <span className="text-foreground-secondary text-right text-[10px] font-semibold">
                   {item.count}
                 </span>
               </li>
             ))}
           </ul>
 
-          <div className="mt-3 border-t border-gray-900/10 pt-4">
-            <p className="text-label-mono font-mono text-gray-400">TOP TYPES</p>
+          <div className="border-border-subtle mt-3 border-t pt-4">
+            <p className="text-label-mono text-foreground-disabled font-mono">TOP TYPES</p>
             <ul className="mt-2.5 space-y-1.5">
               {MOCK_DASHBOARD.issuesByType.slice(0, 3).map((item) => (
                 <li key={item.type} className="flex items-baseline justify-between gap-3">
-                  <span className="truncate text-[11px] text-gray-600">{item.type}</span>
-                  <span className="font-mono text-[11px] font-semibold text-gray-900">
+                  <span className="text-foreground-secondary truncate text-[11px]">
+                    {item.type}
+                  </span>
+                  <span className="text-foreground font-mono text-[11px] font-semibold">
                     {item.count}
                   </span>
                 </li>

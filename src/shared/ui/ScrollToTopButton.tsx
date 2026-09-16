@@ -39,7 +39,7 @@ export default function ScrollToTopButton({ containerRef, className }: Props) {
       onClick={() => containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
       aria-label="맨 위로 이동"
       className={cn(
-        'fixed right-6 bottom-6 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white drop-shadow-sm transition-colors hover:bg-gray-50',
+        'border-border-subtle bg-surface hover:bg-surface-subtle fixed right-6 bottom-6 z-50 flex h-11 w-11 items-center justify-center rounded-full border drop-shadow-sm transition-colors',
         className,
       )}
     >

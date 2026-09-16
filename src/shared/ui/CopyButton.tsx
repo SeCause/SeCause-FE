@@ -36,7 +36,7 @@ export default function CopyButton({ text, label = '복사', className }: Props)
       onClick={handleCopy}
       aria-label={copied ? '복사 완료' : label}
       className={cn(
-        'text-label-sm hover:border-blue hover:text-blue flex shrink-0 items-center gap-1.5 rounded-full border border-gray-900/15 px-3 py-1 text-gray-600 transition-colors',
+        'text-label-sm hover:border-blue hover:text-blue border-border-subtle text-foreground-secondary flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 transition-colors',
         copied && 'border-blue/40 text-blue',
         className,
       )}
