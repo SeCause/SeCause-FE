@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useCallback, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
 import ArrowIcon from '@/icons/icon_arrow.svg';
 import { cn } from '@/shared/lib/cn';
@@ -44,7 +44,10 @@ export default function Dropdown({
   const listboxId = `${id}-listbox`;
 
   const [open, setOpen] = useState(false);
+  const [focusedIndex, setFocusedIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   useClickOutside(
     containerRef,
@@ -52,11 +55,55 @@ export default function Dropdown({
   );
 
   const selected = options.find((o) => o.value === value);
+  const selectedIndex = options.findIndex((option) => option.value === value);
+
+  useEffect(() => {
+    if (open && focusedIndex >= 0) optionRefs.current[focusedIndex]?.focus();
+  }, [focusedIndex, open]);
+
+  const openDropdown = (index = selectedIndex >= 0 ? selectedIndex : 0) => {
+    if (options.length === 0) return;
+    setFocusedIndex(index);
+    setOpen(true);
+  };
+
+  const handleTriggerKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      const fallbackIndex = event.key === 'ArrowDown' ? 0 : options.length - 1;
+      openDropdown(selectedIndex >= 0 ? selectedIndex : fallbackIndex);
+    }
+  };
+
+  const handleListboxKeyDown = (event: React.KeyboardEvent<HTMLUListElement>) => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      setOpen(false);
+      triggerRef.current?.focus();
+      return;
+    }
+
+    if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+    event.preventDefault();
+    setFocusedIndex((current) => {
+      const offset = event.key === 'ArrowDown' ? 1 : -1;
+      return (current + offset + options.length) % options.length;
+    });
+  };
+
+  const handleSelect = (optionValue: string) => {
+    onChange(optionValue);
+    setOpen(false);
+    triggerRef.current?.focus();
+  };
 
   return (
     <div ref={containerRef} className={cn('relative', fullWidth ? 'w-full' : 'w-fit', className)}>
       <button
-        onClick={() => setOpen((o) => !o)}
+        ref={triggerRef}
+        type="button"
+        onClick={() => (open ? setOpen(false) : openDropdown())}
+        onKeyDown={handleTriggerKeyDown}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={listboxId}
@@ -103,20 +150,22 @@ export default function Dropdown({
           role="listbox"
           id={listboxId}
           aria-labelledby={ariaLabelledby}
+          onKeyDown={handleListboxKeyDown}
           className={cn(
             'scrollbar-custom-gray z-dropdown absolute mt-1 max-h-54 w-full min-w-max overflow-y-auto rounded-lg border border-gray-300 bg-white py-1 drop-shadow-sm',
             listboxClassName,
           )}
         >
-          {options.map((option) => (
+          {options.map((option, index) => (
             <li key={option.value} role="presentation">
               <button
+                ref={(element) => {
+                  optionRefs.current[index] = element;
+                }}
+                type="button"
                 role="option"
                 aria-selected={value === option.value}
-                onClick={() => {
-                  onChange(option.value);
-                  setOpen(false);
-                }}
+                onClick={() => handleSelect(option.value)}
                 className={cn(
                   'text-body-md flex w-full items-center gap-2 px-3 py-2.5 text-left font-medium transition-colors hover:bg-gray-100',
                   value === option.value ? 'text-blue' : 'text-gray-900',
