@@ -48,7 +48,8 @@ export const LongDescription = {
 
 export const CancelInteraction = {
   play: async ({ canvasElement, args }) => {
-    const canvas = within(canvasElement);
+    // ConfirmDialog renders through a portal, outside the story canvas.
+    const canvas = within(canvasElement.ownerDocument.body);
 
     await userEvent.click(canvas.getByRole('button', { name: '취소' }));
     await expect(args.onCancel).toHaveBeenCalledOnce();
