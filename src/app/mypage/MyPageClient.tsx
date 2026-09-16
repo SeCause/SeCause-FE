@@ -1,18 +1,35 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
+import { useSyncExternalStore } from 'react';
 
 import { AccountTab } from '@/features/account';
 import { useGithubAccounts } from '@/features/analysis/hooks/useAnalysisApi';
 import { resolveActiveAccount } from '@/features/analysis/model/activeAccount';
+import type { GithubAccount } from '@/features/analysis/model/types';
 import { RepositoriesTab } from '@/features/repositories';
 import { ROUTES } from '@/shared/config/routes';
 import { MyPageSidebar, type MyPageTab } from '@/widgets/mypage-sidebar';
 
-export default function MyPageClient() {
+const subscribeToHydration = () => () => {};
+
+interface Props {
+  initialAccounts: GithubAccount[];
+  initialActiveAccount: string | null;
+}
+
+export default function MyPageClient({ initialAccounts, initialActiveAccount }: Props) {
   const searchParams = useSearchParams();
-  const { data: accounts = [] } = useGithubAccounts();
-  const activeAccount = resolveActiveAccount(accounts, searchParams.get('account'));
+  const { data: clientAccounts = [] } = useGithubAccounts();
+  const isHydrated = useSyncExternalStore(
+    subscribeToHydration,
+    () => true,
+    () => false,
+  );
+  const accounts = isHydrated ? clientAccounts : initialAccounts;
+  const activeAccount = isHydrated
+    ? resolveActiveAccount(accounts, searchParams.get('account'))
+    : initialActiveAccount;
   const activeTab: MyPageTab = searchParams.get('tab') === 'account' ? 'account' : 'repositories';
 
   const updateQuery = (mutate: (params: URLSearchParams) => void, replace = false) => {

@@ -42,7 +42,7 @@ export default async function MyPage({ searchParams }: Props) {
     <PageTransition>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense fallback={null}>
-          <MyPageClient />
+          <MyPageClient initialAccounts={accounts} initialActiveAccount={activeAccount} />
         </Suspense>
       </HydrationBoundary>
     </PageTransition>
