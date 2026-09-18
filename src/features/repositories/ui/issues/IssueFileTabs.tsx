@@ -6,6 +6,7 @@ interface Props {
   selectedFilePath: string | null;
   isLoading: boolean;
   isError: boolean;
+  emptyMessage?: string;
   onSelect: (filePath: string) => void;
 }
 
@@ -14,6 +15,7 @@ export default function IssueFileTabs({
   selectedFilePath,
   isLoading,
   isError,
+  emptyMessage = '표시할 파일이 없습니다.',
   onSelect,
 }: Props) {
   return (
@@ -50,7 +52,9 @@ export default function IssueFileTabs({
           </button>
         ))
       ) : (
-        <p className="text-body-sm text-foreground-tertiary px-2 py-3">표시할 파일이 없습니다.</p>
+        <p className="text-body-sm text-foreground-tertiary m-auto px-2 py-3 text-center">
+          {emptyMessage}
+        </p>
       )}
     </div>
   );
