@@ -1,3 +1,4 @@
+export { repositoriesKey, repositoryDashboardKey } from './model/queryKeys';
 export type {
   RepositoryDashboard as RepositoryDashboardData,
   RepositoryIssueDetail,

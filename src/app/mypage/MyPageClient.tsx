@@ -3,13 +3,11 @@
 import { useSearchParams } from 'next/navigation';
 import { useSyncExternalStore } from 'react';
 
-import { AccountTab } from '@/features/account';
-import { useGithubAccounts } from '@/features/analysis/hooks/useAnalysisApi';
-import { resolveActiveAccount } from '@/features/analysis/model/activeAccount';
-import type { GithubAccount } from '@/features/analysis/model/types';
-import type { GetUserResponse } from '@/features/auth/model/types';
+import { type GithubAccount, resolveActiveAccount, useGithubAccounts } from '@/features/analysis';
+import type { GetUserResponse } from '@/features/auth';
 import { RepositoriesTab } from '@/features/repositories';
 import { ROUTES } from '@/shared/config/routes';
+import { AccountTab } from '@/widgets/account-settings';
 import { MyPageSidebar, type MyPageTab } from '@/widgets/mypage-sidebar';
 
 const subscribeToHydration = () => () => {};

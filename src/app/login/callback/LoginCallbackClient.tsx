@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { useGithubLogin } from '@/features/auth/hooks/useAuthApi';
+import { useGithubLogin } from '@/features/auth';
 import { ROUTES } from '@/shared/config/routes';
 import { useToast } from '@/shared/ui/Toast';
 

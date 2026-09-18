@@ -2,12 +2,11 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
-import { getGithubAccountsServer } from '@/features/analysis/api/analysis.server';
-import { resolveActiveAccount } from '@/features/analysis/model/activeAccount';
-import { githubAccountsKey } from '@/features/analysis/model/queryKeys';
-import { getUserServer } from '@/features/auth/api/auth.server';
-import { getRepositoriesServer } from '@/features/repositories/api/repositories.server';
-import { repositoriesKey } from '@/features/repositories/model/queryKeys';
+import { githubAccountsKey, resolveActiveAccount } from '@/features/analysis';
+import { getGithubAccountsServer } from '@/features/analysis/index.server';
+import { getUserServer } from '@/features/auth/index.server';
+import { repositoriesKey } from '@/features/repositories';
+import { getRepositoriesServer } from '@/features/repositories/index.server';
 import { createServerQueryClient } from '@/shared/lib/queryClient';
 import PageTransition from '@/shared/ui/PageTransition';
 

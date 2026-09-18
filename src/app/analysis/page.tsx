@@ -6,6 +6,7 @@ import { Suspense, useEffect, useState } from 'react';
 import {
   AnalysisProgress,
   type AnalysisRepository,
+  type AnalysisRequestResult,
   AnalysisSidebar,
   type AnalysisStep,
   BranchStep,
@@ -13,7 +14,6 @@ import {
   useAnalysisStatus,
   useCreateAnalysisRequest,
 } from '@/features/analysis';
-import type { AnalysisRequestResult } from '@/features/analysis/model/types';
 import { ROUTES } from '@/shared/config/routes';
 import PageTransition from '@/shared/ui/PageTransition';
 import { useToast } from '@/shared/ui/Toast';

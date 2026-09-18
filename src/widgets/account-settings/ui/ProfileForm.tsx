@@ -5,12 +5,12 @@ import { Camera } from 'lucide-react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 
-import { profileFormSchema, type ProfileFormValues } from '@/features/account/model/schema';
-import { useUpdateUser } from '@/features/auth/hooks/useAuthApi';
-import type { GetUserResponse } from '@/features/auth/model/types';
+import { type GetUserResponse, useUpdateUser } from '@/features/auth';
 import Button from '@/shared/ui/Button';
 import Input from '@/shared/ui/Input';
 import { useToast } from '@/shared/ui/Toast';
+
+import { profileFormSchema, type ProfileFormValues } from '../model/schema';
 
 export default function ProfileForm({ user }: { user: GetUserResponse }) {
   const { showToast } = useToast();

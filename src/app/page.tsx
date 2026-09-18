@@ -1,8 +1,5 @@
 import PageTransition from '@/shared/ui/PageTransition';
-import FaqSection from '@/widgets/landing/ui/FaqSection';
-import HeroSection from '@/widgets/landing/ui/HeroSection';
-import HowItWorksSection from '@/widgets/landing/ui/how-it-works/HowItWorksSection';
-import LandingFooter from '@/widgets/landing/ui/LandingFooter';
+import { FaqSection, HeroSection, HowItWorksSection, LandingFooter } from '@/widgets/landing';
 
 export default function Home() {
   return (

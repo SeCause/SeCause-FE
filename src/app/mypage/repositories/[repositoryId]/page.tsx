@@ -2,9 +2,8 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { RepositoryDashboard } from '@/features/repositories';
-import { getRepositoryDashboardServer } from '@/features/repositories/api/repositories.server';
-import { repositoryDashboardKey } from '@/features/repositories/model/queryKeys';
+import { RepositoryDashboard, repositoryDashboardKey } from '@/features/repositories';
+import { getRepositoryDashboardServer } from '@/features/repositories/index.server';
 import { createServerQueryClient } from '@/shared/lib/queryClient';
 import PageTransition from '@/shared/ui/PageTransition';
 

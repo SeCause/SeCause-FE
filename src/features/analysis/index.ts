@@ -1,5 +1,16 @@
-export { useAnalysisStatus, useCreateAnalysisRequest } from './hooks/useAnalysisApi';
-export type { AnalysisRepository, AnalysisStep } from './model/types';
+export {
+  useAnalysisStatus,
+  useCreateAnalysisRequest,
+  useGithubAccounts,
+} from './hooks/useAnalysisApi';
+export { resolveActiveAccount } from './model/activeAccount';
+export { githubAccountsKey } from './model/queryKeys';
+export type {
+  AnalysisRepository,
+  AnalysisRequestResult,
+  AnalysisStep,
+  GithubAccount,
+} from './model/types';
 export { default as AnalysisProgress } from './ui/AnalysisProgress';
 export { default as AnalysisSidebar } from './ui/AnalysisSidebar';
 export { default as BranchStep } from './ui/BranchStep';

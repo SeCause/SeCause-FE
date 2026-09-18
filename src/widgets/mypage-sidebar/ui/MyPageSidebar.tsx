@@ -3,8 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import { createGithubAccountOptions } from '@/features/analysis';
-import type { GithubAccount } from '@/features/analysis/model/types';
+import { createGithubAccountOptions, type GithubAccount } from '@/features/analysis';
 import AccountIcon from '@/icons/icon_account.svg';
 import RepositoryIcon from '@/icons/icon_repository.svg';
 import SidebarIcon from '@/icons/icon_sidebar.svg';

@@ -6,8 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { useLogout, useSessionHint, useUser } from '@/features/auth/hooks/useAuthApi';
-import AuthButton from '@/features/auth/ui/AuthButton';
+import { AuthButton, useLogout, useSessionHint, useUser } from '@/features/auth';
 import { isProtectedRoute, ROUTES } from '@/shared/config/routes';
 import { useClickOutside } from '@/shared/lib/useClickOutside';
 

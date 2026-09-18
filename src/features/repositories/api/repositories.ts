@@ -1,9 +1,3 @@
-import {
-  getMockRepositoryIssueDetail,
-  getMockRepositoryIssueFiles,
-  getMockRepositoryIssues,
-  mockRepositoryDashboard,
-} from '@/features/repositories/model/mockRepositoryData';
 import type {
   IssueSeverity,
   RepositoryDashboard,
@@ -16,6 +10,13 @@ import type {
 } from '@/features/repositories/model/types';
 import { apiClient } from '@/shared/api/client';
 import { ENDPOINTS } from '@/shared/api/endpoints';
+
+import {
+  getMockRepositoryIssueDetail,
+  getMockRepositoryIssueFiles,
+  getMockRepositoryIssues,
+  mockRepositoryDashboard,
+} from './mockRepositoryData';
 
 const USE_REPOSITORY_MOCK =
   process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_USE_REPOSITORY_MOCK !== 'false';

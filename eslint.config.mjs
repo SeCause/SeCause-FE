@@ -44,6 +44,7 @@ const eslintConfig = defineConfig([
     'playwright-report/**',
     'test-results/**',
     'blob-report/**',
+    'storybook-static/**',
     'next-env.d.ts',
   ]),
   {

@@ -6,7 +6,7 @@ import type {
   RepositoryIssueFile,
   RepositoryIssueListParams,
   RepositoryIssueListResult,
-} from './types';
+} from '../model/types';
 
 const issueTemplates: Array<{
   vulnerabilityType: string;

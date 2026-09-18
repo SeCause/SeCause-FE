@@ -1,7 +1,7 @@
 import { Check } from 'lucide-react';
 import type { Metadata } from 'next';
 
-import GithubLoginButton from '@/features/auth/ui/GithubLoginButton';
+import { GithubLoginButton } from '@/features/auth';
 import PageTransition from '@/shared/ui/PageTransition';
 
 import styles from './page.module.css';

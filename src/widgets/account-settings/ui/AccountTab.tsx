@@ -1,12 +1,11 @@
 'use client';
 
-import { useUser } from '@/features/auth/hooks/useAuthApi';
-import type { GetUserResponse } from '@/features/auth/model/types';
+import { type GetUserResponse, useUser } from '@/features/auth';
 import Button from '@/shared/ui/Button';
-import GithubBadge from '@/shared/ui/GithubBadge';
-import ThemeToggle from '@/shared/ui/ThemeToggle';
 
+import GithubBadge from './GithubBadge';
 import ProfileForm from './ProfileForm';
+import ThemeToggle from './ThemeToggle';
 
 interface Props {
   initialUser: GetUserResponse | null;
