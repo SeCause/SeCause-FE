@@ -15,7 +15,7 @@ interface ApiResponseLog extends ApiLogBase {
 const MAX_TEXT_BODY_LENGTH = 5000;
 
 export function isApiLoggingEnabled() {
-  return process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_API_DEBUG === 'true';
+  return process.env.NODE_ENV === 'development';
 }
 
 export function logApiRequest({ layer, method, url }: ApiLogBase) {
