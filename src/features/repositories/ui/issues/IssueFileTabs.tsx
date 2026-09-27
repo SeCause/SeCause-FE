@@ -1,5 +1,6 @@
 import type { RepositoryIssueFile } from '@/features/repositories/model/types';
 import { cn } from '@/shared/lib/cn';
+import RetryState from '@/shared/ui/RetryState';
 
 interface Props {
   files: RepositoryIssueFile[];
@@ -7,6 +8,7 @@ interface Props {
   isLoading: boolean;
   isError: boolean;
   emptyMessage?: string;
+  onRetry: () => void;
   onSelect: (filePath: string) => void;
 }
 
@@ -16,6 +18,7 @@ export default function IssueFileTabs({
   isLoading,
   isError,
   emptyMessage = '표시할 파일이 없습니다.',
+  onRetry,
   onSelect,
 }: Props) {
   return (
@@ -23,9 +26,7 @@ export default function IssueFileTabs({
       {isLoading ? (
         <p className="text-body-sm text-foreground-tertiary px-2 py-3">불러오는 중...</p>
       ) : isError ? (
-        <p className="text-body-sm text-foreground-tertiary px-2 py-3">
-          파일 목록을 불러오지 못했습니다.
-        </p>
+        <RetryState message="파일 목록을 불러오지 못했습니다." onRetry={onRetry} compact />
       ) : files.length > 0 ? (
         files.map((file) => (
           <button

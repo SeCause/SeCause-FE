@@ -40,6 +40,7 @@ const repositories = [
 describe('RepositoriesTab', () => {
   const push = vi.fn();
   const mutate = vi.fn();
+  const refetch = vi.fn();
 
   beforeEach(() => {
     vi.mocked(useRouter).mockReturnValue({ push } as never);
@@ -47,7 +48,8 @@ describe('RepositoriesTab', () => {
       data: { repositories },
       isLoading: false,
       isError: false,
-    } as ReturnType<typeof useRepositories>);
+      refetch,
+    } as unknown as ReturnType<typeof useRepositories>);
     vi.mocked(useDeleteRepository).mockReturnValue({
       mutate,
       isPending: false,
@@ -102,5 +104,23 @@ describe('RepositoriesTab', () => {
       'href',
       '/mypage/repositories/1',
     );
+  });
+
+  it('Given 저장소 조회가 실패했을 때 When 다시 시도를 누르면 Then 목록을 다시 요청한다', async () => {
+    // Given
+    const user = userEvent.setup();
+    vi.mocked(useRepositories).mockReturnValue({
+      data: undefined,
+      isLoading: false,
+      isError: true,
+      refetch,
+    } as unknown as ReturnType<typeof useRepositories>);
+    render(<RepositoriesTab />);
+
+    // When
+    await user.click(screen.getByRole('button', { name: '다시 시도' }));
+
+    // Then
+    expect(refetch).toHaveBeenCalledOnce();
   });
 });

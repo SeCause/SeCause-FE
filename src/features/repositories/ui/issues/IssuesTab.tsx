@@ -13,6 +13,7 @@ import Pagination from '@/features/repositories/ui/Pagination';
 import { SEVERITY_TAG_LABEL } from '@/features/repositories/ui/severityTag';
 import SwitchIcon from '@/icons/icon_switch.svg';
 import Dropdown from '@/shared/ui/Dropdown';
+import RetryState from '@/shared/ui/RetryState';
 import SearchBar from '@/shared/ui/SearchBar';
 
 import IssueCard from './IssueCard';
@@ -42,6 +43,7 @@ export default function IssuesTab({ repositoryId }: Props) {
     data: files = EMPTY_FILES,
     isLoading: isFilesLoading,
     isError: isFilesError,
+    refetch: refetchFiles,
   } = useRepositoryIssueFiles(repositoryId, severity);
   const filteredFiles = useMemo(() => filterIssueFiles(files, fileKeyword), [files, fileKeyword]);
   const effectiveSelectedFilePath =
@@ -56,6 +58,7 @@ export default function IssuesTab({ repositoryId }: Props) {
     data,
     isLoading: isIssuesLoading,
     isError: isIssuesError,
+    refetch: refetchIssues,
   } = useRepositoryIssues(
     repositoryId,
     {
@@ -142,6 +145,7 @@ export default function IssuesTab({ repositoryId }: Props) {
             isLoading={isFilesLoading}
             isError={isFilesError}
             emptyMessage={fileKeyword ? '검색 결과가 없습니다.' : undefined}
+            onRetry={() => void refetchFiles()}
             onSelect={handleFileSelect}
           />
         </div>
@@ -149,9 +153,13 @@ export default function IssuesTab({ repositoryId }: Props) {
           {isFilesLoading || isIssuesLoading ? (
             <p className="text-body-md text-foreground-tertiary m-auto">불러오는 중...</p>
           ) : isFilesError || isIssuesError ? (
-            <p className="text-body-md text-foreground-tertiary m-auto">
-              이슈를 불러오지 못했습니다.
-            </p>
+            <RetryState
+              message="이슈를 불러오지 못했습니다."
+              onRetry={() => {
+                if (isFilesError) void refetchFiles();
+                if (isIssuesError) void refetchIssues();
+              }}
+            />
           ) : files.length === 0 ? (
             <p className="text-body-md text-foreground-tertiary m-auto">발견된 이슈가 없습니다.</p>
           ) : filteredFiles.length === 0 ? (

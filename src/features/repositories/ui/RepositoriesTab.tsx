@@ -9,6 +9,7 @@ import {
 } from '@/features/repositories/hooks/useRepositoriesApi';
 import { ROUTES } from '@/shared/config/routes';
 import Button from '@/shared/ui/Button';
+import RetryState from '@/shared/ui/RetryState';
 import SearchBar from '@/shared/ui/SearchBar';
 import { useToast } from '@/shared/ui/Toast';
 
@@ -27,7 +28,9 @@ export default function RepositoriesTab({ accountName }: Props) {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
 
-  const { data, isLoading, isError } = useRepositories(accountName ? { accountName } : undefined);
+  const { data, isLoading, isError, refetch } = useRepositories(
+    accountName ? { accountName } : undefined,
+  );
   const { mutate: deleteRepository } = useDeleteRepository();
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
@@ -93,9 +96,7 @@ export default function RepositoriesTab({ accountName }: Props) {
         {isLoading ? (
           <p className="text-body-md text-foreground-tertiary m-auto">불러오는 중...</p>
         ) : isError ? (
-          <p className="text-body-md text-foreground-tertiary m-auto">
-            레포지토리를 불러오지 못했습니다.
-          </p>
+          <RetryState message="레포지토리를 불러오지 못했습니다." onRetry={() => void refetch()} />
         ) : paginated.length > 0 ? (
           paginated.map((repo) => (
             <RepositoryCard

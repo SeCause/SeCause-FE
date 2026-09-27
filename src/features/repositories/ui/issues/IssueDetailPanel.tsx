@@ -2,6 +2,7 @@
 
 import { useRepositoryIssueDetail } from '@/features/repositories/hooks/useRepositoriesApi';
 import CopyButton from '@/shared/ui/CopyButton';
+import RetryState from '@/shared/ui/RetryState';
 
 import CodeDiffView from './CodeDiffView';
 
@@ -15,6 +16,7 @@ export default function IssueDetailPanel({ repositoryId, analysisResultId }: Pro
     data: detail,
     isLoading,
     isError,
+    refetch,
   } = useRepositoryIssueDetail(repositoryId, analysisResultId);
 
   if (isLoading) {
@@ -23,9 +25,7 @@ export default function IssueDetailPanel({ repositoryId, analysisResultId }: Pro
 
   if (isError || !detail) {
     return (
-      <p className="text-body-md text-foreground-tertiary py-4 text-center">
-        이슈 상세 정보를 불러오지 못했습니다.
-      </p>
+      <RetryState message="이슈 상세 정보를 불러오지 못했습니다." onRetry={() => void refetch()} />
     );
   }
 
