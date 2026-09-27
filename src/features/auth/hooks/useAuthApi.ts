@@ -52,9 +52,10 @@ export function useLogout() {
 
   return useMutation({
     mutationFn: postLogout,
-    onSuccess: () => {
+    onSuccess: async () => {
       clearSessionHint();
-      queryClient.removeQueries({ queryKey: ['user'] });
+      await queryClient.cancelQueries();
+      queryClient.removeQueries();
       router.replace(ROUTES.login);
     },
   });
