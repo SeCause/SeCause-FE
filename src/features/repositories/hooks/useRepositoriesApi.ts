@@ -61,7 +61,16 @@ export function useRepositoryIssues(
     queryKey: repositoryIssuesKey(repositoryId, params),
     queryFn: () => getRepositoryIssues(repositoryId, params),
     enabled,
-    placeholderData: (prev) => prev,
+    placeholderData: (prev, previousQuery) => {
+      const previousKey = previousQuery?.queryKey;
+      const previousParams = previousKey?.[3] as RepositoryIssueListParams | undefined;
+      return previousKey?.[1] === repositoryId &&
+        previousParams?.filePath === params?.filePath &&
+        (previousParams?.severity ?? 'ALL') === (params?.severity ?? 'ALL') &&
+        previousParams?.size === params?.size
+        ? prev
+        : undefined;
+    },
   });
 }
 
