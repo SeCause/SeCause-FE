@@ -2,7 +2,7 @@ import { cn } from '@/shared/lib/cn';
 
 const INFO_BULLETS = [
   '본 프로젝트는 SemGrep, CodeQL, Vector DB를 사용하여 포괄적으로 검사합니다.',
-  '분석 결과는 실시간으로 확인 가능하며, 완료 후 상세 보고서가 제공됩니다.',
+  '분석이 완료되면 발견된 취약점과 수정 가이드를 확인할 수 있습니다.',
 ];
 
 interface Props {
