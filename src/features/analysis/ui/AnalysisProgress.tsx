@@ -55,7 +55,7 @@ export default function AnalysisProgress({
         <p className="text-body-md text-foreground-tertiary mt-3">
           {stopped
             ? getFailureMessage(status, failureReason, isError)
-            : '분석이 완료될 때까지 이 페이지를 유지해주세요.'}
+            : '분석이 완료되면 발견된 취약점과 수정 가이드를 확인할 수 있습니다.'}
         </p>
 
         {!stopped && (
