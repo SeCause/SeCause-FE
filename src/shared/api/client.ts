@@ -1,4 +1,6 @@
-import ky, { type AfterResponseHook, type BeforeRequestHook } from 'ky';
+import ky, { type AfterResponseHook, type BeforeRequestHook, isHTTPError } from 'ky';
+
+import { ROUTES } from '@/shared/config/routes';
 
 import { ENDPOINTS } from './endpoints';
 import {
@@ -46,7 +48,10 @@ function reissueOnce(): Promise<boolean> {
   pendingReissue ??= baseClient
     .post(ENDPOINTS.auth.reissue)
     .then(() => true)
-    .catch(() => false)
+    .catch((error: unknown) => {
+      if (isHTTPError(error) && error.response.status === 401) return false;
+      throw error;
+    })
     .finally(() => {
       pendingReissue = null;
     });
@@ -55,9 +60,14 @@ function reissueOnce(): Promise<boolean> {
 }
 
 const handleUnauthorized: AfterResponseHook = async ({ request, response, retryCount }) => {
-  if (response.status !== 401 || retryCount > 0) return;
+  if (response.status !== 401) return;
 
-  if (await reissueOnce()) return ky.retry({ request });
+  if (retryCount === 0 && (await reissueOnce())) return ky.retry({ request });
+
+  const pathname = window.location.pathname;
+  if (pathname === ROUTES.mypage || pathname.startsWith(`${ROUTES.mypage}/`)) {
+    window.location.replace(ROUTES.login);
+  }
 };
 
 const kyClient = baseClient.extend({
