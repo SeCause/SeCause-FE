@@ -24,7 +24,12 @@ export default function OverviewTab({ dashboard }: Props) {
     <div className="flex flex-col gap-4">
       <CodeDetailsCard
         codeDetails={dashboard.codeDetails}
-        lastAnalysisAt={dashboard.analysis.completedAt}
+        lastAnalysisAt={
+          dashboard.analysis.status === 'COMPLETED'
+            ? dashboard.analysis.completedAt
+            : dashboard.analysis.requestedAt
+        }
+        analysisDateLabel={dashboard.analysis.status === 'COMPLETED' ? '마지막 분석' : '분석 요청'}
       />
 
       <div className="mt-2 flex flex-col gap-1">

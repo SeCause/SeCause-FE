@@ -9,15 +9,20 @@ const lineCountFormatter = new Intl.NumberFormat('en', {
 interface Props {
   codeDetails: RepositoryCodeDetails;
   lastAnalysisAt: string | null;
+  analysisDateLabel?: string;
 }
 
-export default function CodeDetailsCard({ codeDetails, lastAnalysisAt }: Props) {
+export default function CodeDetailsCard({
+  codeDetails,
+  lastAnalysisAt,
+  analysisDateLabel = '마지막 분석',
+}: Props) {
   const rows = [
     { label: '브랜치', value: codeDetails.branch },
     { label: '코드 라인 수', value: lineCountFormatter.format(codeDetails.lineCount) },
     { label: '사용 언어', value: codeDetails.languages.join(', ') || '-' },
     {
-      label: '마지막 분석',
+      label: analysisDateLabel,
       value: lastAnalysisAt ? formatRelativeTime(lastAnalysisAt) : '분석 기록 없음',
     },
   ];

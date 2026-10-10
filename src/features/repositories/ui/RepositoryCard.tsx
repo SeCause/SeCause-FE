@@ -35,6 +35,8 @@ interface Props {
 
 export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
   const status = repo.analysisStatus;
+  const isCompleted = status === 'COMPLETED';
+  const analysisAt = isCompleted ? repo.completedAt : repo.analysisRequestedAt;
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const handleDeleteClick = () => {
@@ -82,10 +84,12 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
 
       <div className="pointer-events-none flex min-w-0 items-start justify-between gap-2.5">
         <p className="text-body-sm text-foreground-tertiary min-w-0 wrap-break-word">
-          {repo.completedAt ? (
+          {analysisAt ? (
             <>
-              <span className="text-foreground font-semibold">Last analysis:</span>{' '}
-              <span>{formatAnalysisDate(repo.completedAt)}</span>
+              <span className="text-foreground font-semibold">
+                {isCompleted ? 'Last analysis:' : 'Analysis requested:'}
+              </span>{' '}
+              <span>{formatAnalysisDate(analysisAt)}</span>
               <span className="text-foreground-disabled mx-1">|</span>
               <span>{repo.fileCount} Files</span>
               <span className="text-foreground-disabled mx-1">|</span>
