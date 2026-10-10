@@ -146,9 +146,11 @@ export default function IssuesTab({ repositoryId }: Props) {
     <div className="flex min-h-0 flex-1 flex-col gap-4">
       <div className="flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-body-sm text-foreground-tertiary">
-          {data
-            ? `선택한 파일의 이슈 ${data.totalElements}개 · 전체 ${totalIssueCount}개`
-            : '보안 이슈를 불러오는 중입니다.'}
+          {isFilesError || isIssuesError
+            ? '보안 이슈를 불러오지 못했습니다.'
+            : data
+              ? `선택한 파일의 이슈 ${data.totalElements}개 · 전체 ${totalIssueCount}개`
+              : '보안 이슈를 불러오는 중입니다.'}
         </p>
 
         <Dropdown
@@ -177,7 +179,6 @@ export default function IssuesTab({ repositoryId }: Props) {
             isLoading={isFilesLoading}
             isError={isFilesError}
             emptyMessage={fileKeyword ? '검색 결과가 없습니다.' : undefined}
-            onRetry={() => void refetchFiles()}
             onSelect={handleFileSelect}
           />
         </div>
@@ -186,7 +187,11 @@ export default function IssuesTab({ repositoryId }: Props) {
             <p className="text-body-md text-foreground-tertiary m-auto">불러오는 중...</p>
           ) : isFilesError || isIssuesError ? (
             <RetryState
-              message="이슈를 불러오지 못했습니다."
+              message={
+                isFilesError
+                  ? '파일 목록을 불러오지 못해 이슈를 표시할 수 없습니다.'
+                  : '이슈를 불러오지 못했습니다.'
+              }
               onRetry={() => {
                 if (isFilesError) void refetchFiles();
                 if (isIssuesError) void refetchIssues();
