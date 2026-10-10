@@ -1,6 +1,7 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useRef } from 'react';
 
 import { useRepositoryDashboard } from '@/features/repositories/hooks/useRepositoriesApi';
 import type { RepositoryDetailTab } from '@/features/repositories/model/types';
@@ -17,7 +18,13 @@ interface Props {
 }
 
 export default function RepositoryDashboard({ repositoryId }: Props) {
-  const [activeTab, setActiveTab] = useState<RepositoryDetailTab>('overview');
+  const searchParams = useSearchParams();
+  const activeTab = searchParams.get('tab') === 'issues' ? 'issues' : 'overview';
+  const setActiveTab = (tab: RepositoryDetailTab) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('tab', tab);
+    if (url.href !== window.location.href) window.history.pushState(null, '', url);
+  };
   const { data: dashboard, isLoading, isError } = useRepositoryDashboard(repositoryId);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 

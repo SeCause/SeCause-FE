@@ -1,7 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { useMemo, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
   useRepositoryIssueFiles,
@@ -33,11 +34,30 @@ interface Props {
 }
 
 export default function IssuesTab({ repositoryId }: Props) {
-  const [severity, setSeverity] = useState<'ALL' | IssueSeverity>('ALL');
+  const searchParams = useSearchParams();
+  const rawSeverity = searchParams.get('severity');
+  const severity: 'ALL' | IssueSeverity = SEVERITY_FILTER_OPTIONS.some(
+    (option) => option.value === rawSeverity,
+  )
+    ? (rawSeverity as 'ALL' | IssueSeverity)
+    : 'ALL';
   const [fileKeyword, setFileKeyword] = useState('');
-  const [page, setPage] = useState(1);
-  const [selectedFilePath, setSelectedFilePath] = useState<string | null>(null);
+  const [searchResetKey, setSearchResetKey] = useState(0);
+  const rawPage = Number(searchParams.get('page'));
+  const page = Number.isSafeInteger(rawPage) && rawPage > 0 ? rawPage : 1;
+  const selectedFilePath = searchParams.get('file');
   const [expandedIds, setExpandedIds] = useState<Set<number>>(() => new Set());
+
+  useEffect(() => {
+    const restoreNavigation = () => {
+      // 로컬 검색어가 URL에서 복원한 파일을 가리지 않도록 초기화한다.
+      setFileKeyword('');
+      setSearchResetKey((key) => key + 1);
+      setExpandedIds(new Set());
+    };
+    window.addEventListener('popstate', restoreNavigation);
+    return () => window.removeEventListener('popstate', restoreNavigation);
+  }, []);
 
   const {
     data: files = EMPTY_FILES,
@@ -74,26 +94,37 @@ export default function IssuesTab({ repositoryId }: Props) {
 
   const issues = data?.content ?? EMPTY_ISSUES;
 
+  const updateLocation = (changes: Record<string, string | null>) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('tab', 'issues');
+    if (effectiveSelectedFilePath) url.searchParams.set('file', effectiveSelectedFilePath);
+    Object.entries(changes).forEach(([key, value]) => {
+      if (value === null) url.searchParams.delete(key);
+      else url.searchParams.set(key, value);
+    });
+    if (url.href !== window.location.href) window.history.pushState(null, '', url);
+  };
+
   const handleSeverityChange = (value: string) => {
-    setSeverity(value as 'ALL' | IssueSeverity);
-    setPage(1);
+    updateLocation({ severity: value, page: '1' });
     setExpandedIds(new Set());
   };
 
   const handlePageChange = (nextPage: number) => {
-    setPage(nextPage);
+    updateLocation({ page: String(nextPage) });
     setExpandedIds(new Set());
   };
 
   const handleFileSelect = (filePath: string) => {
-    setSelectedFilePath(filePath);
-    setPage(1);
+    updateLocation({ file: filePath, page: '1' });
     setExpandedIds(new Set());
   };
 
   const handleFileSearch = (value: string) => {
     setFileKeyword(value);
-    setPage(1);
+    const matches = filterIssueFiles(files, value);
+    const file = matches.find((item) => item.filePath === effectiveSelectedFilePath) ?? matches[0];
+    updateLocation({ file: file?.filePath ?? null, page: '1' });
     setExpandedIds(new Set());
   };
 
@@ -133,6 +164,7 @@ export default function IssuesTab({ repositoryId }: Props) {
       <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-hidden lg:grid-cols-[15rem_1fr]">
         <div className="flex min-h-0 flex-col gap-2">
           <SearchBar
+            key={searchResetKey}
             onChange={handleFileSearch}
             placeholder="파일 경로 검색"
             aria-label="이슈 파일 검색"
@@ -190,7 +222,7 @@ export default function IssuesTab({ repositoryId }: Props) {
 
       {data && (
         <div className="shrink-0">
-          <Pagination current={data.page} total={data.totalPages} onChange={handlePageChange} />
+          <Pagination current={page} total={data.totalPages} onChange={handlePageChange} />
         </div>
       )}
     </div>
