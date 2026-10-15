@@ -1,7 +1,11 @@
 'use client';
 
-import { type GetUserResponse, useUser } from '@/features/auth';
+import { useState } from 'react';
+
+import { type GetUserResponse, useUser, useWithdraw } from '@/features/auth';
 import Button from '@/shared/ui/Button';
+import ConfirmDialog from '@/shared/ui/ConfirmDialog';
+import { useToast } from '@/shared/ui/Toast';
 
 import GithubBadge from './GithubBadge';
 import ProfileForm from './ProfileForm';
@@ -13,6 +17,9 @@ interface Props {
 }
 
 export default function AccountTab({ initialUser, isHydrated }: Props) {
+  const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
+  const { mutate: withdraw, isPending } = useWithdraw();
+  const { showToast } = useToast();
   const { data: clientUser } = useUser();
   const user = isHydrated ? clientUser : initialUser;
 
@@ -48,10 +55,26 @@ export default function AccountTab({ initialUser, isHydrated }: Props) {
           </p>
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
             <GithubBadge username={user.githubLoginId || user.name} />
-            <Button variant="danger">계정 삭제</Button>
+            <Button variant="danger" disabled={isPending} onClick={() => setIsWithdrawOpen(true)}>
+              계정 삭제
+            </Button>
           </div>
         </div>
       </div>
+      <ConfirmDialog
+        open={isWithdrawOpen}
+        title="계정을 삭제하시겠습니까?"
+        description="계정과 모든 분석 기록이 영구적으로 삭제되며 복구할 수 없습니다. GitHub 저장소는 삭제되지 않습니다."
+        confirmLabel={isPending ? '삭제 중...' : '계정 삭제'}
+        isConfirming={isPending}
+        onCancel={() => setIsWithdrawOpen(false)}
+        onConfirm={() => {
+          if (isPending) return;
+          withdraw(undefined, {
+            onError: () => showToast('계정 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.'),
+          });
+        }}
+      />
     </div>
   );
 }

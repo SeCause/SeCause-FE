@@ -4,7 +4,13 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useSyncExternalStore } from 'react';
 
-import { getUser, patchUser, postGithubLogin, postLogout } from '@/features/auth/api/auth';
+import {
+  deleteUser,
+  getUser,
+  patchUser,
+  postGithubLogin,
+  postLogout,
+} from '@/features/auth/api/auth';
 import { clearSessionHint, hasSessionHint, setSessionHint } from '@/features/auth/lib/sessionHint';
 import type {
   GetUserResponse,
@@ -68,6 +74,22 @@ export function useUpdateUser() {
     mutationFn: patchUser,
     onSuccess: (user) => {
       queryClient.setQueryData(['user'], user);
+    },
+  });
+}
+
+export function useWithdraw() {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteUser,
+    onSuccess: async () => {
+      clearSessionHint();
+      await queryClient.cancelQueries();
+      queryClient.removeQueries();
+      router.replace(ROUTES.login);
+      router.refresh();
     },
   });
 }

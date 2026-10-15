@@ -49,3 +49,7 @@ export async function patchUser(body: UpdateUserRequest): Promise<GetUserRespons
 export async function postLogout(): Promise<void> {
   await apiClient.post(ENDPOINTS.auth.logout);
 }
+
+export async function deleteUser(): Promise<void> {
+  await apiClient.delete(ENDPOINTS.users.me, { retry: 0 });
+}

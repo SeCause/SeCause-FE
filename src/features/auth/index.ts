@@ -4,6 +4,7 @@ export {
   useSessionHint,
   useUpdateUser,
   useUser,
+  useWithdraw,
 } from './hooks/useAuthApi';
 export type { GetUserResponse, UserProfile } from './model/types';
 export { default as AuthButton } from './ui/AuthButton';
