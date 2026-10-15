@@ -1,4 +1,52 @@
 export interface paths {
+  '/api/internal/analyses/{analysisId}/result': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['handleSuccess'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/internal/analyses/{analysisId}/progress': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['handleProgress'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/internal/analyses/{analysisId}/failure': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['handleFailure'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/api/auth/reissue': {
     parameters: {
       query?: never;
@@ -81,7 +129,15 @@ export interface paths {
     get: operations['getMe'];
     put?: never;
     post?: never;
-    delete?: never;
+    /**
+     * 회원탈퇴
+     * @description access_token 쿠키로 인증된 회원을 탈퇴 처리합니다.
+     *     회원 정보와 소유 저장소, 파일, 분석 및 취약점 데이터를 영구 삭제합니다.
+     *     이미 삭제 처리한 저장소도 포함되며, 실제 GitHub 저장소는 삭제하지 않습니다.
+     *     성공 시 access_token과 refresh_token 쿠키를 만료시킵니다.
+     *     탈퇴 이후 기존 토큰은 사용할 수 없으며 GitHub 로그인 시 신규 가입됩니다.
+     */
+    delete: operations['withdraw'];
     options?: never;
     head?: never;
     /**
@@ -301,6 +357,52 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
+    AnalysisCallbackFinding: {
+      tool?: string;
+      type: string;
+      cweId?: string;
+      severity: string;
+      filePath: string;
+      /** Format: int32 */
+      lineStart?: number;
+      /** Format: int32 */
+      lineEnd?: number;
+      message?: string;
+      evidence?: string;
+      summary?: string;
+      rootCause?: string;
+      impact?: string;
+      recommendation?: string;
+      fixExamples?: components['schemas']['AnalysisCallbackFixExample'][];
+      references?: string[];
+      referenceDocuments?: components['schemas']['AnalysisCallbackReferenceDocument'][];
+    };
+    AnalysisCallbackFixExample: {
+      language?: string;
+      vulnerableCode?: string;
+      fixedCode?: string;
+      explanation?: string;
+    };
+    AnalysisCallbackReferenceDocument: {
+      title?: string;
+      url?: string;
+      sourceType?: string;
+    };
+    AnalysisCallbackSuccessRequest: {
+      /** Format: int64 */
+      analysisId: number;
+      /** Format: int64 */
+      repositoryId: number;
+      /** @enum {string} */
+      status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+      failedScanners?: string[];
+      findings?: components['schemas']['AnalysisCallbackFinding'][];
+      summary?: components['schemas']['AnalysisCallbackSummary'];
+    };
+    AnalysisCallbackSummary: {
+      /** Format: int32 */
+      totalCount?: number;
+    };
     ApiResponseVoid: {
       isSuccess?: boolean;
       code?: string;
@@ -313,6 +415,21 @@ export interface components {
       validation?: {
         [key: string]: string;
       };
+    };
+    AnalysisProgressRequest: {
+      /** Format: int32 */
+      progressPercent: number;
+    };
+    AnalysisCallbackFailureRequest: {
+      /** Format: int64 */
+      analysisId: number;
+      /** Format: int64 */
+      repositoryId: number;
+      /** @enum {string} */
+      status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+      errorCode?: string;
+      errorMessage?: string;
+      failedStage?: string;
     };
     GithubLoginRequest: {
       code: string;
@@ -366,6 +483,84 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+  handleSuccess: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        analysisId: number;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['AnalysisCallbackSuccessRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['ApiResponseVoid'];
+        };
+      };
+    };
+  };
+  handleProgress: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        analysisId: number;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['AnalysisProgressRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['ApiResponseVoid'];
+        };
+      };
+    };
+  };
+  handleFailure: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        analysisId: number;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['AnalysisCallbackFailureRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['ApiResponseVoid'];
+        };
+      };
+    };
+  };
   reissue: {
     parameters: {
       query?: never;
@@ -522,6 +717,51 @@ export interface operations {
         };
       };
       /** @description 사용자를 찾을 수 없음 */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['ApiResponse'];
+        };
+      };
+    };
+  };
+  withdraw: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description 회원탈퇴 성공 및 인증 쿠키 만료 */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "isSuccess": true,
+           *       "code": "COMMON2000",
+           *       "message": "회원탈퇴가 완료됐습니다."
+           *     }
+           */
+          '*/*': components['schemas']['ApiResponse'];
+        };
+      };
+      /** @description 인증 실패 또는 이미 탈퇴한 회원의 요청 */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['ApiResponse'];
+        };
+      };
+      /** @description 인증 이후 동시 탈퇴 등으로 회원이 삭제된 경우 (USER404) */
       404: {
         headers: {
           [name: string]: unknown;
