@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useGithubLogin } from '@/features/auth';
 import { ROUTES } from '@/shared/config/routes';
@@ -12,11 +12,14 @@ export default function LoginCallbackClient() {
   const router = useRouter();
   const { showToast } = useToast();
   const { mutate, isPending } = useGithubLogin();
+  const submittedCode = useRef<string | null>(null);
 
   useEffect(() => {
     const code = searchParams.get('code');
 
     if (code) {
+      if (submittedCode.current === code) return;
+      submittedCode.current = code;
       mutate(code, {
         onError: () => {
           showToast('로그인 중 오류가 발생했습니다.');
