@@ -7,6 +7,7 @@ import {
   useDeleteRepository,
   useRepositories,
 } from '@/features/repositories/hooks/useRepositoriesApi';
+import type { Repository } from '@/features/repositories/model/types';
 import { ROUTES } from '@/shared/config/routes';
 import Button from '@/shared/ui/Button';
 import RetryState from '@/shared/ui/RetryState';
@@ -20,9 +21,15 @@ const ITEMS_PER_PAGE = 5;
 
 interface Props {
   accountName?: string | null;
+  initialRepositories?: Repository[] | null;
+  isHydrated?: boolean;
 }
 
-export default function RepositoriesTab({ accountName }: Props) {
+export default function RepositoriesTab({
+  accountName,
+  initialRepositories = null,
+  isHydrated = true,
+}: Props) {
   const router = useRouter();
   const { showToast } = useToast();
   const [search, setSearch] = useState('');
@@ -34,11 +41,16 @@ export default function RepositoriesTab({ accountName }: Props) {
   const { mutate: deleteRepository } = useDeleteRepository();
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
-  const repositories = data?.repositories ?? [];
+  const repositories = useMemo(
+    () => (isHydrated ? (data?.repositories ?? []) : (initialRepositories ?? [])),
+    [data?.repositories, initialRepositories, isHydrated],
+  );
+  const isRepositoriesLoading = isHydrated ? isLoading : initialRepositories === null;
+  const isRepositoriesError = isHydrated && isError;
   const filtered = useMemo(() => {
     const keyword = search.toLowerCase();
-    return (data?.repositories ?? []).filter((repo) => repo.name.toLowerCase().includes(keyword));
-  }, [data, search]);
+    return repositories.filter((repo) => repo.name.toLowerCase().includes(keyword));
+  }, [repositories, search]);
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
   const currentPage = Math.min(Math.max(page, 1), totalPages || 1);
@@ -93,9 +105,9 @@ export default function RepositoriesTab({ accountName }: Props) {
       </div>
 
       <div className="flex min-h-100 flex-col gap-3">
-        {isLoading ? (
+        {isRepositoriesLoading ? (
           <p className="text-body-md text-foreground-tertiary m-auto">불러오는 중...</p>
-        ) : isError ? (
+        ) : isRepositoriesError ? (
           <RetryState message="레포지토리를 불러오지 못했습니다." onRetry={() => void refetch()} />
         ) : paginated.length > 0 ? (
           paginated.map((repo) => (

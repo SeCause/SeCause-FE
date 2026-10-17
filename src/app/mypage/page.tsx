@@ -7,6 +7,7 @@ import { getGithubAccountsServer } from '@/features/analysis/index.server';
 import { getUserServer } from '@/features/auth/index.server';
 import { repositoriesKey } from '@/features/repositories';
 import { getRepositoriesServer } from '@/features/repositories/index.server';
+import type { Repository } from '@/features/repositories/model/types';
 import { createServerQueryClient } from '@/shared/lib/queryClient';
 import PageTransition from '@/shared/ui/PageTransition';
 
@@ -38,10 +39,16 @@ export default async function MyPage({ searchParams }: Props) {
   const activeAccount = resolveActiveAccount(accounts, account ?? null);
   const params = activeAccount ? { accountName: activeAccount } : undefined;
 
-  await queryClient.prefetchQuery({
-    queryKey: repositoriesKey(params),
-    queryFn: () => getRepositoriesServer(params),
-  });
+  let initialRepositories: Repository[] | null = null;
+  try {
+    const result = await queryClient.fetchQuery({
+      queryKey: repositoriesKey(params),
+      queryFn: () => getRepositoriesServer(params),
+    });
+    initialRepositories = result.repositories;
+  } catch {
+    // The client query retries if the server-side request fails.
+  }
 
   return (
     <PageTransition>
@@ -50,6 +57,7 @@ export default async function MyPage({ searchParams }: Props) {
           <MyPageClient
             initialAccounts={accounts}
             initialActiveAccount={activeAccount}
+            initialRepositories={initialRepositories}
             initialUser={user}
           />
         </Suspense>

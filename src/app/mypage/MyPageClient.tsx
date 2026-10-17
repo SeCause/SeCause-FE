@@ -6,6 +6,7 @@ import { useSyncExternalStore } from 'react';
 import { type GithubAccount, resolveActiveAccount, useGithubAccounts } from '@/features/analysis';
 import type { GetUserResponse } from '@/features/auth';
 import { RepositoriesTab } from '@/features/repositories';
+import type { Repository } from '@/features/repositories/model/types';
 import { ROUTES } from '@/shared/config/routes';
 import { AccountTab } from '@/widgets/account-settings';
 import { MyPageSidebar, type MyPageTab } from '@/widgets/mypage-sidebar';
@@ -15,12 +16,14 @@ const subscribeToHydration = () => () => {};
 interface Props {
   initialAccounts: GithubAccount[];
   initialActiveAccount: string | null;
+  initialRepositories: Repository[] | null;
   initialUser: GetUserResponse | null;
 }
 
 export default function MyPageClient({
   initialAccounts,
   initialActiveAccount,
+  initialRepositories,
   initialUser,
 }: Props) {
   const searchParams = useSearchParams();
@@ -68,7 +71,13 @@ export default function MyPageClient({
       />
 
       <div className="bg-canvas h-[calc(100dvh-var(--spacing-header))] min-w-0 flex-1 overflow-auto px-5 pt-7 pb-14 md:px-8 md:pt-9 md:pb-16">
-        {activeTab === 'repositories' && <RepositoriesTab accountName={activeAccount} />}
+        {activeTab === 'repositories' && (
+          <RepositoriesTab
+            accountName={activeAccount}
+            initialRepositories={initialRepositories}
+            isHydrated={isHydrated}
+          />
+        )}
         {activeTab === 'account' && (
           <AccountTab initialUser={initialUser} isHydrated={isHydrated} />
         )}
