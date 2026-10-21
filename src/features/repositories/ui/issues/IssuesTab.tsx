@@ -70,9 +70,10 @@ export default function IssuesTab({ repositoryId }: Props) {
     selectedFilePath && filteredFiles.some((file) => file.filePath === selectedFilePath)
       ? selectedFilePath
       : (filteredFiles[0]?.filePath ?? null);
+  const effectiveSelectedFile =
+    files.find((file) => file.filePath === effectiveSelectedFilePath) ?? null;
   const totalIssueCount = files.reduce((sum, file) => sum + file.issueCount, 0);
-  const selectedFileIssueCount =
-    files.find((file) => file.filePath === effectiveSelectedFilePath)?.issueCount ?? 0;
+  const selectedFileIssueCount = effectiveSelectedFile?.issueCount ?? 0;
 
   const {
     data,
@@ -83,7 +84,7 @@ export default function IssuesTab({ repositoryId }: Props) {
     repositoryId,
     {
       severity,
-      filePath: effectiveSelectedFilePath ?? undefined,
+      repositoryFileId: effectiveSelectedFile?.repositoryFileId,
       page,
       size: PAGE_SIZE,
     },

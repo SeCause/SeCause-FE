@@ -975,6 +975,11 @@ export interface operations {
     parameters: {
       query?: {
         /**
+         * @description 선택한 파일 ID. 생략하면 전체 파일을 조회합니다.
+         * @example 33
+         */
+        repositoryFileId?: number;
+        /**
          * @description 필터링할 이슈 취약도 수준
          * @example ALL
          */

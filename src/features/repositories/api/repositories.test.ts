@@ -6,7 +6,7 @@ import { getRepositoryIssues } from './repositories';
 
 vi.mock('@/shared/api/client', () => ({ apiClient: { get: vi.fn() } }));
 
-it('requests only the selected page and preserves the original file path', async () => {
+it('requests only the selected page and file ID', async () => {
   const result = {
     content: [],
     page: 2,
@@ -17,7 +17,7 @@ it('requests only the selected page and preserves the original file path', async
   };
   vi.mocked(apiClient.get).mockResolvedValueOnce({ result } as never);
   const params = {
-    filePath: 'src/shared/api/logger.ts',
+    repositoryFileId: 33,
     severity: 'HIGH' as const,
     page: 2,
     size: 5,

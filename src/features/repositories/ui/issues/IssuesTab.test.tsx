@@ -31,7 +31,9 @@ beforeEach(() => {
 });
 
 vi.mock('@/features/repositories/hooks/useRepositoriesApi', () => ({
-  useRepositoryIssueFiles: () => ({ data: [{ filePath: 'a.ts', issueCount: 15 }] }),
+  useRepositoryIssueFiles: () => ({
+    data: [{ repositoryFileId: 33, filePath: 'a.ts', issueCount: 15 }],
+  }),
   // 새 페이지 응답을 기다리는 동안 이전 응답이 유지된다.
   useRepositoryIssues: vi.fn(() => ({
     data: { content: [], page: 1, totalElements: 15, totalPages: 3 },
@@ -48,7 +50,7 @@ it('advances the requested page while the previous response is displayed', () =>
   fireEvent.click(screen.getByRole('button', { name: '다음 페이지' }));
   expect(useRepositoryIssues).toHaveBeenLastCalledWith(
     1,
-    { severity: 'ALL', filePath: 'a.ts', page: 3, size: 5 },
+    { severity: 'ALL', repositoryFileId: 33, page: 3, size: 5 },
     { enabled: true },
   );
   expect(screen.getByRole('button', { name: '다음 페이지' })).toBeDisabled();
@@ -59,7 +61,7 @@ it('restores URL filters on mount and browser navigation', () => {
   const view = render(<IssuesTab repositoryId={1} />);
   expect(useRepositoryIssues).toHaveBeenLastCalledWith(
     1,
-    { severity: 'HIGH', filePath: 'a.ts', page: 2, size: 5 },
+    { severity: 'HIGH', repositoryFileId: 33, page: 2, size: 5 },
     { enabled: true },
   );
   fireEvent.click(screen.getByRole('button', { name: '다음 페이지' }));
@@ -71,14 +73,14 @@ it('restores URL filters on mount and browser navigation', () => {
   });
   expect(useRepositoryIssues).toHaveBeenLastCalledWith(
     1,
-    { severity: 'LOW', filePath: 'a.ts', page: 1, size: 5 },
+    { severity: 'LOW', repositoryFileId: 33, page: 1, size: 5 },
     { enabled: true },
   );
   view.unmount();
   render(<IssuesTab repositoryId={1} />);
   expect(useRepositoryIssues).toHaveBeenLastCalledWith(
     1,
-    { severity: 'LOW', filePath: 'a.ts', page: 1, size: 5 },
+    { severity: 'LOW', repositoryFileId: 33, page: 1, size: 5 },
     { enabled: true },
   );
 });
@@ -88,7 +90,7 @@ it('uses safe defaults for invalid URL values', () => {
   render(<IssuesTab repositoryId={1} />);
   expect(useRepositoryIssues).toHaveBeenLastCalledWith(
     1,
-    { severity: 'ALL', filePath: 'a.ts', page: 1, size: 5 },
+    { severity: 'ALL', repositoryFileId: 33, page: 1, size: 5 },
     { enabled: true },
   );
 });

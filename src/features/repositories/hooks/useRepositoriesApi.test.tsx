@@ -19,7 +19,7 @@ afterEach(() => {
   clients.forEach((client) => client.clear());
 });
 
-it('keeps the previous page only within the same repository, file and severity', async () => {
+it('keeps the previous page only within the same repository, file ID and severity', async () => {
   const data = { content: [], page: 1, size: 5, totalElements: 10, totalPages: 2, hasNext: true };
   vi.mocked(getRepositoryIssues)
     .mockResolvedValueOnce(data)
@@ -27,28 +27,28 @@ it('keeps the previous page only within the same repository, file and severity',
   const { result, rerender } = renderHook(
     ({
       id,
-      filePath,
+      repositoryFileId,
       severity,
       page,
     }: {
       id: number;
-      filePath: string;
+      repositoryFileId: number;
       severity: 'ALL' | 'HIGH';
       page: number;
-    }) => useRepositoryIssues(id, { filePath, severity, page, size: 5 }),
+    }) => useRepositoryIssues(id, { repositoryFileId, severity, page, size: 5 }),
     {
       wrapper: wrapper(),
-      initialProps: { id: 1, filePath: 'a.ts', severity: 'ALL' as 'ALL' | 'HIGH', page: 1 },
+      initialProps: { id: 1, repositoryFileId: 33, severity: 'ALL' as 'ALL' | 'HIGH', page: 1 },
     },
   );
   await waitFor(() => expect(result.current.isSuccess).toBe(true));
-  rerender({ id: 1, filePath: 'a.ts', severity: 'ALL', page: 2 });
+  rerender({ id: 1, repositoryFileId: 33, severity: 'ALL', page: 2 });
   expect(result.current.data).toEqual(data);
   expect(result.current.isPlaceholderData).toBe(true);
-  rerender({ id: 1, filePath: 'b.ts', severity: 'ALL', page: 1 });
+  rerender({ id: 1, repositoryFileId: 34, severity: 'ALL', page: 1 });
   expect(result.current.data).toBeUndefined();
-  rerender({ id: 1, filePath: 'a.ts', severity: 'HIGH', page: 1 });
+  rerender({ id: 1, repositoryFileId: 33, severity: 'HIGH', page: 1 });
   expect(result.current.data).toBeUndefined();
-  rerender({ id: 2, filePath: 'a.ts', severity: 'ALL', page: 1 });
+  rerender({ id: 2, repositoryFileId: 33, severity: 'ALL', page: 1 });
   expect(result.current.data).toBeUndefined();
 });

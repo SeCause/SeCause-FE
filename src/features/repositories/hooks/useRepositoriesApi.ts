@@ -65,7 +65,7 @@ export function useRepositoryIssues(
       const previousKey = previousQuery?.queryKey;
       const previousParams = previousKey?.[3] as RepositoryIssueListParams | undefined;
       return previousKey?.[1] === repositoryId &&
-        previousParams?.filePath === params?.filePath &&
+        previousParams?.repositoryFileId === params?.repositoryFileId &&
         (previousParams?.severity ?? 'ALL') === (params?.severity ?? 'ALL') &&
         previousParams?.size === params?.size
         ? prev

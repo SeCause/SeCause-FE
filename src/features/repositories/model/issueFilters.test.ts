@@ -4,8 +4,8 @@ import { filterIssueFiles } from './issueFilters';
 import type { RepositoryIssueFile } from './types';
 
 const files: RepositoryIssueFile[] = [
-  { filePath: 'src/auth/Login.tsx', issueCount: 2 },
-  { filePath: 'src/api/users.ts', issueCount: 1 },
+  { repositoryFileId: 1, filePath: 'src/auth/Login.tsx', issueCount: 2 },
+  { repositoryFileId: 2, filePath: 'src/api/users.ts', issueCount: 1 },
 ];
 
 describe('issueFilters', () => {

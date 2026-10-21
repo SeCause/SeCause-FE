@@ -90,8 +90,8 @@ export interface RepositoryIssue {
 }
 
 export interface RepositoryIssueListParams {
+  repositoryFileId?: number;
   severity?: IssueSeverity | 'ALL';
-  filePath?: string;
   page?: number;
   size?: number;
 }
@@ -106,6 +106,7 @@ export interface RepositoryIssueListResult {
 }
 
 export interface RepositoryIssueFile {
+  repositoryFileId: number;
   filePath: string;
   issueCount: number;
 }
