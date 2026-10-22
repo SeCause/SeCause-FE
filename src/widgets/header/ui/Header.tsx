@@ -33,7 +33,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="site-header z-header h-header bg-surface/90 border-border-subtle sticky top-0 grid grid-cols-[1fr_auto_1fr] items-center border-b px-4 backdrop-blur-xl md:flex md:justify-between md:px-10">
+      <header className="site-header z-header h-header bg-surface/90 border-border-subtle sticky top-0 grid grid-cols-[1fr_auto_1fr] items-center border-b px-4 backdrop-blur-xl md:grid-cols-[1fr_auto_1fr] md:px-10">
         <div className="flex h-full items-center gap-20">
           {isHome && (
             <button
@@ -58,9 +58,9 @@ export default function Header() {
           >
             SeCause
           </Link>
-
-          {isHome && <NavLinks />}
         </div>
+
+        {isHome && <NavLinks />}
 
         <Link
           href={ROUTES.home}

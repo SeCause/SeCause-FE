@@ -1,22 +1,17 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ROUTES, SECTION_IDS, type SectionId } from '@/shared/config/routes';
 
 export const NAV_ITEMS: { label: string; sectionId: SectionId }[] = [
-  { label: 'Overview', sectionId: SECTION_IDS.overview },
-  { label: 'How it Works', sectionId: SECTION_IDS.howItWorks },
+  { label: 'Product', sectionId: SECTION_IDS.overview },
+  { label: 'How it works', sectionId: SECTION_IDS.howItWorks },
   { label: 'FAQ', sectionId: SECTION_IDS.faq },
 ];
 
 export default function NavLinks() {
-  const [activeSection, setActiveSection] = useState<SectionId | null>(null);
-  const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; width: number } | null>(
-    null,
-  );
-  const navRef = useRef<HTMLElement>(null);
-  const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const [activeSection, setActiveSection] = useState<SectionId | null>(SECTION_IDS.overview);
 
   useEffect(() => {
     const targets = NAV_ITEMS.map(({ sectionId }) => document.getElementById(sectionId)).filter(
@@ -30,40 +25,24 @@ export default function NavLinks() {
         const visible = entries.find((e) => e.isIntersecting);
         if (visible) setActiveSection(visible.target.id as SectionId);
       },
-      { threshold: 0.5 },
+      { threshold: 0.35 },
     );
 
     targets.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (!activeSection || !navRef.current) return;
-
-    const idx = NAV_ITEMS.findIndex(({ sectionId }) => sectionId === activeSection);
-    const el = itemRefs.current[idx];
-    if (!el) return;
-
-    const navRect = navRef.current.getBoundingClientRect();
-    const elRect = el.getBoundingClientRect();
-    setIndicatorStyle({ left: elRect.left - navRect.left, width: elRect.width });
-  }, [activeSection]);
-
   return (
     <nav
-      ref={navRef}
       aria-label="데스크톱 네비게이션"
-      className="relative hidden h-full gap-1 self-stretch md:flex"
+      className="hidden h-full items-center justify-center gap-8 md:flex"
     >
-      {NAV_ITEMS.map(({ label, sectionId }, idx) => (
+      {NAV_ITEMS.map(({ label, sectionId }) => (
         <a
           key={sectionId}
-          ref={(el) => {
-            itemRefs.current[idx] = el;
-          }}
           href={`${ROUTES.home}#${sectionId}`}
           aria-current={activeSection === sectionId ? 'true' : undefined}
-          className={`flex w-24 items-center justify-center text-sm transition-colors ${
+          className={`text-body-md flex h-full items-center transition-colors ${
             activeSection === sectionId
               ? 'text-foreground font-semibold'
               : 'text-foreground-secondary hover:text-foreground font-medium'
@@ -72,14 +51,6 @@ export default function NavLinks() {
           {label}
         </a>
       ))}
-
-      {indicatorStyle && (
-        <span
-          aria-hidden="true"
-          className="bg-inverse absolute bottom-[-1.5px] h-0.5 transition-all duration-300 ease-in-out"
-          style={{ left: indicatorStyle.left, width: indicatorStyle.width }}
-        />
-      )}
     </nav>
   );
 }

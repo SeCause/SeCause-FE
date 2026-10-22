@@ -21,7 +21,7 @@ export default function AuthButton({ user, onLogout }: Props) {
     <Link
       href={ROUTES.login}
       aria-label="Get Started"
-      className="text-label-md text-surface bg-inverse rounded-xl px-4 py-1.5 md:px-8 md:py-2"
+      className="text-label-md text-surface bg-inverse rounded-[10px] px-4 py-1.5 transition-colors md:px-8 md:py-2"
     >
       <span aria-hidden="true" className="md:hidden">
         Login
