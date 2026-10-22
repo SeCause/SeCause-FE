@@ -62,9 +62,9 @@ export const MOCK_ISSUE_DETAIL: RepositoryIssueDetail = {
 };
 
 export const MOCK_FILES: RepositoryIssueFile[] = [
-  { filePath: 'auth/login.php', issueCount: 2 },
-  { filePath: 'utils/db.py', issueCount: 1 },
-  { filePath: 'api/payment.ts', issueCount: 1 },
+  { repositoryFileId: 1, filePath: 'auth/login.php', issueCount: 2 },
+  { repositoryFileId: 2, filePath: 'utils/db.py', issueCount: 1 },
+  { repositoryFileId: 3, filePath: 'api/payment.ts', issueCount: 1 },
 ];
 
 export const ACCOUNT_OPTIONS = [{ value: 'secure-corp', label: 'secure-corp' }];
