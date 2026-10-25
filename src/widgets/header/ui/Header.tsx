@@ -73,7 +73,7 @@ export default function Header() {
           SeCause
         </Link>
 
-        <div className="flex items-center justify-end">
+        <div className="flex items-center justify-end md:col-start-3">
           {!isAuthPage && <AuthButton user={user ?? null} onLogout={() => logout()} />}
         </div>
       </header>
