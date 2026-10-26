@@ -1,5 +1,11 @@
+'use client';
+
+import { Lottie, type LottieHandle } from 'lottie-react';
+import { useEffect, useRef, useState } from 'react';
+
 import type { AnalysisRequestStatus } from '@/features/analysis/model/types';
 
+import analysisBear from './analysis-bear.json';
 import styles from './AnalysisProgress.module.css';
 
 interface Props {
@@ -39,6 +45,42 @@ export default function AnalysisProgress({
 }: Props) {
   const progress = Math.min(100, Math.max(0, progressPercent));
   const stopped = status === 'FAILED' || status === 'CANCELLED' || isError;
+  const animationRef = useRef<LottieHandle>(null);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState<boolean | null>(null);
+  const [isFallen, setIsFallen] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const syncPreference = () => setPrefersReducedMotion(mediaQuery.matches);
+    syncPreference();
+    mediaQuery.addEventListener('change', syncPreference);
+    return () => mediaQuery.removeEventListener('change', syncPreference);
+  }, []);
+
+  useEffect(() => {
+    if (prefersReducedMotion === null) return;
+    if (prefersReducedMotion || status === 'COMPLETED' || isFallen) animationRef.current?.pause();
+    else animationRef.current?.play();
+  }, [isFallen, prefersReducedMotion, status]);
+
+  useEffect(() => {
+    if (prefersReducedMotion || status === 'COMPLETED') return;
+
+    let recoveryTimer: number | undefined;
+    const fallBriefly = () => {
+      setIsFallen(true);
+      recoveryTimer = window.setTimeout(() => setIsFallen(false), 1_800);
+    };
+
+    const firstFallTimer = window.setTimeout(fallBriefly, 12_000);
+    const fallInterval = window.setInterval(fallBriefly, 24_000);
+
+    return () => {
+      window.clearTimeout(firstFallTimer);
+      window.clearInterval(fallInterval);
+      if (recoveryTimer !== undefined) window.clearTimeout(recoveryTimer);
+    };
+  }, [prefersReducedMotion, status]);
 
   return (
     <div className="flex min-h-[calc(100dvh-var(--spacing-header))] flex-1 items-center justify-center px-6">
@@ -60,15 +102,40 @@ export default function AnalysisProgress({
 
         {!stopped && (
           <div className="mt-8 w-full">
-            <div className="bg-surface-muted h-2 overflow-hidden rounded-full">
-              <div
-                className="bg-blue relative h-full overflow-hidden rounded-full transition-[width] duration-700 ease-out"
-                style={{ width: `${progress}%` }}
-              >
-                <span className={styles.shimmer} aria-hidden="true" />
+            <div
+              className={styles.progressTrack}
+              role="progressbar"
+              aria-label="분석 진행률"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={progress}
+            >
+              <div className={styles.rail} aria-hidden="true">
+                <div className={styles.fill} style={{ width: `${progress}%` }} />
               </div>
+              <span className={styles.runner} style={{ left: `${progress}%` }} aria-hidden="true">
+                <span
+                  className={
+                    isFallen && status !== 'COMPLETED'
+                      ? `${styles.character} ${styles.fallen}`
+                      : styles.character
+                  }
+                >
+                  <Lottie
+                    lottieRef={animationRef}
+                    src={analysisBear}
+                    loop={status !== 'COMPLETED'}
+                    autoplay={prefersReducedMotion !== true && status !== 'COMPLETED'}
+                    className={styles.bear}
+                    aria-hidden="true"
+                  />
+                </span>
+              </span>
             </div>
-            <p className="text-label-md text-foreground-secondary mt-2">{progress}%</p>
+            <div className="text-label-md text-foreground-secondary mt-2 flex justify-between">
+              <span>{progress}%</span>
+              <span>{status === 'COMPLETED' ? '도착했어요!' : '분석 중'}</span>
+            </div>
           </div>
         )}
 
