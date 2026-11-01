@@ -36,10 +36,18 @@
   --color-danger-action-hover: #c91f28;
 
   /* severity */
-  --color-severity-critical: #fc4f4f;
-  --color-severity-high: #ffce3a;
-  --color-severity-medium: #4fa0fc;
-  --color-severity-low: #c2c8d0;
+  --color-severity-critical: #ff648c;
+  --color-severity-critical-bg: #fff0f5;
+  --color-severity-critical-text: #cb315d;
+  --color-severity-high: #ffc75b;
+  --color-severity-high-bg: #fff8e8;
+  --color-severity-high-text: #ffb000;
+  --color-severity-medium: #79b4ff;
+  --color-severity-medium-bg: #eef6ff;
+  --color-severity-medium-text: #326eb9;
+  --color-severity-low: #68d9c0;
+  --color-severity-low-bg: #eafbf6;
+  --color-severity-low-text: #167d69;
 
   /* layout */
   --z-index-dropdown: 40;

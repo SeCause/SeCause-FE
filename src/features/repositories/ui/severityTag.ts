@@ -6,10 +6,10 @@ export const SEVERITY_TAG_LABEL: Record<string, string> = {
 };
 
 export const SEVERITY_TAG_STYLE: Record<string, string> = {
-  CRITICAL: 'border-severity-critical bg-severity-critical/10 text-severity-critical',
-  HIGH: 'border-severity-high bg-severity-high/15 text-severity-high',
-  MEDIUM: 'border-severity-medium bg-severity-medium/10 text-severity-medium',
-  LOW: 'border-severity-low bg-severity-low/20 text-foreground-secondary',
+  CRITICAL: 'border-severity-critical bg-severity-critical-bg text-severity-critical-text',
+  HIGH: 'border-severity-high bg-severity-high-bg text-severity-high-text',
+  MEDIUM: 'border-severity-medium bg-severity-medium-bg text-severity-medium-text',
+  LOW: 'border-severity-low bg-severity-low-bg text-severity-low-text',
 };
 
 export const SEVERITY_COLOR: Record<string, string> = {

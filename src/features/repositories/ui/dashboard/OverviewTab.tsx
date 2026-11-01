@@ -4,7 +4,7 @@ import type { RepositoryDashboard } from '@/features/repositories/model/types';
 
 import CodeDetailsCard from './CodeDetailsCard';
 import IssuesByTypeCard from './IssuesByTypeCard';
-import IssueSummaryCards from './IssueSummaryCards';
+import RecentIssuesCard from './RecentIssuesCard';
 
 const SeverityBreakdownChart = dynamic(() => import('./SeverityBreakdownChart'), {
   loading: () => (
@@ -13,15 +13,13 @@ const SeverityBreakdownChart = dynamic(() => import('./SeverityBreakdownChart'),
 });
 
 interface Props {
+  repositoryId: number;
   dashboard: RepositoryDashboard;
 }
 
-export default function OverviewTab({ dashboard }: Props) {
-  const criticalIssues =
-    dashboard.severityBreakdown.find((item) => item.severity === 'CRITICAL')?.count ?? 0;
-
+export default function OverviewTab({ repositoryId, dashboard }: Props) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-5">
       <CodeDetailsCard
         codeDetails={dashboard.codeDetails}
         lastAnalysisAt={
@@ -32,22 +30,15 @@ export default function OverviewTab({ dashboard }: Props) {
         analysisDateLabel={dashboard.analysis.status === 'COMPLETED' ? '마지막 분석' : '분석 요청'}
       />
 
-      <div className="mt-2 flex flex-col gap-1">
-        <h2 className="text-heading-base text-foreground">Project dashboard</h2>
-        <p className="text-body-md text-foreground-secondary">
-          레포지토리의 보안 분석 결과와 위험도 분포를 확인할 수 있습니다.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <IssueSummaryCards
+      <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-2">
+        <SeverityBreakdownChart
+          breakdown={dashboard.severityBreakdown}
           totalIssues={dashboard.summary.totalIssues}
-          criticalIssues={criticalIssues}
         />
-        <SeverityBreakdownChart breakdown={dashboard.severityBreakdown} />
+        <IssuesByTypeCard issuesByType={dashboard.issuesByType} />
       </div>
 
-      <IssuesByTypeCard issuesByType={dashboard.issuesByType} />
+      <RecentIssuesCard repositoryId={repositoryId} />
     </div>
   );
 }

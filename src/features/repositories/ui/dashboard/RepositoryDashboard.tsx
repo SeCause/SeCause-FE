@@ -6,7 +6,6 @@ import { useRef } from 'react';
 import { useRepositoryDashboard } from '@/features/repositories/hooks/useRepositoriesApi';
 import type { RepositoryDetailTab } from '@/features/repositories/model/types';
 import IssuesTab from '@/features/repositories/ui/issues/IssuesTab';
-import { cn } from '@/shared/lib/cn';
 import ScrollToTopButton from '@/shared/ui/ScrollToTopButton';
 
 import OverviewTab from './OverviewTab';
@@ -36,12 +35,7 @@ export default function RepositoryDashboard({ repositoryId }: Props) {
         ref={scrollContainerRef}
         className="bg-canvas h-[calc(100dvh-var(--spacing-header)-3rem)] min-w-0 flex-1 overflow-auto px-5 py-7 max-md:flex-none md:h-[calc(100dvh-var(--spacing-header))] md:px-8 md:py-9"
       >
-        <div
-          className={cn(
-            'mx-auto flex w-full max-w-5xl flex-col gap-5',
-            activeTab === 'issues' ? 'h-full' : 'min-h-full',
-          )}
-        >
+        <div className="mx-auto flex min-h-full w-full max-w-5xl flex-col gap-5">
           {isLoading ? (
             <p className="text-body-md text-foreground-tertiary m-auto">불러오는 중...</p>
           ) : isError || !dashboard ? (
@@ -57,7 +51,7 @@ export default function RepositoryDashboard({ repositoryId }: Props) {
               />
 
               {activeTab === 'overview' ? (
-                <OverviewTab dashboard={dashboard} />
+                <OverviewTab repositoryId={repositoryId} dashboard={dashboard} />
               ) : (
                 <IssuesTab repositoryId={repositoryId} />
               )}

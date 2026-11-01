@@ -9,18 +9,18 @@ const CHART_SIZE = 144;
 
 interface Props {
   breakdown: RepositorySeverityCount[];
+  totalIssues: number;
   animate?: boolean;
 }
 
-export default function SeverityBreakdownChart({ breakdown, animate = false }: Props) {
-  const total = breakdown.reduce((sum, item) => sum + item.count, 0);
+export default function SeverityBreakdownChart({ breakdown, totalIssues, animate = false }: Props) {
   const chartData = breakdown.map((item) => ({
     ...item,
     fill: SEVERITY_COLOR[item.severity] ?? '#d0d0d0',
   }));
 
   return (
-    <div className="border-border-subtle bg-surface rounded-2xl border p-6">
+    <div className="border-border-subtle bg-surface rounded-2xl border p-6 xl:min-h-[14.5rem]">
       <h2 className="text-foreground-tertiary mb-5 text-xs font-semibold tracking-[0.08em]">
         SEVERITY BREAKDOWN
       </h2>
@@ -41,7 +41,7 @@ export default function SeverityBreakdownChart({ breakdown, animate = false }: P
             />
           </PieChart>
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-heading-md text-foreground">{total}</span>
+            <span className="text-heading-md text-foreground">{totalIssues}</span>
             <span className="text-caption text-foreground-tertiary">issues</span>
           </div>
         </div>

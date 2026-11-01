@@ -57,8 +57,8 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
       />
 
       <div className="pointer-events-none flex min-w-0 items-start justify-between gap-3 lg:items-center">
-        <div className="flex min-w-0 flex-1 gap-x-3 gap-y-2 max-lg:flex-col lg:items-center">
-          <div className="flex min-w-0 items-center gap-2">
+        <div className="flex min-w-0 flex-1 flex-col gap-y-2 lg:flex-row lg:items-center lg:gap-x-3">
+          <div className="flex min-w-0 items-center gap-2 pr-10 lg:pr-0">
             <span className="group-hover:text-blue text-foreground min-w-0 truncate text-lg font-semibold tracking-tight">
               {repo.owner} / {repo.name}
             </span>
@@ -68,6 +68,7 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
             criticalCount={repo.issueCounts.critical}
             highCount={repo.issueCounts.high}
             mediumCount={repo.issueCounts.medium}
+            lowCount={repo.issueCounts.low}
           />
         </div>
 
@@ -76,7 +77,7 @@ export default function RepositoryCard({ repo, onDelete, isDeleting }: Props) {
           onClick={handleDeleteClick}
           disabled={isDeleting}
           aria-label="레포지토리 삭제"
-          className="text-foreground-tertiary hover:bg-surface-muted pointer-events-auto relative z-10 shrink-0 self-start rounded-lg p-1.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent"
+          className="text-foreground-tertiary hover:bg-surface-muted pointer-events-auto absolute top-5 right-5 z-10 shrink-0 self-start rounded-lg p-1.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent lg:static"
         >
           <Image src={TrashIcon} alt="" aria-hidden="true" className="h-4 w-4" />
         </button>
