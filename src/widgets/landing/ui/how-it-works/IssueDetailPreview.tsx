@@ -22,7 +22,7 @@ export default function IssueDetailPreview() {
         <div className="mt-4">
           <CodeDiffView
             oldCode={MOCK_ISSUE_DETAIL.codeSnippet}
-            newCode={MOCK_ISSUE_DETAIL.fixCode}
+            newCode={MOCK_ISSUE_DETAIL.fixCode ?? MOCK_ISSUE_DETAIL.codeSnippet}
             startLine={MOCK_ISSUE_DETAIL.lineStart}
           />
         </div>
