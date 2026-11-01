@@ -1,4 +1,3 @@
-import { FileCode2 } from 'lucide-react';
 import Image from 'next/image';
 
 import type { RepositoryIssue } from '@/features/repositories/model/types';
@@ -23,15 +22,10 @@ export default function IssueCard({ issue, repositoryId, expanded, onToggle }: P
         <div className="min-w-0 flex-1">
           <div className="flex min-w-0 flex-wrap items-center gap-2.5">
             <SeverityBadge severity={issue.severity} />
-            <span className="text-label-lg text-foreground">{issue.vulnerabilityType}</span>
-          </div>
-          <span className="text-body-sm text-foreground-tertiary mt-2 inline-flex min-w-0 items-center gap-1.5">
-            <FileCode2 className="size-3.5 shrink-0" aria-hidden="true" />
-            <span className="min-w-0 truncate">
-              {issue.filePath}:{issue.lineStart}
-              {issue.lineEnd !== issue.lineStart ? `–${issue.lineEnd}` : ''}
+            <span className="text-label-lg text-foreground min-w-0 wrap-break-word">
+              {issue.vulnerabilityType}
             </span>
-          </span>
+          </div>
         </div>
 
         <button

@@ -1,6 +1,6 @@
 'use client';
 
-import { SearchCheck, ShieldAlert, Wrench } from 'lucide-react';
+import { ChevronDown, FileCode2, SearchCheck, ShieldAlert, Wrench } from 'lucide-react';
 import Link from 'next/link';
 
 import { useRepositoryIssueDetail } from '@/features/repositories/hooks/useRepositoriesApi';
@@ -24,14 +24,23 @@ function getSafeReferenceUrl(referenceUrl: string) {
 }
 
 function getFixSteps(summary: string) {
-  const steps = summary
+  const trimmedSummary = summary.trim();
+  const numberedSteps = trimmedSummary
     .trim()
     .split(/(?=\d+\.\s)/)
     .map((step) => step.trim())
     .filter(Boolean);
 
-  if (steps.length < 2 || !steps.every((step) => /^\d+\.\s/.test(step))) return null;
-  return steps.map((step) => step.replace(/^\d+\.\s/, ''));
+  if (numberedSteps.length >= 2 && numberedSteps.every((step) => /^\d+\.\s/.test(step))) {
+    return numberedSteps.map((step) => step.replace(/^\d+\.\s/, ''));
+  }
+
+  const sentences = trimmedSummary
+    .split(/(?<=[.!?])\s+(?=\S)/u)
+    .map((sentence) => sentence.trim())
+    .filter(Boolean);
+
+  return sentences.length >= 2 ? sentences : null;
 }
 
 interface Props {
@@ -60,120 +69,156 @@ export default function IssueDetailPanel({ repositoryId, analysisResultId }: Pro
   const fixCode = detail.fixCode?.trim() ? detail.fixCode : null;
   const fixSteps = getFixSteps(detail.fixSummary);
   const references = detail.references ?? [];
+  const lineLabel =
+    detail.lineStart === detail.lineEnd
+      ? `${detail.lineStart}`
+      : `${detail.lineStart}–${detail.lineEnd}`;
 
   return (
-    <div className="border-border-subtle flex min-w-0 flex-col gap-4 border-t pt-4">
-      <CodeDiffView
-        oldCode={detail.codeSnippet}
-        newCode={fixCode ?? detail.codeSnippet}
-        startLine={detail.lineStart}
-      />
+    <div className="border-border-subtle flex min-w-0 flex-col gap-5 border-t pt-5">
+      <section
+        className="border-border-strong min-w-0 border-l-2 py-1 pl-4"
+        aria-label="취약점 요약"
+      >
+        <h4 className="text-label-md text-foreground mb-1">한눈에 보기</h4>
+        <p className="text-body-md text-foreground leading-7 wrap-break-word">
+          <InlineCodeText text={detail.summary} />
+        </p>
+      </section>
 
-      <div className="grid min-w-0 grid-cols-1 gap-4 xl:grid-cols-2">
-        <section className="border-border-subtle min-w-0 rounded-lg border p-4">
-          <div className="flex min-w-0 flex-col items-start gap-2">
-            <h3 className="text-label-lg text-foreground wrap-break-word">
-              {detail.vulnerabilityType}
-            </h3>
-          </div>
-          <h4 className="text-label-md text-foreground mt-4 inline-flex items-center gap-2">
-            <SearchCheck className="size-4 shrink-0" aria-hidden="true" />
-            분석 근거
-          </h4>
-          <p className="text-body-md text-foreground-secondary mt-1 wrap-break-word">
-            <InlineCodeText text={detail.description} />
-          </p>
-          <h4 className="text-label-md text-foreground mt-3 inline-flex items-center gap-2">
-            <ShieldAlert className="size-4 shrink-0" aria-hidden="true" />
-            공격 시나리오
-          </h4>
-          <p className="text-body-md text-foreground-secondary mt-1 wrap-break-word">
-            <InlineCodeText text={detail.attackScenario} />
-          </p>
-        </section>
+      <section className="min-w-0" aria-label="코드 위치">
+        <h4 className="text-label-md text-foreground mb-2">취약 코드 및 수정 코드</h4>
+        <div className="text-body-sm text-foreground-secondary mb-2 flex min-w-0 items-start justify-between gap-3">
+          <span className="inline-flex min-w-0 items-start gap-1.5">
+            <FileCode2 className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+            <span className="min-w-0 wrap-break-word">{detail.filePath}</span>
+          </span>
+          <span className="text-caption text-foreground-tertiary shrink-0 pt-0.5">
+            {lineLabel}행
+          </span>
+        </div>
+        <CodeDiffView
+          oldCode={detail.codeSnippet}
+          newCode={fixCode ?? detail.codeSnippet}
+          startLine={detail.lineStart}
+        />
+      </section>
 
-        <section className="border-border-subtle min-w-0 rounded-lg border p-4">
-          <div className="mb-2 flex items-start justify-between gap-3">
-            <h3 className="text-label-md text-foreground inline-flex items-center gap-2">
-              <Wrench className="size-4 shrink-0" aria-hidden="true" />
-              수정 방법
-            </h3>
-            {fixCode && <CopyButton text={fixCode} label="코드 복사" />}
+      <section className="border-border-subtle min-w-0 border-t pt-4">
+        <div className="mb-4 flex items-start justify-between gap-3">
+          <div>
+            <h3 className="text-label-md text-foreground inline-flex items-center">수정 방법</h3>
           </div>
-          {fixSteps ? (
-            <ol className="text-body-md text-foreground-secondary list-inside list-decimal space-y-2">
-              {fixSteps.map((step, index) => (
-                <li key={`${index}-${step}`} className="wrap-break-word">
-                  <InlineCodeText text={step} />
-                </li>
-              ))}
-            </ol>
-          ) : (
-            <p className="text-body-md text-foreground-secondary wrap-break-word">
-              <InlineCodeText text={detail.fixSummary} />
-            </p>
-          )}
-          {fixCode ? (
-            <pre className="text-body-sm bg-surface-subtle text-foreground-secondary mt-3 rounded p-3 font-mono wrap-break-word whitespace-pre-wrap">
-              {fixCode}
-            </pre>
-          ) : (
-            <div className="bg-surface-subtle mt-2 rounded-lg p-4">
-              <p className="text-label-md text-foreground">수정 코드 생성 실패</p>
-              <p className="text-body-sm text-foreground-secondary mt-1">
-                수정 코드를 받으려면 전체 분석을 다시 요청할 수 있습니다.
-              </p>
-              <Link
-                href={ROUTES.analysis}
-                className="text-label-md text-blue mt-3 inline-flex rounded underline underline-offset-4"
+          {fixCode && <CopyButton text={fixCode} label="코드 복사" />}
+        </div>
+        {fixSteps ? (
+          <ol className="flex max-w-4xl flex-col gap-3">
+            {fixSteps.map((step, index) => (
+              <li
+                key={`${index}-${step}`}
+                className="grid min-w-0 grid-cols-[1.5rem_minmax(0,1fr)] items-start gap-3"
               >
-                분석 설정으로 이동
-              </Link>
-            </div>
-          )}
-        </section>
-      </div>
+                <span className="text-label-sm text-foreground-secondary bg-surface-subtle flex size-6 items-center justify-center rounded-full">
+                  {index + 1}
+                </span>
+                <span className="text-body-md text-foreground min-w-0 leading-7 wrap-break-word">
+                  <InlineCodeText text={step} />
+                </span>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p className="text-body-md text-foreground max-w-4xl leading-7 wrap-break-word">
+            <InlineCodeText text={detail.fixSummary} />
+          </p>
+        )}
+        {!fixCode && (
+          <div className="bg-surface-subtle mt-3 rounded-lg p-4">
+            <p className="text-label-md text-foreground">수정 코드 생성 실패</p>
+            <p className="text-body-sm text-foreground-secondary mt-1">
+              수정 코드를 받으려면 전체 분석을 다시 요청할 수 있습니다.
+            </p>
+            <Link
+              href={ROUTES.analysis}
+              className="text-label-md text-blue mt-3 inline-flex rounded underline underline-offset-4"
+            >
+              분석 설정으로 이동
+            </Link>
+          </div>
+        )}
+      </section>
 
-      {references.length > 0 && (
-        <section className="border-border-subtle min-w-0 border-t pt-4">
-          <h3 className="text-label-lg text-foreground">참고 자료</h3>
-          <ul className="mt-2 flex min-w-0 flex-col">
-            {references.map((reference) => {
-              const href = getSafeReferenceUrl(reference.referenceUrl);
+      <details className="group border-border-subtle min-w-0 border-t pt-4">
+        <summary className="text-label-md text-foreground flex cursor-pointer list-none items-center justify-between gap-3">
+          <span>{references.length > 0 ? '분석 상세 및 참고 자료' : '분석 상세'}</span>
+          <ChevronDown
+            className="text-foreground-tertiary size-4 shrink-0 transition-transform group-open:rotate-180"
+            aria-hidden="true"
+          />
+        </summary>
+        <div className="mt-4 flex min-w-0 flex-col gap-5">
+          <section className="min-w-0">
+            <h4 className="text-label-sm text-foreground-secondary inline-flex items-center gap-2">
+              <SearchCheck className="size-4 shrink-0" aria-hidden="true" />
+              분석 근거
+            </h4>
+            <p className="text-body-md text-foreground mt-2 max-w-4xl leading-7 wrap-break-word">
+              <InlineCodeText text={detail.description} />
+            </p>
+          </section>
 
-              return (
-                <li
-                  key={reference.securityReferenceId}
-                  className="border-border-subtle min-w-0 border-b py-2 last:border-b-0"
-                >
-                  {href ? (
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-body-sm text-blue inline-flex min-w-0 items-start gap-2 transition-colors hover:underline"
+          <section className="min-w-0">
+            <h4 className="text-label-sm text-foreground-secondary inline-flex items-center gap-2">
+              <ShieldAlert className="size-4 shrink-0" aria-hidden="true" />
+              공격 시나리오
+            </h4>
+            <p className="text-body-md text-foreground mt-2 max-w-4xl leading-7 wrap-break-word">
+              <InlineCodeText text={detail.attackScenario} />
+            </p>
+          </section>
+
+          {references.length > 0 && (
+            <section className="min-w-0">
+              <h4 className="text-label-sm text-foreground-secondary">참고 자료</h4>
+              <ul className="mt-1 flex min-w-0 flex-col">
+                {references.map((reference) => {
+                  const href = getSafeReferenceUrl(reference.referenceUrl);
+
+                  return (
+                    <li
+                      key={reference.securityReferenceId}
+                      className="border-border-subtle min-w-0 border-b py-2 last:border-b-0"
                     >
-                      <span className="min-w-0 wrap-break-word">{reference.title}</span>
-                      <span className="shrink-0" aria-hidden="true">
-                        ↗
+                      {href ? (
+                        <a
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-body-sm text-blue inline-flex min-w-0 items-start gap-2 transition-colors hover:underline"
+                        >
+                          <span className="min-w-0 wrap-break-word">{reference.title}</span>
+                          <span className="shrink-0" aria-hidden="true">
+                            ↗
+                          </span>
+                        </a>
+                      ) : (
+                        <span className="text-body-sm text-foreground-secondary wrap-break-word">
+                          {reference.title}
+                        </span>
+                      )}
+                      <span className="text-caption text-foreground-tertiary ml-2">
+                        {reference.referenceType === 'OTHER' && href
+                          ? new URL(href).hostname.replace(/^www\./, '')
+                          : reference.referenceType}
                       </span>
-                    </a>
-                  ) : (
-                    <span className="text-body-sm text-foreground-secondary wrap-break-word">
-                      {reference.title}
-                    </span>
-                  )}
-                  <span className="text-caption text-foreground-tertiary ml-2">
-                    {reference.referenceType === 'OTHER' && href
-                      ? new URL(href).hostname.replace(/^www\./, '')
-                      : reference.referenceType}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          )}
+        </div>
+      </details>
     </div>
   );
 }
