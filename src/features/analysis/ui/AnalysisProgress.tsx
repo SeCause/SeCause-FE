@@ -132,9 +132,8 @@ export default function AnalysisProgress({
                 </span>
               </span>
             </div>
-            <div className="text-label-md text-foreground-secondary mt-2 flex justify-between">
+            <div className="text-label-md text-foreground-secondary mt-2 flex justify-end">
               <span>{progress}%</span>
-              <span>{status === 'COMPLETED' ? '도착했어요!' : '분석 중'}</span>
             </div>
           </div>
         )}
