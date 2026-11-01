@@ -11,6 +11,7 @@ import IssueDetailPanel from './IssueDetailPanel';
 const detail: RepositoryIssueDetail = {
   analysisResultId: 1,
   vulnerabilityType: 'SQL Injection',
+  cweId: 'CWE-89',
   severity: 'CRITICAL',
   filePath: 'api/users.ts',
   lineStart: 16,
@@ -21,10 +22,24 @@ const detail: RepositoryIssueDetail = {
   attackScenario: '입력값에 SQL 구문을 삽입하면 다른 사용자의 정보가 조회될 수 있습니다.',
   fixCode: 'const users = await db.query("SELECT * FROM users WHERE name = ?", [name]);',
   fixSummary: 'Prepared Statement를 사용하여 사용자 입력값을 바인딩하세요.',
-  references: [],
+  references: [
+    {
+      securityReferenceId: 1,
+      referenceType: 'CWE',
+      title: 'CWE-89: Improper Neutralization of Special Elements used in an SQL Command',
+      referenceUrl: 'https://cwe.mitre.org/data/definitions/89.html',
+    },
+    {
+      securityReferenceId: 2,
+      referenceType: 'OWASP',
+      title: 'SQL Injection Prevention Cheat Sheet',
+      referenceUrl:
+        'https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html',
+    },
+  ],
 };
 
-function Preview({ fixCode }: { fixCode: string }) {
+function Preview({ fixCode }: { fixCode: string | null }) {
   const [client] = useState(() => {
     const queryClient = new QueryClient({
       defaultOptions: { queries: { enabled: false, staleTime: Infinity, retry: false } },
@@ -48,7 +63,7 @@ const meta = {
   args: { repositoryId: 1, analysisResultId: 1 },
   parameters: { layout: 'fullscreen' },
   render: (_, { name }) => (
-    <Preview key={name} fixCode={name === 'Generated' ? detail.fixCode : ''} />
+    <Preview key={name} fixCode={name === 'Generated' ? detail.fixCode : null} />
   ),
 } satisfies Meta<typeof IssueDetailPanel>;
 

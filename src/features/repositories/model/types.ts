@@ -121,6 +121,7 @@ export interface SecurityReference {
 export interface RepositoryIssueDetail {
   analysisResultId: number;
   vulnerabilityType: string;
+  cweId?: string | null;
   severity: IssueSeverity;
   filePath: string;
   lineStart: number;
@@ -129,7 +130,7 @@ export interface RepositoryIssueDetail {
   description: string;
   summary: string;
   attackScenario: string;
-  fixCode: string;
+  fixCode: string | null;
   fixSummary: string;
   references: SecurityReference[];
 }
