@@ -87,7 +87,10 @@ export default function IssueDetailPanel({ repositoryId, analysisResultId }: Pro
       </section>
 
       <section className="min-w-0" aria-label="코드 위치">
-        <h4 className="text-label-md text-foreground mb-2">취약 코드 및 수정 코드</h4>
+        <div className="mb-2 flex min-w-0 items-center justify-between gap-3">
+          <h4 className="text-label-md text-foreground min-w-0">취약 코드 및 수정 코드</h4>
+          {fixCode && <CopyButton text={fixCode} label="수정 코드 복사" />}
+        </div>
         <div className="text-body-sm text-foreground-secondary mb-2 flex min-w-0 items-start justify-between gap-3">
           <span className="inline-flex min-w-0 items-start gap-1.5">
             <FileCode2 className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
@@ -105,12 +108,7 @@ export default function IssueDetailPanel({ repositoryId, analysisResultId }: Pro
       </section>
 
       <section className="border-border-subtle min-w-0 border-t pt-4">
-        <div className="mb-4 flex items-start justify-between gap-3">
-          <div>
-            <h3 className="text-label-md text-foreground inline-flex items-center">수정 방법</h3>
-          </div>
-          {fixCode && <CopyButton text={fixCode} label="코드 복사" />}
-        </div>
+        <h3 className="text-label-md text-foreground mb-4">수정 방법</h3>
         {fixSteps ? (
           <ol className="flex max-w-4xl flex-col gap-3">
             {fixSteps.map((step, index) => (
