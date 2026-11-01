@@ -3,7 +3,7 @@ import Image from 'next/image';
 export default function SecurityAnalysisVisual() {
   return (
     <Image
-      src="/landing-security-hero-overview-v11.png"
+      src="/images/landing-overview.png"
       alt=""
       width={1536}
       height={1024}
