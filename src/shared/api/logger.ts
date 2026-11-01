@@ -21,23 +21,22 @@ export function isApiLoggingEnabled() {
 export function logApiRequest({ layer, method, url }: ApiLogBase) {
   if (!isApiLoggingEnabled()) return;
 
-  console.info(`[api:${layer}] -> ${method} ${url}`);
+  console.info('[api:request]', { layer, method, url });
 }
 
 export function logApiResponse({ layer, method, url, status, durationMs, body }: ApiResponseLog) {
   if (!isApiLoggingEnabled()) return;
 
   const statusLabel = status >= 400 ? 'error' : 'ok';
-  const message = `[api:${layer}] <- ${method} ${url} ${status} ${statusLabel} ${Math.round(
-    durationMs,
-  )}ms`;
-
-  if (body === undefined) {
-    console.info(message);
-    return;
-  }
-
-  console.info(message, body);
+  console.info('[api:response]', {
+    layer,
+    method,
+    url,
+    status,
+    statusLabel,
+    durationMs: Math.round(durationMs),
+    ...(body === undefined ? {} : { body }),
+  });
 }
 
 /**
