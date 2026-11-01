@@ -19,7 +19,7 @@ export default function IssueFileTabs({
   onSelect,
 }: Props) {
   return (
-    <div className="scrollbar-hide lg:scrollbar-custom-gray border-border-subtle bg-surface flex max-h-34 min-h-0 flex-col gap-1.5 overflow-y-auto rounded-2xl border p-3 lg:h-full lg:max-h-none">
+    <div className="scrollbar-hide lg:scrollbar-custom-gray border-border-subtle bg-surface flex max-h-34 flex-col gap-1.5 overflow-y-auto rounded-2xl border p-3">
       {isLoading ? (
         <p className="text-body-sm text-foreground-tertiary px-2 py-3">불러오는 중...</p>
       ) : isError ? (

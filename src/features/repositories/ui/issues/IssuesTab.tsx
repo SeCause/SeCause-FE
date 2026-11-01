@@ -144,7 +144,7 @@ export default function IssuesTab({ repositoryId }: Props) {
   };
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <div className="flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-body-sm text-foreground-tertiary">
           {isFilesError || isIssuesError
@@ -164,8 +164,8 @@ export default function IssuesTab({ repositoryId }: Props) {
         />
       </div>
 
-      <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-hidden lg:grid-cols-[15rem_1fr]">
-        <div className="flex min-h-0 flex-col gap-2">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[15rem_minmax(0,1fr)]">
+        <div className="flex flex-col gap-2 lg:self-start">
           <SearchBar
             key={searchResetKey}
             onChange={handleFileSearch}
@@ -183,7 +183,7 @@ export default function IssuesTab({ repositoryId }: Props) {
             onSelect={handleFileSelect}
           />
         </div>
-        <div className="scrollbar-hide lg:scrollbar-custom-gray flex min-h-0 min-w-0 flex-col gap-3 overflow-y-auto lg:pr-3">
+        <div className="flex min-w-0 flex-col gap-3">
           {isFilesLoading || isIssuesLoading ? (
             <p className="text-body-md text-foreground-tertiary m-auto">불러오는 중...</p>
           ) : isFilesError || isIssuesError ? (
