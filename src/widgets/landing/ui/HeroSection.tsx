@@ -2,18 +2,18 @@ import Link from 'next/link';
 
 import { ROUTES, SECTION_IDS } from '@/shared/config/routes';
 
-import LogoAssembly from './LogoAssembly';
+import SecurityAnalysisVisual from './SecurityAnalysisVisual';
 
 export default function HeroSection() {
   return (
     <section
       id={SECTION_IDS.overview}
-      className="scroll-mt-header bg-canvas relative flex min-h-[calc(100svh-var(--spacing-header))] items-center overflow-hidden px-6 py-14 md:min-h-[calc(100dvh-var(--spacing-header))] md:snap-start md:px-10 lg:py-16"
+      className="scroll-mt-header bg-canvas relative flex min-h-[calc(100svh-var(--spacing-header))] items-center overflow-hidden px-6 py-16 md:min-h-[calc(100dvh-var(--spacing-header))] md:snap-start md:px-10 lg:py-20"
     >
-      <div className="mx-auto grid w-full max-w-7xl items-center gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:gap-12">
-        <div className="relative z-10 max-w-2xl">
-          <div className="mb-8 flex items-center gap-3">
-            <span className="bg-blue h-px w-9" />
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-8 text-left lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 xl:gap-16">
+        <div className="relative z-10 flex w-full max-w-2xl flex-col items-start lg:pl-6 xl:pl-10">
+          <div className="mb-8 flex items-center justify-start gap-3">
+            <span className="bg-blue h-px w-9" aria-hidden="true" />
             <span className="text-blue text-[10px] font-semibold tracking-[0.18em]">
               AI CODE SECURITY
             </span>
@@ -27,7 +27,7 @@ export default function HeroSection() {
             취약점을 찾는 데서 끝내지 않고, 코드가 위험한 이유와 안전하게 고치는 방법까지
             연결합니다.
           </p>
-          <div className="mt-9 flex flex-wrap items-center gap-5">
+          <div className="mt-9 flex flex-wrap items-center justify-start gap-5">
             <Link
               href={ROUTES.login}
               className="text-label-md text-on-inverse hover:bg-blue bg-inverse rounded-full px-6 py-3 transition-all hover:-translate-y-0.5"
@@ -41,17 +41,14 @@ export default function HeroSection() {
               분석 과정 보기
             </a>
           </div>
-          <div className="text-label-mono border-border-subtle text-foreground-tertiary mt-12 flex gap-8 border-t pt-5 font-mono sm:gap-12">
+          <div className="text-label-mono border-border-subtle text-foreground-tertiary mt-12 flex w-full flex-wrap justify-start gap-x-8 gap-y-3 border-t pt-5 font-mono sm:gap-x-12">
             <span>NO INSTALL</span>
             <span>PRIVATE REPO</span>
             <span>CODE NOT STORED</span>
           </div>
         </div>
-
-        <div className="relative mx-auto flex min-h-88 w-full max-w-145 items-center justify-center px-3 py-5 sm:min-h-100 lg:min-h-120">
-          <div className="w-full max-w-110">
-            <LogoAssembly />
-          </div>
+        <div className="relative -mx-3 flex w-full items-center justify-center px-3 py-5 md:mx-0 md:min-h-100 lg:min-h-120 lg:justify-end lg:px-0">
+          <SecurityAnalysisVisual />
         </div>
       </div>
     </section>
