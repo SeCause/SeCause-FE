@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronDown, FileCode2, SearchCheck, ShieldAlert, Wrench } from 'lucide-react';
+import { ChevronDown, FileCode2, SearchCheck, ShieldAlert } from 'lucide-react';
 import Link from 'next/link';
 
 import { useRepositoryIssueDetail } from '@/features/repositories/hooks/useRepositoriesApi';
