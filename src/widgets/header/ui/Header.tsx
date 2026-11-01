@@ -4,7 +4,7 @@ import './Header.module.css';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 
 import { AuthButton, useLogout, useSessionHint, useUser } from '@/features/auth';
 import { isProtectedRoute, ROUTES } from '@/shared/config/routes';
@@ -12,13 +12,18 @@ import { useClickOutside } from '@/shared/lib/useClickOutside';
 
 import NavLinks, { NAV_ITEMS } from './NavLinks';
 
+const noSubscription = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isMounted = useSyncExternalStore(noSubscription, getClientSnapshot, getServerSnapshot);
   const pathname = usePathname();
   const isHome = pathname === ROUTES.home;
   const isAuthPage = pathname.startsWith(ROUTES.login);
   const hasSessionHint = useSessionHint();
-  const { data: user } = useUser({
+  const { data: user, isPending: isUserPending } = useUser({
     enabled: (hasSessionHint || isProtectedRoute(pathname)) && !isAuthPage,
   });
   const { mutate: logout } = useLogout();
@@ -74,7 +79,13 @@ export default function Header() {
         </Link>
 
         <div className="flex items-center justify-end md:col-start-3">
-          {!isAuthPage && <AuthButton user={user ?? null} onLogout={() => logout()} />}
+          {!isAuthPage && (
+            <AuthButton
+              user={user ?? null}
+              isLoading={!isMounted || (hasSessionHint && isUserPending)}
+              onLogout={() => logout()}
+            />
+          )}
         </div>
       </header>
 
