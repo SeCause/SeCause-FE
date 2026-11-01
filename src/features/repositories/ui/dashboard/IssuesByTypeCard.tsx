@@ -20,7 +20,7 @@ export default function IssuesByTypeCard({ issuesByType }: Props) {
   const maxCount = Math.max(1, ...sortedIssues.map((item) => item.count));
 
   return (
-    <div className="border-border-subtle bg-surface rounded-2xl border p-6 xl:min-h-[14.5rem]">
+    <div className="border-border-subtle bg-surface rounded-2xl border p-6 xl:min-h-58">
       <h2 className="text-foreground-tertiary mb-5 text-xs font-semibold tracking-[0.08em]">
         ISSUES BY TYPE
       </h2>
