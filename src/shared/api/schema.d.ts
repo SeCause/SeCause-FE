@@ -222,7 +222,7 @@ export interface paths {
     };
     /**
      * 레포지토리 이슈 목록 조회
-     * @description 레포지토리 분석 결과에서 발견된 코드/인프라 보안 이슈 목록을 취약도 기준으로 필터링하여 페이지네이션 조회합니다.
+     * @description 레포지토리 분석 결과에서 발견된 코드/인프라 보안 이슈 목록을 파일 ID와 취약도 기준으로 필터링하여 페이지네이션 조회합니다. 파일 ID를 생략하면 전체 파일의 이슈를 조회하며, 전체 개수와 페이지 수에도 동일한 필터가 적용됩니다.
      */
     get: operations['getRepositoryIssues'];
     put?: never;
@@ -357,6 +357,23 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
+    /** @description 전체 분석 대상 코드 통계. 객체 제공 시 모든 필드가 필수입니다. */
+    AnalysisCallbackCodeDetails: {
+      /**
+       * Format: int32
+       * @description 취약점 유무와 무관한 전체 분석 대상 파일 수
+       * @example 42
+       */
+      fileCount: number;
+      /**
+       * Format: int64
+       * @description 전체 분석 대상 파일의 라인 수
+       * @example 1000
+       */
+      lineCount: number;
+      /** @description 전체 분석 대상 파일의 사용 언어 목록. 빈 배열 허용 */
+      languages: string[];
+    };
     AnalysisCallbackFinding: {
       tool?: string;
       type: string;
@@ -398,6 +415,8 @@ export interface components {
       failedScanners?: string[];
       findings?: components['schemas']['AnalysisCallbackFinding'][];
       summary?: components['schemas']['AnalysisCallbackSummary'];
+      /** @description 선택 코드 통계. 생략/null이면 기존 통계를 유지합니다. */
+      codeDetails?: components['schemas']['AnalysisCallbackCodeDetails'];
     };
     AnalysisCallbackSummary: {
       /** Format: int32 */
