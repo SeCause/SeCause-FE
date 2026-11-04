@@ -19,7 +19,7 @@ export default function IssueFileTabs({
   onSelect,
 }: Props) {
   return (
-    <div className="scrollbar-hide lg:scrollbar-custom-gray border-border-subtle bg-surface flex max-h-34 flex-col gap-1.5 overflow-y-auto rounded-2xl border p-3">
+    <div className="scrollbar-hide lg:scrollbar-custom-gray border-border-subtle bg-surface flex max-h-80 flex-col gap-1.5 overflow-y-auto rounded-2xl border p-3">
       {isLoading ? (
         <p className="text-body-sm text-foreground-tertiary px-2 py-3">불러오는 중...</p>
       ) : isError ? (
@@ -33,7 +33,7 @@ export default function IssueFileTabs({
             type="button"
             onClick={() => onSelect(file.filePath)}
             className={cn(
-              'text-body-sm flex w-full items-center gap-1 rounded-xl px-3 py-3 text-left transition-colors',
+              'text-body-sm flex w-full shrink-0 items-center gap-1 rounded-xl px-3 py-3 text-left transition-colors',
               selectedFilePath === file.filePath
                 ? 'bg-blue font-semibold text-white'
                 : 'text-foreground-tertiary hover:bg-surface-muted hover:text-foreground-secondary font-medium',
