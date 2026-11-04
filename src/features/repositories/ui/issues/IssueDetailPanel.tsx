@@ -1,10 +1,8 @@
 'use client';
 
 import { ChevronDown, FileCode2, SearchCheck, ShieldAlert } from 'lucide-react';
-import Link from 'next/link';
 
 import { useRepositoryIssueDetail } from '@/features/repositories/hooks/useRepositoriesApi';
-import { ROUTES } from '@/shared/config/routes';
 import CopyButton from '@/shared/ui/CopyButton';
 import RetryState from '@/shared/ui/RetryState';
 
@@ -88,7 +86,9 @@ export default function IssueDetailPanel({ repositoryId, analysisResultId }: Pro
 
       <section className="min-w-0" aria-label="코드 위치">
         <div className="mb-2 flex min-w-0 items-center justify-between gap-3">
-          <h4 className="text-label-md text-foreground min-w-0">취약 코드 및 수정 코드</h4>
+          <h4 className="text-label-md text-foreground min-w-0">
+            {fixCode ? '취약 코드 및 수정 코드' : '발견된 취약 코드'}
+          </h4>
           {fixCode && <CopyButton text={fixCode} label="수정 코드 복사" />}
         </div>
         <div className="text-body-sm text-foreground-secondary mb-2 flex min-w-0 items-start justify-between gap-3">
@@ -132,16 +132,12 @@ export default function IssueDetailPanel({ repositoryId, analysisResultId }: Pro
         )}
         {!fixCode && (
           <div className="bg-surface-subtle mt-3 rounded-lg p-4">
-            <p className="text-label-md text-foreground">수정 코드 생성 실패</p>
+            <p className="text-label-md text-foreground">수정 코드를 제공하지 않는 항목입니다.</p>
             <p className="text-body-sm text-foreground-secondary mt-1">
-              수정 코드를 받으려면 전체 분석을 다시 요청할 수 있습니다.
+              분석 설정이나 코드 특성에 따라 자동 수정 코드를 제공하지 않을 수 있습니다.
+              <br />
+              위의 수정 방법을 참고해 주세요.
             </p>
-            <Link
-              href={ROUTES.analysis}
-              className="text-label-md text-blue mt-3 inline-flex rounded underline underline-offset-4"
-            >
-              분석 설정으로 이동
-            </Link>
           </div>
         )}
       </section>

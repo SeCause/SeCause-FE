@@ -72,14 +72,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Generated = {} satisfies Story;
 
-export const GenerationFailed = {
+export const FixCodeUnavailable = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByText('수정 코드 생성 실패')).toBeVisible();
-    await expect(canvas.getByRole('link', { name: '분석 설정으로 이동' })).toHaveAttribute(
-      'href',
-      '/analysis',
-    );
+    await expect(canvas.getByText('수정 코드를 제공하지 않는 항목입니다.')).toBeVisible();
     await expect(canvas.queryByRole('button', { name: '코드 복사' })).not.toBeInTheDocument();
     await expect(canvas.getByText(detail.codeSnippet)).toBeVisible();
   },
