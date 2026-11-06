@@ -14,8 +14,14 @@ const browserQueryClientConfig = {
   },
 } as const;
 
-// 브라우저 전역에서 공유하는 싱글턴 (Providers에서 사용)
-export const queryClient = new QueryClient(browserQueryClientConfig);
+let browserQueryClient: QueryClient | undefined;
+
+// 서버 렌더에서는 요청마다 새로 만들어 사용자 간 캐시 공유를 막고, 브라우저에서만 싱글턴을 쓴다.
+export function getQueryClient() {
+  if (typeof window === 'undefined') return new QueryClient(browserQueryClientConfig);
+  browserQueryClient ??= new QueryClient(browserQueryClientConfig);
+  return browserQueryClient;
+}
 
 // 서버에서는 실패한 prefetch를 재시도하지 않고 클라이언트 쿼리에 복구를 맡긴다.
 // 요청마다 새 인스턴스를 생성해 사용자별 캐시가 섞이지 않도록 한다.
