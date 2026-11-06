@@ -21,11 +21,11 @@ export default function ProfileForm({ user }: { user: GetUserResponse }) {
     formState: { errors, isDirty },
   } = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
-    defaultValues: { name: user.name },
+    defaultValues: { name: user.name ?? '' },
   });
 
   const onSubmit = handleSubmit(({ name }) => {
-    if (name === user.name) return;
+    if (name === (user.name ?? '')) return;
 
     updateUser(
       { name },
@@ -63,7 +63,7 @@ export default function ProfileForm({ user }: { user: GetUserResponse }) {
       <div className="flex min-w-0 flex-1 flex-col gap-5">
         <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-2">
           <span className="text-body-lg text-foreground-secondary shrink-0 md:w-12">이메일</span>
-          <p className="text-body-lg text-foreground ml-3">{user.email}</p>
+          <p className="text-body-lg text-foreground ml-3">{user.email ?? '비공개'}</p>
         </div>
         <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-2">
           <span className="text-body-lg text-foreground-secondary shrink-0 md:w-12">이름</span>

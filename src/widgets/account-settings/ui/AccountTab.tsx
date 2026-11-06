@@ -54,7 +54,7 @@ export default function AccountTab({ initialUser, isHydrated }: Props) {
             계정을 삭제하면 모든 분석 기록과 계정 데이터가 영구적으로 삭제됩니다.
           </p>
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <GithubBadge username={user.githubLoginId || user.name} />
+            <GithubBadge username={user.githubLoginId || user.name || ''} />
             <Button variant="danger" disabled={isPending} onClick={() => setIsWithdrawOpen(true)}>
               계정 삭제
             </Button>

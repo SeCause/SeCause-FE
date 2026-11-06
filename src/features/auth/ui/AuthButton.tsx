@@ -19,7 +19,11 @@ export default function AuthButton({ user, isLoading = false, onLogout }: Props)
       {isLoading ? (
         <span className="h-8 w-16 md:h-9 md:w-28" aria-hidden="true" />
       ) : user ? (
-        <ProfileDropdown avatarUrl={user.avatarUrl} username={user.name} onLogout={onLogout} />
+        <ProfileDropdown
+          avatarUrl={user.avatarUrl}
+          username={user.name ?? user.githubLoginId}
+          onLogout={onLogout}
+        />
       ) : (
         <Link
           href={ROUTES.login}
