@@ -1,7 +1,6 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Camera } from 'lucide-react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 
@@ -39,7 +38,7 @@ export default function ProfileForm({ user }: { user: GetUserResponse }) {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5 md:flex-row md:gap-8">
-      <div className="relative h-fit shrink-0 self-start">
+      <div className="h-fit shrink-0 self-start">
         {user.avatarUrl ? (
           <Image
             src={user.avatarUrl}
@@ -51,13 +50,6 @@ export default function ProfileForm({ user }: { user: GetUserResponse }) {
         ) : (
           <div className="bg-surface-muted h-24 w-24 rounded-full md:h-28 md:w-28" />
         )}
-        <button
-          type="button"
-          aria-label="프로필 사진 변경"
-          className="text-on-inverse border-surface hover:bg-blue bg-inverse absolute right-0 -bottom-2 flex h-9 w-9 items-center justify-center rounded-full border-2 shadow-sm"
-        >
-          <Camera size={16} aria-hidden="true" />
-        </button>
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col gap-5">
