@@ -26,14 +26,22 @@ interface Props {
 export default function RepoStep({ value: selectedRepo, onChange, initialAccountName }: Props) {
   const [search, setSearch] = useState('');
   const [selectedAccount, setSelectedAccount] = useState<string | null>(
-    () => selectedRepo?.owner ?? initialAccountName ?? null,
+    () => selectedRepo?.owner ?? null,
   );
+  const preferredAccount = selectedAccount ?? initialAccountName ?? null;
 
   const queryClient = useQueryClient();
-  const { data: accounts = [], isFetching: isAccountsFetching } = useGithubAccounts();
-  const activeAccount = accounts.some((account) => account.name === selectedAccount)
-    ? selectedAccount
-    : (accounts[0]?.name ?? null);
+  const {
+    data: accounts = [],
+    isSuccess: isAccountsLoaded,
+    isFetching: isAccountsFetching,
+  } = useGithubAccounts();
+  // 계정 목록이 오기 전에는 선호 계정으로 레포를 먼저 조회하고, 목록이 오면 유효성을 확인한다.
+  const activeAccount = !isAccountsLoaded
+    ? preferredAccount
+    : accounts.some((account) => account.name === preferredAccount)
+      ? preferredAccount
+      : (accounts[0]?.name ?? null);
   const { data: repositories = [], isLoading: isReposLoading } =
     useAnalysisRepositories(activeAccount);
 

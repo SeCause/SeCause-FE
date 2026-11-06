@@ -14,6 +14,7 @@ import {
   useAnalysisStatus,
   useCreateAnalysisRequest,
 } from '@/features/analysis';
+import { useUser } from '@/features/auth';
 import { ROUTES } from '@/shared/config/routes';
 import PageTransition from '@/shared/ui/PageTransition';
 import { useToast } from '@/shared/ui/Toast';
@@ -32,7 +33,9 @@ const HEADINGS: Record<AnalysisStep, { title: string; subtitle: string }> = {
 function AnalysisPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const initialAccountName = searchParams.get('account');
+  const { data: user } = useUser();
+  // 계정 목록(GitHub)을 기다리지 않고 레포 조회를 시작하도록 개인 계정을 기본값으로 쓴다.
+  const initialAccountName = searchParams.get('account') ?? user?.githubLoginId ?? null;
   const { showToast } = useToast();
   const [step, setStep] = useState<AnalysisStep>('repo');
   const [selectedRepo, setSelectedRepo] = useState<AnalysisRepository | null>(null);
