@@ -1,5 +1,7 @@
 import { NextRequest } from 'next/server';
 
+import { adaptSetCookie } from '@/shared/api/cookies';
+
 type HeadersWithSetCookie = Headers & { getSetCookie(): string[] };
 
 const HOP_BY_HOP_HEADERS = [
@@ -54,16 +56,4 @@ export function buildClientHeaders(upstreamResponse: Response, request: NextRequ
   });
 
   return responseHeaders;
-}
-
-function adaptSetCookie(cookie: string, request: NextRequest) {
-  let nextCookie = cookie.replace(/;\s*Domain=[^;]*/i, '');
-
-  if (request.nextUrl.hostname === 'localhost') {
-    nextCookie = nextCookie
-      .replace(/;\s*Secure/i, '')
-      .replace(/;\s*SameSite=None/i, '; SameSite=Lax');
-  }
-
-  return nextCookie;
 }
