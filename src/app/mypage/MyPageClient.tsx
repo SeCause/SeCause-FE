@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import { useSyncExternalStore } from 'react';
 
-import { type GithubAccount, resolveActiveAccount, useGithubAccounts } from '@/features/analysis';
+import { resolveActiveAccount, useGithubAccounts } from '@/features/analysis';
 import type { GetUserResponse } from '@/features/auth';
 import { RepositoriesTab } from '@/features/repositories';
 import type { Repository } from '@/features/repositories/model/types';
@@ -14,29 +14,29 @@ import { MyPageSidebar, type MyPageTab } from '@/widgets/mypage-sidebar';
 const subscribeToHydration = () => () => {};
 
 interface Props {
-  initialAccounts: GithubAccount[];
   initialActiveAccount: string | null;
   initialRepositories: Repository[] | null;
   initialUser: GetUserResponse | null;
 }
 
 export default function MyPageClient({
-  initialAccounts,
   initialActiveAccount,
   initialRepositories,
   initialUser,
 }: Props) {
   const searchParams = useSearchParams();
-  const { data: clientAccounts = [] } = useGithubAccounts();
+  const { data: clientAccounts = [], isSuccess: isAccountsLoaded } = useGithubAccounts();
   const isHydrated = useSyncExternalStore(
     subscribeToHydration,
     () => true,
     () => false,
   );
-  const accounts = isHydrated ? clientAccounts : initialAccounts;
-  const activeAccount = isHydrated
-    ? resolveActiveAccount(accounts, searchParams.get('account'))
-    : initialActiveAccount;
+  const accounts = isHydrated ? clientAccounts : [];
+  // 계정 목록이 오기 전에는 서버가 정한 계정을 유지해 저장소 목록 재조회를 막는다.
+  const activeAccount =
+    isHydrated && isAccountsLoaded
+      ? resolveActiveAccount(accounts, searchParams.get('account'))
+      : initialActiveAccount;
   const activeTab: MyPageTab = searchParams.get('tab') === 'account' ? 'account' : 'repositories';
 
   const updateQuery = (mutate: (params: URLSearchParams) => void, replace = false) => {

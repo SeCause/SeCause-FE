@@ -2,8 +2,6 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
-import { githubAccountsKey, resolveActiveAccount } from '@/features/analysis';
-import { getGithubAccountsServer } from '@/features/analysis/index.server';
 import { getUserServer } from '@/features/auth/index.server';
 import { repositoriesKey } from '@/features/repositories';
 import { getRepositoriesServer } from '@/features/repositories/index.server';
@@ -25,18 +23,11 @@ export default async function MyPage({ searchParams }: Props) {
   const { account } = await searchParams;
   const queryClient = createServerQueryClient();
 
-  // 저장소 목록 쿼리 키에 계정명이 들어가므로 계정을 먼저 확정해야 한다. 여기서 건너뛰면
-  // 클라이언트가 계정을 받는 순간 키가 바뀌어 프리페치한 목록이 버려진다.
-  const [accounts, user] = await Promise.all([
-    queryClient
-      .fetchQuery({ queryKey: githubAccountsKey(), queryFn: getGithubAccountsServer })
-      .catch(() => []),
-    getUserServer().catch(() => null),
-  ]);
-
+  // GitHub 계정 목록(/user/orgs)은 느려서 기다리지 않는다. 기본 계정은 개인 계정(githubLoginId)이다.
+  const user = await getUserServer().catch(() => null);
   if (user) queryClient.setQueryData(['user'], user);
 
-  const activeAccount = resolveActiveAccount(accounts, account ?? null);
+  const activeAccount = account ?? user?.githubLoginId ?? null;
   const params = activeAccount ? { accountName: activeAccount } : undefined;
 
   let initialRepositories: Repository[] | null = null;
@@ -55,7 +46,6 @@ export default async function MyPage({ searchParams }: Props) {
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense fallback={null}>
           <MyPageClient
-            initialAccounts={accounts}
             initialActiveAccount={activeAccount}
             initialRepositories={initialRepositories}
             initialUser={user}
