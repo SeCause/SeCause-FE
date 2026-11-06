@@ -1,13 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { ExternalLink, RotateCw } from 'lucide-react';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 
 import {
   useAnalysisRepositories,
   useGithubAccounts,
 } from '@/features/analysis/hooks/useAnalysisApi';
+import { githubAccountsKey } from '@/features/analysis/model/queryKeys';
 import type { AnalysisRepository } from '@/features/analysis/model/types';
 import { createGithubAccountOptions } from '@/features/analysis/ui/githubAccountOptions';
+import { GITHUB_OAUTH_APP_SETTINGS_URL } from '@/shared/config/github';
 import Dropdown from '@/shared/ui/Dropdown';
 import SearchBar from '@/shared/ui/SearchBar';
 
@@ -25,7 +29,8 @@ export default function RepoStep({ value: selectedRepo, onChange, initialAccount
     () => selectedRepo?.owner ?? initialAccountName ?? null,
   );
 
-  const { data: accounts = [] } = useGithubAccounts();
+  const queryClient = useQueryClient();
+  const { data: accounts = [], isFetching: isAccountsFetching } = useGithubAccounts();
   const activeAccount = accounts.some((account) => account.name === selectedAccount)
     ? selectedAccount
     : (accounts[0]?.name ?? null);
@@ -35,6 +40,33 @@ export default function RepoStep({ value: selectedRepo, onChange, initialAccount
   const accountOptions = createGithubAccountOptions(accounts);
 
   const filtered = repositories.filter((r) => r.name.toLowerCase().includes(search.toLowerCase()));
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const openedGithubSettings = useRef(false);
+
+  const refreshGithubAccess = async () => {
+    setIsRefreshing(true);
+    try {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: githubAccountsKey() }),
+        queryClient.invalidateQueries({ queryKey: ['analysisRepositories'] }),
+      ]);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  // GitHub 설정 탭에서 돌아오면 권한 변경을 반영하도록 다시 조회한다.
+  const handleWindowFocus = useEffectEvent(() => {
+    if (!openedGithubSettings.current) return;
+    openedGithubSettings.current = false;
+    void refreshGithubAccess();
+  });
+
+  useEffect(() => {
+    window.addEventListener('focus', handleWindowFocus);
+    return () => window.removeEventListener('focus', handleWindowFocus);
+  }, []);
 
   const handleAccountChange = (accountName: string) => {
     setSelectedAccount(accountName);
@@ -55,6 +87,38 @@ export default function RepoStep({ value: selectedRepo, onChange, initialAccount
           className="w-48"
           buttonClassName="w-full"
         />
+        <div className="text-caption text-foreground-secondary flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span>찾는 조직이 없나요?</span>
+          <a
+            href={GITHUB_OAUTH_APP_SETTINGS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => {
+              openedGithubSettings.current = true;
+            }}
+            className="text-blue inline-flex items-center gap-1 hover:underline"
+          >
+            GitHub에서 조직 접근 권한 관리
+            <ExternalLink size={12} aria-hidden="true" />
+          </a>
+          <button
+            type="button"
+            onClick={() => void refreshGithubAccess()}
+            disabled={isRefreshing || isAccountsFetching}
+            aria-label="GitHub 계정 및 레포지토리 목록 새로고침"
+            className="text-foreground-secondary hover:text-foreground inline-flex items-center gap-1 disabled:opacity-50"
+          >
+            <RotateCw
+              size={12}
+              aria-hidden="true"
+              className={isRefreshing || isAccountsFetching ? 'animate-spin' : ''}
+            />
+            새로고침
+          </button>
+        </div>
+        <p className="text-caption text-foreground-tertiary">
+          조직 멤버가 접근을 요청한 경우 조직 owner가 승인한 뒤 목록에 표시됩니다.
+        </p>
       </div>
 
       <div className="flex flex-col gap-3">

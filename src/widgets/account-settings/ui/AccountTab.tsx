@@ -1,8 +1,10 @@
 'use client';
 
+import { ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 
 import { type GetUserResponse, useUser, useWithdraw } from '@/features/auth';
+import { GITHUB_OAUTH_APP_SETTINGS_URL } from '@/shared/config/github';
 import Button from '@/shared/ui/Button';
 import ConfirmDialog from '@/shared/ui/ConfirmDialog';
 import { useToast } from '@/shared/ui/Toast';
@@ -46,6 +48,24 @@ export default function AccountTab({ initialUser, isHydrated }: Props) {
             </p>
           </div>
           <ThemeToggle showLabel />
+        </div>
+
+        <div className="border-border-subtle flex flex-col items-start gap-4 border-t p-5 sm:flex-row sm:items-center sm:justify-between md:px-6">
+          <div>
+            <h2 className="text-heading-md text-foreground">GitHub 연동</h2>
+            <p className="text-body-md text-foreground-secondary mt-1">
+              분석할 조직의 접근 권한을 GitHub에서 추가하거나 요청할 수 있습니다.
+            </p>
+          </div>
+          <a
+            href={GITHUB_OAUTH_APP_SETTINGS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-label-lg border-border-default text-foreground hover:bg-surface-muted inline-flex shrink-0 items-center gap-1.5 rounded-lg border px-4 py-2 transition-colors"
+          >
+            GitHub 연동 관리
+            <ExternalLink size={14} aria-hidden="true" />
+          </a>
         </div>
 
         <div className="border-border-subtle border-t p-5 md:p-6">
