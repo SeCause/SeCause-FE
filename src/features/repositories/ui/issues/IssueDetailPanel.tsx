@@ -3,6 +3,7 @@
 import { ChevronDown, FileCode2, SearchCheck, ShieldAlert } from 'lucide-react';
 
 import { useRepositoryIssueDetail } from '@/features/repositories/hooks/useRepositoriesApi';
+import { parseFixSummary } from '@/features/repositories/model/fixSummary';
 import CopyButton from '@/shared/ui/CopyButton';
 import RetryState from '@/shared/ui/RetryState';
 
@@ -19,26 +20,6 @@ function getSafeReferenceUrl(referenceUrl: string) {
   } catch {
     return null;
   }
-}
-
-function getFixSteps(summary: string) {
-  const trimmedSummary = summary.trim();
-  const numberedSteps = trimmedSummary
-    .trim()
-    .split(/(?=\d+\.\s)/)
-    .map((step) => step.trim())
-    .filter(Boolean);
-
-  if (numberedSteps.length >= 2 && numberedSteps.every((step) => /^\d+\.\s/.test(step))) {
-    return numberedSteps.map((step) => step.replace(/^\d+\.\s/, ''));
-  }
-
-  const sentences = trimmedSummary
-    .split(/(?<=[.!?])\s+(?=\S)/u)
-    .map((sentence) => sentence.trim())
-    .filter(Boolean);
-
-  return sentences.length >= 2 ? sentences : null;
 }
 
 interface Props {
@@ -65,7 +46,7 @@ export default function IssueDetailPanel({ repositoryId, analysisResultId }: Pro
   }
 
   const fixCode = detail.fixCode?.trim() ? detail.fixCode : null;
-  const fixSteps = getFixSteps(detail.fixSummary);
+  const fixContent = parseFixSummary(detail.fixSummary);
   const references = detail.references ?? [];
   const lineLabel =
     detail.lineStart === detail.lineEnd
@@ -109,25 +90,32 @@ export default function IssueDetailPanel({ repositoryId, analysisResultId }: Pro
 
       <section className="border-border-subtle min-w-0 border-t pt-4">
         <h3 className="text-label-md text-foreground mb-4">수정 방법</h3>
-        {fixSteps ? (
-          <ol className="flex max-w-4xl flex-col gap-3">
-            {fixSteps.map((step, index) => (
-              <li
-                key={`${index}-${step}`}
-                className="grid min-w-0 grid-cols-[1.5rem_minmax(0,1fr)] items-start gap-3"
-              >
-                <span className="text-label-sm text-foreground-secondary bg-surface-subtle flex size-6 items-center justify-center rounded-full">
-                  {index + 1}
-                </span>
-                <span className="text-body-md text-foreground min-w-0 leading-7 wrap-break-word">
-                  <InlineCodeText text={step} />
-                </span>
-              </li>
-            ))}
-          </ol>
+        {fixContent.steps ? (
+          <>
+            {fixContent.introduction && (
+              <p className="text-body-md text-foreground mb-3 max-w-4xl leading-7 wrap-break-word">
+                <InlineCodeText text={fixContent.introduction} />
+              </p>
+            )}
+            <ol className="flex max-w-4xl flex-col gap-3">
+              {fixContent.steps.map((step, index) => (
+                <li
+                  key={`${index}-${step}`}
+                  className="grid min-w-0 grid-cols-[1.5rem_minmax(0,1fr)] items-start gap-3"
+                >
+                  <span className="text-label-sm text-foreground-secondary bg-surface-subtle flex size-6 items-center justify-center rounded-full">
+                    {index + 1}
+                  </span>
+                  <span className="text-body-md text-foreground min-w-0 leading-7 wrap-break-word">
+                    <InlineCodeText text={step} />
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </>
         ) : (
           <p className="text-body-md text-foreground max-w-4xl leading-7 wrap-break-word">
-            <InlineCodeText text={detail.fixSummary} />
+            <InlineCodeText text={fixContent.introduction} />
           </p>
         )}
         {!fixCode && (
