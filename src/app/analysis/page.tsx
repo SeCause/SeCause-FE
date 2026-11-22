@@ -97,18 +97,18 @@ function AnalysisPageContent() {
 
   return (
     <PageTransition>
-      <div className="bg-canvas flex h-full flex-1 flex-col items-center px-6 pt-7 pb-28 md:px-10 md:py-10">
-        <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
-          <div className="border-border-subtle border-b pb-5">
-            <p className="text-blue text-label-mono mb-2.5 font-mono">
+      <div className="bg-canvas flex h-full flex-1 flex-col items-center px-6 pt-6 pb-28 md:px-10 md:py-5">
+        <div className="mx-auto flex w-full max-w-5xl flex-col gap-4">
+          <div className="border-border-subtle border-b pb-4">
+            <p className="text-blue text-label-mono mb-2 font-mono">
               NEW ANALYSIS / {step === 'repo' ? '01' : '02'}
             </p>
             <h1 className="text-heading-lg text-foreground">{HEADINGS[step].title}</h1>
             <p className="text-foreground-secondary mt-2 text-sm">{HEADINGS[step].subtitle}</p>
           </div>
 
-          <div className="flex flex-col gap-6 md:grid md:grid-cols-[1fr_280px] md:items-start md:gap-6">
-            <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 md:grid md:grid-cols-[1fr_280px] md:items-start md:gap-4">
+            <div className="flex flex-col gap-3">
               {step === 'branch' && (
                 <button
                   onClick={() => setStep('repo')}
@@ -118,7 +118,7 @@ function AnalysisPageContent() {
                 </button>
               )}
 
-              <div className="bg-surface border-border-subtle rounded-2xl border p-5 shadow-[0_12px_32px_rgba(27,43,75,0.05)] md:p-6">
+              <div className="bg-surface border-border-subtle rounded-2xl border p-4 shadow-[0_12px_32px_rgba(27,43,75,0.05)] md:p-5">
                 {step === 'repo' ? (
                   <RepoStep
                     value={selectedRepo}
@@ -143,6 +143,7 @@ function AnalysisPageContent() {
                 step === 'repo' ? selectedRepo === null : selectedBranch === null || isPending
               }
               onClick={step === 'repo' ? handleGoToBranch : handleRunAnalysis}
+              repository={selectedRepo}
             />
           </div>
         </div>
